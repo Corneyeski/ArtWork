@@ -1,0 +1,10 @@
+{
+    "artWorkApp": {
+        "Theme" : {
+            "null": "",
+            "BLACK": "BLACK",
+            "WHITE": "WHITE",
+            "MINIMAL": "MINIMAL"
+        }
+    }
+}

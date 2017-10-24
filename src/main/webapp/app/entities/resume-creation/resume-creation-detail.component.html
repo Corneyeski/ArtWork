@@ -1,0 +1,91 @@
+
+<div *ngIf="resumeCreation">
+    <h2><span jhiTranslate="artWorkApp.resumeCreation.detail.title">Resume Creation</span> {{resumeCreation.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="artWorkApp.resumeCreation.name">Name</span></dt>
+        <dd>
+            <span>{{resumeCreation.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.resumeCreation.lastName">Last Name</span></dt>
+        <dd>
+            <span>{{resumeCreation.lastName}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.resumeCreation.birthdate">Birthdate</span></dt>
+        <dd>
+            <span>{{resumeCreation.birthdate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.resumeCreation.photo">Photo</span></dt>
+        <dd>
+            <div *ngIf="resumeCreation.photo">
+                <a (click)="openFile(resumeCreation.photoContentType, resumeCreation.photo)">
+                    <img [src]="'data:' + resumeCreation.photoContentType + ';base64,' + resumeCreation.photo" style="max-width: 100%;" alt="resumeCreation image"/>
+                </a>
+                {{resumeCreation.photoContentType}}, {{byteSize(resumeCreation.photo)}}
+            </div>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.resumeCreation.email">Email</span></dt>
+        <dd>
+            <span>{{resumeCreation.email}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.resumeCreation.phone">Phone</span></dt>
+        <dd>
+            <span>{{resumeCreation.phone}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.resumeCreation.address">Address</span></dt>
+        <dd>
+            <span>{{resumeCreation.address}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.resumeCreation.skills">Skills</span></dt>
+        <dd>
+            <div *ngIf="resumeCreation.skills">
+                <a (click)="openFile(resumeCreation.skillsContentType, resumeCreation.skills)" jhiTranslate="entity.action.open">open</a>
+                {{resumeCreation.skillsContentType}}, {{byteSize(resumeCreation.skills)}}
+            </div>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.resumeCreation.tool">Tool</span></dt>
+        <dd>
+            <div *ngIf="resumeCreation.tool">
+                <a [routerLink]="['/tool', resumeCreation.tool?.id]">{{resumeCreation.tool?.name}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.resumeCreation.language">Language</span></dt>
+        <dd>
+            <div *ngIf="resumeCreation.language">
+                <a [routerLink]="['/language', resumeCreation.language?.id]">{{resumeCreation.language?.name}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.resumeCreation.city">City</span></dt>
+        <dd>
+            <div *ngIf="resumeCreation.city">
+                <a [routerLink]="['/city', resumeCreation.city?.id]">{{resumeCreation.city?.name}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.resumeCreation.training">Training</span></dt>
+        <dd>
+            <div *ngIf="resumeCreation.training">
+                <a [routerLink]="['/training', resumeCreation.training?.id]">{{resumeCreation.training?.id}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.resumeCreation.experience">Experience</span></dt>
+        <dd>
+            <div *ngIf="resumeCreation.experience">
+                <a [routerLink]="['/experience', resumeCreation.experience?.id]">{{resumeCreation.experience?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'resume-creation/'+ resumeCreation.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

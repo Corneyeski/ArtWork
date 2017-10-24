@@ -1,0 +1,45 @@
+
+<div *ngIf="connection">
+    <h2><span jhiTranslate="artWorkApp.connection.detail.title">Connection</span> {{connection.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="artWorkApp.connection.acepted">Acepted</span></dt>
+        <dd>
+            <span>{{connection.acepted}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.connection.title">Title</span></dt>
+        <dd>
+            <span>{{connection.title}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.connection.message">Message</span></dt>
+        <dd>
+            <span>{{connection.message}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.connection.time">Time</span></dt>
+        <dd>
+            <span>{{connection.time | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.connection.sender">Sender</span></dt>
+        <dd>
+            {{connection.sender?.login}}
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.connection.receiver">Receiver</span></dt>
+        <dd>
+            {{connection.receiver?.login}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'connection/'+ connection.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

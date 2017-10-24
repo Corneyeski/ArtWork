@@ -1,0 +1,63 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myReportLabel" jhiTranslate="artWorkApp.report.home.createOrEditLabel">Create or edit a Report</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!report.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="report.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.report.title" for="field_title">Title</label>
+            <input type="text" class="form-control" name="title" id="field_title"
+                [(ngModel)]="report.title"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.report.reason" for="field_reason">Reason</label>
+            <textarea class="form-control" name="reason" id="field_reason"
+                [(ngModel)]="report.reason"  ></textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.report.reporter" for="field_reporter">Reporter</label>
+            <select class="form-control" id="field_reporter" name="reporter" [(ngModel)]="report.reporter" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="userOption.id === report.reporter?.id ? report.reporter : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.report.reported" for="field_reported">Reported</label>
+            <select class="form-control" id="field_reported" name="reported" [(ngModel)]="report.reported" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="userOption.id === report.reported?.id ? report.reported : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.report.offer" for="field_offer">Offer</label>
+            <select class="form-control" id="field_offer" name="offer" [(ngModel)]="report.offer" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="offerOption.id === report.offer?.id ? report.offer : offerOption" *ngFor="let offerOption of offers; trackBy: trackOfferById">{{offerOption.login}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.report.multimedia" for="field_multimedia">Multimedia</label>
+            <select class="form-control" id="field_multimedia" name="multimedia" [(ngModel)]="report.multimedia" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="multimediaOption.id === report.multimedia?.id ? report.multimedia : multimediaOption" *ngFor="let multimediaOption of multimedias; trackBy: trackMultimediaById">{{multimediaOption.login}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

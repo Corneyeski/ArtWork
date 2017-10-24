@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Tool.
+    -->
+    <changeSet id="20171024111738-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="tools_id"
+                                 baseTableName="tool_user"
+                                 constraintName="fk_tool_user_tools_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tool"/>
+        <addForeignKeyConstraint baseColumnNames="users_id"
+                                 baseTableName="tool_user"
+                                 constraintName="fk_tool_user_users_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+        
+    </changeSet>
+</databaseChangeLog>

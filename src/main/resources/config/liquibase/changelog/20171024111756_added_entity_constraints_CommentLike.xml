@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity CommentLike.
+    -->
+    <changeSet id="20171024111756-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="comment_like"
+                                 constraintName="fk_comment_like_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="comment_id"
+                                 baseTableName="comment_like"
+                                 constraintName="fk_comment_like_comment_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="comment"/>
+
+    </changeSet>
+</databaseChangeLog>

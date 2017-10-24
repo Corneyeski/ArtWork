@@ -1,0 +1,108 @@
+<div>
+    <h2>
+        <span jhiTranslate="artWorkApp.resumeCreation.home.title">Resume Creations</span>
+        <button class="btn btn-primary float-right jh-create-entity create-resume-creation" [routerLink]="['/', { outlets: { popup: ['resume-creation-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="artWorkApp.resumeCreation.home.createLabel">
+            Create new Resume Creation
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="resumeCreations">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="artWorkApp.resumeCreation.name">Name</span></th>
+            <th><span jhiTranslate="artWorkApp.resumeCreation.lastName">Last Name</span></th>
+            <th><span jhiTranslate="artWorkApp.resumeCreation.birthdate">Birthdate</span></th>
+            <th><span jhiTranslate="artWorkApp.resumeCreation.photo">Photo</span></th>
+            <th><span jhiTranslate="artWorkApp.resumeCreation.email">Email</span></th>
+            <th><span jhiTranslate="artWorkApp.resumeCreation.phone">Phone</span></th>
+            <th><span jhiTranslate="artWorkApp.resumeCreation.address">Address</span></th>
+            <th><span jhiTranslate="artWorkApp.resumeCreation.skills">Skills</span></th>
+            <th><span jhiTranslate="artWorkApp.resumeCreation.tool">Tool</span></th>
+            <th><span jhiTranslate="artWorkApp.resumeCreation.language">Language</span></th>
+            <th><span jhiTranslate="artWorkApp.resumeCreation.city">City</span></th>
+            <th><span jhiTranslate="artWorkApp.resumeCreation.training">Training</span></th>
+            <th><span jhiTranslate="artWorkApp.resumeCreation.experience">Experience</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let resumeCreation of resumeCreations ;trackBy: trackId">
+                <td><a [routerLink]="['../resume-creation', resumeCreation.id ]">{{resumeCreation.id}}</a></td>
+                <td>{{resumeCreation.name}}</td>
+                <td>{{resumeCreation.lastName}}</td>
+                <td>{{resumeCreation.birthdate | date:'mediumDate'}}</td>
+                <td>
+                    <a *ngIf="resumeCreation.photo" (click)="openFile(resumeCreation.photoContentType, resumeCreation.photo)">
+                        <img [src]="'data:' + resumeCreation.photoContentType + ';base64,' + resumeCreation.photo" style="max-height: 30px;" alt="resumeCreation image"/>
+                    </a>
+                    <span *ngIf="resumeCreation.photo">{{resumeCreation.photoContentType}}, {{byteSize(resumeCreation.photo)}}</span>
+                </td>
+                <td>{{resumeCreation.email}}</td>
+                <td>{{resumeCreation.phone}}</td>
+                <td>{{resumeCreation.address}}</td>
+                <td>
+                    <a *ngIf="resumeCreation.skills" (click)="openFile(resumeCreation.skillsContentType, resumeCreation.skills)" jhiTranslate="entity.action.open">open</a>
+                    <span *ngIf="resumeCreation.skills">{{resumeCreation.skillsContentType}}, {{byteSize(resumeCreation.skills)}}</span>
+                </td>
+                <td>
+                    <div *ngIf="resumeCreation.tool">
+                        <a [routerLink]="['../tool', resumeCreation.tool?.id ]" >{{resumeCreation.tool?.name}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="resumeCreation.language">
+                        <a [routerLink]="['../language', resumeCreation.language?.id ]" >{{resumeCreation.language?.name}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="resumeCreation.city">
+                        <a [routerLink]="['../city', resumeCreation.city?.id ]" >{{resumeCreation.city?.name}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="resumeCreation.training">
+                        <a [routerLink]="['../training', resumeCreation.training?.id ]" >{{resumeCreation.training?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="resumeCreation.experience">
+                        <a [routerLink]="['../experience', resumeCreation.experience?.id ]" >{{resumeCreation.experience?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../resume-creation', resumeCreation.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'resume-creation/'+ resumeCreation.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'resume-creation/'+ resumeCreation.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

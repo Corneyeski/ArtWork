@@ -1,0 +1,37 @@
+
+<div *ngIf="userProfileValoration">
+    <h2><span jhiTranslate="artWorkApp.userProfileValoration.detail.title">User Profile Valoration</span> {{userProfileValoration.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="artWorkApp.userProfileValoration.value">Value</span></dt>
+        <dd>
+            <span>{{userProfileValoration.value}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userProfileValoration.comments">Comments</span></dt>
+        <dd>
+            <span>{{userProfileValoration.comments}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userProfileValoration.valuator">Valuator</span></dt>
+        <dd>
+            {{userProfileValoration.valuator?.login}}
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userProfileValoration.valuated">Valuated</span></dt>
+        <dd>
+            {{userProfileValoration.valuated?.login}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'user-profile-valoration/'+ userProfileValoration.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

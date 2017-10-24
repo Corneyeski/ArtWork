@@ -1,0 +1,24 @@
+{
+    "artWorkApp": {
+        "valoration" : {
+            "home": {
+                "title": "Valorations",
+                "createLabel": "Crear nuevo Valoration",
+                "createOrEditLabel": "Crear o editar Valoration"
+            },
+            "created": "Un nuevo Valoration ha sido creado con el identificador {{ param }}",
+            "updated": "Un Valoration ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Valoration ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Valoration {{ id }}?"
+            },
+            "detail": {
+                "title": "Valoration"
+            },
+            "mark": "Mark",
+            "time": "Time",
+            "user": "User",
+            "multimedia": "Multimedia"
+        }
+    }
+}

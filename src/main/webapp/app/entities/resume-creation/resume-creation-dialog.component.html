@@ -1,0 +1,130 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myResumeCreationLabel" jhiTranslate="artWorkApp.resumeCreation.home.createOrEditLabel">Create or edit a Resume Creation</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!resumeCreation.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="resumeCreation.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.resumeCreation.name" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                [(ngModel)]="resumeCreation.name"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.resumeCreation.lastName" for="field_lastName">Last Name</label>
+            <input type="text" class="form-control" name="lastName" id="field_lastName"
+                [(ngModel)]="resumeCreation.lastName"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.resumeCreation.birthdate" for="field_birthdate">Birthdate</label>
+            <div class="input-group">
+                <input id="field_birthdate" type="text" class="form-control" name="birthdate" ngbDatepicker  #birthdateDp="ngbDatepicker" [(ngModel)]="resumeCreation.birthdate"
+                />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary" (click)="birthdateDp.toggle()"><i class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.resumeCreation.photo" for="field_photo">Photo</label>
+            <div>
+                <img [src]="'data:' + resumeCreation.photoContentType + ';base64,' + resumeCreation.photo" style="max-height: 100px;" *ngIf="resumeCreation.photo" alt="resumeCreation image"/>
+                <div *ngIf="resumeCreation.photo" class="form-text text-danger clearfix">
+                    <span class="pull-left">{{resumeCreation.photoContentType}}, {{byteSize(resumeCreation.photo)}}</span>
+                    <button type="button" (click)="clearInputImage('photo', 'photoContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                        <span class="fa fa-times"></span>
+                    </button>
+                </div>
+                <input type="file" id="file_photo" (change)="setFileData($event, resumeCreation, 'photo', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+            </div>
+            <input type="hidden" class="form-control" name="photo" id="field_photo"
+                [(ngModel)]="resumeCreation.photo"  />
+            <input type="hidden" class="form-control" name="photoContentType" id="field_photoContentType"
+                [(ngModel)]="resumeCreation.photoContentType" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.resumeCreation.email" for="field_email">Email</label>
+            <input type="text" class="form-control" name="email" id="field_email"
+                [(ngModel)]="resumeCreation.email"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.resumeCreation.phone" for="field_phone">Phone</label>
+            <input type="number" class="form-control" name="phone" id="field_phone"
+                [(ngModel)]="resumeCreation.phone"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.resumeCreation.address" for="field_address">Address</label>
+            <input type="text" class="form-control" name="address" id="field_address"
+                [(ngModel)]="resumeCreation.address"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.resumeCreation.skills" for="field_skills">Skills</label>
+            <div>
+                <div *ngIf="resumeCreation.skills" class="form-text text-danger clearfix">
+                    <a class="pull-left" (click)="openFile(resumeCreation.skillsContentType, resumeCreation.skills)" jhiTranslate="entity.action.open">open</a><br>
+                    <span class="pull-left">{{resumeCreation.skillsContentType}}, {{byteSize(resumeCreation.skills)}}</span>
+                    <button type="button" (click)="resumeCreation.skills=null;resumeCreation.skillsContentType=null;"
+                            class="btn btn-secondary btn-xs pull-right">
+                        <span class="fa fa-times"></span>
+                    </button>
+                </div>
+                <input type="file" id="file_skills" (change)="setFileData($event, resumeCreation, 'skills', false)" jhiTranslate="entity.action.addblob"/>
+            </div>
+            <input type="hidden" class="form-control" name="skills" id="field_skills"
+                [(ngModel)]="resumeCreation.skills"  />
+            <input type="hidden" class="form-control" name="skillsContentType" id="field_skillsContentType"
+                [(ngModel)]="resumeCreation.skillsContentType" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.resumeCreation.tool" for="field_tool">Tool</label>
+            <select class="form-control" id="field_tool" name="tool" [(ngModel)]="resumeCreation.tool">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="toolOption.id === resumeCreation.tool?.id ? resumeCreation.tool : toolOption" *ngFor="let toolOption of tools; trackBy: trackToolById">{{toolOption.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.resumeCreation.language" for="field_language">Language</label>
+            <select class="form-control" id="field_language" name="language" [(ngModel)]="resumeCreation.language" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="languageOption.id === resumeCreation.language?.id ? resumeCreation.language : languageOption" *ngFor="let languageOption of languages; trackBy: trackLanguageById">{{languageOption.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.resumeCreation.city" for="field_city">City</label>
+            <select class="form-control" id="field_city" name="city" [(ngModel)]="resumeCreation.city" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="cityOption.id === resumeCreation.city?.id ? resumeCreation.city : cityOption" *ngFor="let cityOption of cities; trackBy: trackCityById">{{cityOption.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.resumeCreation.training" for="field_training">Training</label>
+            <select class="form-control" id="field_training" name="training" [(ngModel)]="resumeCreation.training" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="trainingOption.id === resumeCreation.training?.id ? resumeCreation.training : trainingOption" *ngFor="let trainingOption of trainings; trackBy: trackTrainingById">{{trainingOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.resumeCreation.experience" for="field_experience">Experience</label>
+            <select class="form-control" id="field_experience" name="experience" [(ngModel)]="resumeCreation.experience" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="experienceOption.id === resumeCreation.experience?.id ? resumeCreation.experience : experienceOption" *ngFor="let experienceOption of experiences; trackBy: trackExperienceById">{{experienceOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

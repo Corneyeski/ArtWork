@@ -1,0 +1,75 @@
+
+<div *ngIf="multimedia">
+    <h2><span jhiTranslate="artWorkApp.multimedia.detail.title">Multimedia</span> {{multimedia.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="artWorkApp.multimedia.title">Title</span></dt>
+        <dd>
+            <span>{{multimedia.title}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.multimedia.image">Image</span></dt>
+        <dd>
+            <div *ngIf="multimedia.image">
+                <a (click)="openFile(multimedia.imageContentType, multimedia.image)">
+                    <img [src]="'data:' + multimedia.imageContentType + ';base64,' + multimedia.image" style="max-width: 100%;" alt="multimedia image"/>
+                </a>
+                {{multimedia.imageContentType}}, {{byteSize(multimedia.image)}}
+            </div>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.multimedia.url">Url</span></dt>
+        <dd>
+            <span>{{multimedia.url}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.multimedia.urlShare">Url Share</span></dt>
+        <dd>
+            <span>{{multimedia.urlShare}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.multimedia.time">Time</span></dt>
+        <dd>
+            <span>{{multimedia.time | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.multimedia.tags">Tags</span></dt>
+        <dd>
+            <span>{{multimedia.tags}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.multimedia.totalValoration">Total Valoration</span></dt>
+        <dd>
+            <span>{{multimedia.totalValoration}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.multimedia.type">Type</span></dt>
+        <dd>
+            <span jhiTranslate="{{'artWorkApp.Type.' + multimedia.type}}">{{multimedia.type}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.multimedia.description">Description</span></dt>
+        <dd>
+            <div *ngIf="multimedia.description">
+                <a (click)="openFile(multimedia.descriptionContentType, multimedia.description)" jhiTranslate="entity.action.open">open</a>
+                {{multimedia.descriptionContentType}}, {{byteSize(multimedia.description)}}
+            </div>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.multimedia.user">User</span></dt>
+        <dd>
+            {{multimedia.user?.login}}
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.multimedia.album">Album</span></dt>
+        <dd>
+            <div *ngIf="multimedia.album">
+                <a [routerLink]="['/album', multimedia.album?.id]">{{multimedia.album?.name}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'multimedia/'+ multimedia.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

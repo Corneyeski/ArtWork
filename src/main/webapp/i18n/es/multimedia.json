@@ -1,0 +1,31 @@
+{
+    "artWorkApp": {
+        "multimedia" : {
+            "home": {
+                "title": "Multimedias",
+                "createLabel": "Crear nuevo Multimedia",
+                "createOrEditLabel": "Crear o editar Multimedia"
+            },
+            "created": "Un nuevo Multimedia ha sido creado con el identificador {{ param }}",
+            "updated": "Un Multimedia ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Multimedia ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Multimedia {{ id }}?"
+            },
+            "detail": {
+                "title": "Multimedia"
+            },
+            "title": "Title",
+            "image": "Image",
+            "url": "Url",
+            "urlShare": "Url Share",
+            "time": "Time",
+            "tags": "Tags",
+            "totalValoration": "Total Valoration",
+            "type": "Type",
+            "description": "Description",
+            "user": "User",
+            "album": "Album"
+        }
+    }
+}

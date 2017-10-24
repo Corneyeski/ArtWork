@@ -1,0 +1,33 @@
+
+<div *ngIf="blocked">
+    <h2><span jhiTranslate="artWorkApp.blocked.detail.title">Blocked</span> {{blocked.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="artWorkApp.blocked.time">Time</span></dt>
+        <dd>
+            <span>{{blocked.time | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.blocked.block">Block</span></dt>
+        <dd>
+            {{blocked.block?.login}}
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.blocked.blocked">Blocked</span></dt>
+        <dd>
+            {{blocked.blocked?.login}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'blocked/'+ blocked.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,39 @@
+
+<div *ngIf="pricesT">
+    <h2><span jhiTranslate="artWorkApp.pricesT.detail.title">Prices T</span> {{pricesT.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="artWorkApp.pricesT.phone">Phone</span></dt>
+        <dd>
+            <span>{{pricesT.phone}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.pricesT.name">Name</span></dt>
+        <dd>
+            <span>{{pricesT.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.pricesT.city">City</span></dt>
+        <dd>
+            <span>{{pricesT.city}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.pricesT.tool">Tool</span></dt>
+        <dd>
+            <div *ngIf="pricesT.tool">
+                <a [routerLink]="['/tool', pricesT.tool?.id]">{{pricesT.tool?.name}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'prices-t/'+ pricesT.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

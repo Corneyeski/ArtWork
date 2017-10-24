@@ -6,7 +6,6 @@ entity UserExt{
 	kind Integer,
 	tags String,
 	address String,
-	city String,
 	popular Double min (DEFAULT_MIN) max (DEFAULT_MAX),
 	companyPoints Double min (DEFAULT_MIN) max (DEFAULT_MAX),
 	validated Boolean,
@@ -35,11 +34,11 @@ entity ResumeCreation{
 	name String,
 	lastName String,
 	birthdate LocalDate,
-	photo ImageBlob, 
+	photo ImageBlob,
 	email String,
-	phone Integer, 
+	phone Integer,
 	address String,
-	skills Blob 
+	skills Blob
 }
 
 // Clase para definir idiomas
@@ -50,7 +49,7 @@ entity Language {
 
 // Clase para crear formacion
 entity Training{
-	startYear Integer, 
+	startYear Integer,
 	endingYear Integer,
 	degree String,
 	studyCenter String,
@@ -59,7 +58,7 @@ entity Training{
 
 // Clase para crear experiencia
 entity Experience{
-	startYear Integer, 
+	startYear Integer,
 	endingYear Integer,
 	name String,
 	company String,
@@ -68,7 +67,7 @@ entity Experience{
 
 // Clase herencia herramienta, de ejemplo
 entity PricesT{
-	phone Integer, 
+	phone Integer,
 	name String,
 	city String
 }
@@ -248,16 +247,16 @@ relationship ManyToOne{
 
 	//Se pueden comentar las publicaciones
     Comment{multimedia(title)} to Multimedia,
-    Comment{comment(title)} to Comment,
+    Comment{response(title)} to Comment,
     Comment{user(login)} to User,
 
     //Puede gustar un comentario a un usuario
     CommentLike{user} to User,
     CommentLike{comment} to Comment,
-    
+
     //Enpresa en la que trabaja un usuario
     UserExt{workingOn(login)} to User,
-    
+
     //Lista de razones para reportar
     ReasonReport{report(title)} to Report
 }
@@ -278,10 +277,10 @@ relationship OneToOne{
 
 relationship ManyToMany{
 	//Relacion de users a ofertas de trabajo
-    Offer{user(login)} to User{offer(name)},
+    Offer{user(login)} to User,
 
     //Relacion de users y tool
-    Tool{user(login)} to User{tool(name)}
+    Tool{user(login)} to User
 }
 
 //PARA CREAR LA TIMELINE

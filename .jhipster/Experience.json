@@ -1,0 +1,32 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "startYear",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "endingYear",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "company",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "competitions",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "text"
+        }
+    ],
+    "changelogDate": "20171024111742",
+    "entityTableName": "experience",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no"
+}

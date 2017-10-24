@@ -1,0 +1,90 @@
+<div>
+    <h2>
+        <span jhiTranslate="artWorkApp.multimedia.home.title">Multimedias</span>
+        <button class="btn btn-primary float-right jh-create-entity create-multimedia" [routerLink]="['/', { outlets: { popup: ['multimedia-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="artWorkApp.multimedia.home.createLabel">
+            Create new Multimedia
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="multimedias">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="title"><span jhiTranslate="artWorkApp.multimedia.title">Title</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="image"><span jhiTranslate="artWorkApp.multimedia.image">Image</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="url"><span jhiTranslate="artWorkApp.multimedia.url">Url</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="urlShare"><span jhiTranslate="artWorkApp.multimedia.urlShare">Url Share</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="time"><span jhiTranslate="artWorkApp.multimedia.time">Time</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="tags"><span jhiTranslate="artWorkApp.multimedia.tags">Tags</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="totalValoration"><span jhiTranslate="artWorkApp.multimedia.totalValoration">Total Valoration</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="type"><span jhiTranslate="artWorkApp.multimedia.type">Type</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="description"><span jhiTranslate="artWorkApp.multimedia.description">Description</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="user.login"><span jhiTranslate="artWorkApp.multimedia.user">User</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="album.name"><span jhiTranslate="artWorkApp.multimedia.album">Album</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let multimedia of multimedias ;trackBy: trackId">
+                <td><a [routerLink]="['../multimedia', multimedia.id ]">{{multimedia.id}}</a></td>
+                <td>{{multimedia.title}}</td>
+                <td>
+                    <a *ngIf="multimedia.image" (click)="openFile(multimedia.imageContentType, multimedia.image)">
+                        <img [src]="'data:' + multimedia.imageContentType + ';base64,' + multimedia.image" style="max-height: 30px;" alt="multimedia image"/>
+                    </a>
+                    <span *ngIf="multimedia.image">{{multimedia.imageContentType}}, {{byteSize(multimedia.image)}}</span>
+                </td>
+                <td>{{multimedia.url}}</td>
+                <td>{{multimedia.urlShare}}</td>
+                <td>{{multimedia.time | date:'medium'}}</td>
+                <td>{{multimedia.tags}}</td>
+                <td>{{multimedia.totalValoration}}</td>
+                <td jhiTranslate="{{'artWorkApp.Type.' + multimedia.type}}">{{multimedia.type}}</td>
+                <td>
+                    <a *ngIf="multimedia.description" (click)="openFile(multimedia.descriptionContentType, multimedia.description)" jhiTranslate="entity.action.open">open</a>
+                    <span *ngIf="multimedia.description">{{multimedia.descriptionContentType}}, {{byteSize(multimedia.description)}}</span>
+                </td>
+                <td>
+                    {{multimedia.user?.login}}
+                </td>
+                <td>
+                    <div *ngIf="multimedia.album">
+                        <a [routerLink]="['../album', multimedia.album?.id ]" >{{multimedia.album?.name}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../multimedia', multimedia.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'multimedia/'+ multimedia.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'multimedia/'+ multimedia.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity ReasonReport.
+    -->
+    <changeSet id="20171024111754-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="report_id"
+                                 baseTableName="reason_report"
+                                 constraintName="fk_reason_report_report_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="report"/>
+
+    </changeSet>
+</databaseChangeLog>

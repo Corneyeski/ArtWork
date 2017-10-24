@@ -1,0 +1,26 @@
+{
+    "artWorkApp": {
+        "connection" : {
+            "home": {
+                "title": "Connections",
+                "createLabel": "Crear nuevo Connection",
+                "createOrEditLabel": "Crear o editar Connection"
+            },
+            "created": "Un nuevo Connection ha sido creado con el identificador {{ param }}",
+            "updated": "Un Connection ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Connection ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Connection {{ id }}?"
+            },
+            "detail": {
+                "title": "Connection"
+            },
+            "acepted": "Acepted",
+            "title": "Title",
+            "message": "Message",
+            "time": "Time",
+            "sender": "Sender",
+            "receiver": "Receiver"
+        }
+    }
+}

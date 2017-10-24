@@ -1,0 +1,35 @@
+
+<div *ngIf="commentLike">
+    <h2><span jhiTranslate="artWorkApp.commentLike.detail.title">Comment Like</span> {{commentLike.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="artWorkApp.commentLike.time">Time</span></dt>
+        <dd>
+            <span>{{commentLike.time | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.commentLike.user">User</span></dt>
+        <dd>
+            {{commentLike.user?.id}}
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.commentLike.comment">Comment</span></dt>
+        <dd>
+            <div *ngIf="commentLike.comment">
+                <a [routerLink]="['/comment', commentLike.comment?.id]">{{commentLike.comment?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'comment-like/'+ commentLike.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,64 @@
+<div>
+    <h2>
+        <span jhiTranslate="artWorkApp.experience.home.title">Experiences</span>
+        <button class="btn btn-primary float-right jh-create-entity create-experience" [routerLink]="['/', { outlets: { popup: ['experience-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="artWorkApp.experience.home.createLabel">
+            Create new Experience
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="experiences">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="artWorkApp.experience.startYear">Start Year</span></th>
+            <th><span jhiTranslate="artWorkApp.experience.endingYear">Ending Year</span></th>
+            <th><span jhiTranslate="artWorkApp.experience.name">Name</span></th>
+            <th><span jhiTranslate="artWorkApp.experience.company">Company</span></th>
+            <th><span jhiTranslate="artWorkApp.experience.competitions">Competitions</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let experience of experiences ;trackBy: trackId">
+                <td><a [routerLink]="['../experience', experience.id ]">{{experience.id}}</a></td>
+                <td>{{experience.startYear}}</td>
+                <td>{{experience.endingYear}}</td>
+                <td>{{experience.name}}</td>
+                <td>{{experience.company}}</td>
+                <td>{{experience.competitions}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../experience', experience.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'experience/'+ experience.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'experience/'+ experience.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

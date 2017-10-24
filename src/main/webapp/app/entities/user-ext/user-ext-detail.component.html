@@ -1,0 +1,101 @@
+
+<div *ngIf="userExt">
+    <h2><span jhiTranslate="artWorkApp.userExt.detail.title">User Ext</span> {{userExt.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="artWorkApp.userExt.birthdate">Birthdate</span></dt>
+        <dd>
+            <span>{{userExt.birthdate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userExt.image">Image</span></dt>
+        <dd>
+            <div *ngIf="userExt.image">
+                <a (click)="openFile(userExt.imageContentType, userExt.image)">
+                    <img [src]="'data:' + userExt.imageContentType + ';base64,' + userExt.image" style="max-width: 100%;" alt="userExt image"/>
+                </a>
+                {{userExt.imageContentType}}, {{byteSize(userExt.image)}}
+            </div>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userExt.phone">Phone</span></dt>
+        <dd>
+            <span>{{userExt.phone}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userExt.kind">Kind</span></dt>
+        <dd>
+            <span>{{userExt.kind}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userExt.tags">Tags</span></dt>
+        <dd>
+            <span>{{userExt.tags}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userExt.address">Address</span></dt>
+        <dd>
+            <span>{{userExt.address}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userExt.popular">Popular</span></dt>
+        <dd>
+            <span>{{userExt.popular}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userExt.companyPoints">Company Points</span></dt>
+        <dd>
+            <span>{{userExt.companyPoints}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userExt.validated">Validated</span></dt>
+        <dd>
+            <span>{{userExt.validated}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userExt.age">Age</span></dt>
+        <dd>
+            <span>{{userExt.age}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userExt.working">Working</span></dt>
+        <dd>
+            <span>{{userExt.working}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userExt.theme">Theme</span></dt>
+        <dd>
+            <span jhiTranslate="{{'artWorkApp.Theme.' + userExt.theme}}">{{userExt.theme}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userExt.resume">Resume</span></dt>
+        <dd>
+            <div *ngIf="userExt.resume">
+                <a (click)="openFile(userExt.resumeContentType, userExt.resume)" jhiTranslate="entity.action.open">open</a>
+                {{userExt.resumeContentType}}, {{byteSize(userExt.resume)}}
+            </div>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userExt.user">User</span></dt>
+        <dd>
+            {{userExt.user?.login}}
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userExt.city">City</span></dt>
+        <dd>
+            <div *ngIf="userExt.city">
+                <a [routerLink]="['/city', userExt.city?.id]">{{userExt.city?.name}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userExt.language">Language</span></dt>
+        <dd>
+            <div *ngIf="userExt.language">
+                <a [routerLink]="['/language', userExt.language?.id]">{{userExt.language?.name}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.userExt.workingOn">Working On</span></dt>
+        <dd>
+            {{userExt.workingOn?.login}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'user-ext/'+ userExt.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

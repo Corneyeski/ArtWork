@@ -41,6 +41,32 @@ public class CacheConfiguration {
             cm.createCache(artwork.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(artwork.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(artwork.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(artwork.domain.UserExt.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Tool.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Tool.class.getName() + ".users", jcacheConfiguration);
+            cm.createCache(artwork.domain.ResumeCreation.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Language.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Training.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Experience.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.PricesT.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Connection.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Following.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Offer.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Offer.class.getName() + ".users", jcacheConfiguration);
+            cm.createCache(artwork.domain.Multimedia.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Album.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Album.class.getName() + ".multimedias", jcacheConfiguration);
+            cm.createCache(artwork.domain.Valoration.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Conversation.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Message.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.UserProfileValoration.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Report.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.ReasonReport.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Blocked.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.CommentLike.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Comment.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.City.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Country.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

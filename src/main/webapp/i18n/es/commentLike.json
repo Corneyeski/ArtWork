@@ -1,0 +1,23 @@
+{
+    "artWorkApp": {
+        "commentLike" : {
+            "home": {
+                "title": "Comment Likes",
+                "createLabel": "Crear nuevo Comment Like",
+                "createOrEditLabel": "Crear o editar Comment Like"
+            },
+            "created": "Un nuevo Comment Like ha sido creado con el identificador {{ param }}",
+            "updated": "Un Comment Like ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Comment Like ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Comment Like {{ id }}?"
+            },
+            "detail": {
+                "title": "Comment Like"
+            },
+            "time": "Time",
+            "user": "User",
+            "comment": "Comment"
+        }
+    }
+}

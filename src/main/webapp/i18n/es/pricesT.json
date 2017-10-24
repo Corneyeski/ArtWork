@@ -1,0 +1,24 @@
+{
+    "artWorkApp": {
+        "pricesT" : {
+            "home": {
+                "title": "Prices TS",
+                "createLabel": "Crear nuevo Prices T",
+                "createOrEditLabel": "Crear o editar Prices T"
+            },
+            "created": "Un nuevo Prices T ha sido creado con el identificador {{ param }}",
+            "updated": "Un Prices T ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Prices T ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Prices T {{ id }}?"
+            },
+            "detail": {
+                "title": "Prices T"
+            },
+            "phone": "Phone",
+            "name": "Name",
+            "city": "City",
+            "tool": "Tool"
+        }
+    }
+}

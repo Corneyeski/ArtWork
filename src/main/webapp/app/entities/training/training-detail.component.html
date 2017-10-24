@@ -1,0 +1,44 @@
+
+<div *ngIf="training">
+    <h2><span jhiTranslate="artWorkApp.training.detail.title">Training</span> {{training.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="artWorkApp.training.startYear">Start Year</span></dt>
+        <dd>
+            <span>{{training.startYear}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.training.endingYear">Ending Year</span></dt>
+        <dd>
+            <span>{{training.endingYear}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.training.degree">Degree</span></dt>
+        <dd>
+            <span>{{training.degree}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.training.studyCenter">Study Center</span></dt>
+        <dd>
+            <span>{{training.studyCenter}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.training.competitions">Competitions</span></dt>
+        <dd>
+            <div *ngIf="training.competitions">
+                <a (click)="openFile(training.competitionsContentType, training.competitions)" jhiTranslate="entity.action.open">open</a>
+                {{training.competitionsContentType}}, {{byteSize(training.competitions)}}
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'training/'+ training.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,39 @@
+
+<div *ngIf="valoration">
+    <h2><span jhiTranslate="artWorkApp.valoration.detail.title">Valoration</span> {{valoration.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="artWorkApp.valoration.mark">Mark</span></dt>
+        <dd>
+            <span>{{valoration.mark}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.valoration.time">Time</span></dt>
+        <dd>
+            <span>{{valoration.time | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.valoration.user">User</span></dt>
+        <dd>
+            {{valoration.user?.login}}
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.valoration.multimedia">Multimedia</span></dt>
+        <dd>
+            <div *ngIf="valoration.multimedia">
+                <a [routerLink]="['/multimedia', valoration.multimedia?.id]">{{valoration.multimedia?.title}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'valoration/'+ valoration.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

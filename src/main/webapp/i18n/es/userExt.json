@@ -1,0 +1,37 @@
+{
+    "artWorkApp": {
+        "userExt" : {
+            "home": {
+                "title": "User Exts",
+                "createLabel": "Crear nuevo User Ext",
+                "createOrEditLabel": "Crear o editar User Ext"
+            },
+            "created": "Un nuevo User Ext ha sido creado con el identificador {{ param }}",
+            "updated": "Un User Ext ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un User Ext ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar User Ext {{ id }}?"
+            },
+            "detail": {
+                "title": "User Ext"
+            },
+            "birthdate": "Birthdate",
+            "image": "Image",
+            "phone": "Phone",
+            "kind": "Kind",
+            "tags": "Tags",
+            "address": "Address",
+            "popular": "Popular",
+            "companyPoints": "Company Points",
+            "validated": "Validated",
+            "age": "Age",
+            "working": "Working",
+            "theme": "Theme",
+            "resume": "Resume",
+            "user": "User",
+            "city": "City",
+            "language": "Language",
+            "workingOn": "Working On"
+        }
+    }
+}

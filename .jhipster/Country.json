@@ -1,0 +1,26 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "city",
+            "otherEntityName": "city",
+            "otherEntityField": "name"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "totalUsers",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20171024111759",
+    "entityTableName": "country",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no"
+}

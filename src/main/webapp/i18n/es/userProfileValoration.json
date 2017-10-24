@@ -1,0 +1,24 @@
+{
+    "artWorkApp": {
+        "userProfileValoration" : {
+            "home": {
+                "title": "User Profile Valorations",
+                "createLabel": "Crear nuevo User Profile Valoration",
+                "createOrEditLabel": "Crear o editar User Profile Valoration"
+            },
+            "created": "Un nuevo User Profile Valoration ha sido creado con el identificador {{ param }}",
+            "updated": "Un User Profile Valoration ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un User Profile Valoration ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar User Profile Valoration {{ id }}?"
+            },
+            "detail": {
+                "title": "User Profile Valoration"
+            },
+            "value": "Value",
+            "comments": "Comments",
+            "valuator": "Valuator",
+            "valuated": "Valuated"
+        }
+    }
+}

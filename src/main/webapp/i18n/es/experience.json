@@ -1,0 +1,25 @@
+{
+    "artWorkApp": {
+        "experience" : {
+            "home": {
+                "title": "Experiences",
+                "createLabel": "Crear nuevo Experience",
+                "createOrEditLabel": "Crear o editar Experience"
+            },
+            "created": "Un nuevo Experience ha sido creado con el identificador {{ param }}",
+            "updated": "Un Experience ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Experience ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Experience {{ id }}?"
+            },
+            "detail": {
+                "title": "Experience"
+            },
+            "startYear": "Start Year",
+            "endingYear": "Ending Year",
+            "name": "Name",
+            "company": "Company",
+            "competitions": "Competitions"
+        }
+    }
+}

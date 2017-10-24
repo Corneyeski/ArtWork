@@ -1,0 +1,41 @@
+
+<div *ngIf="conversation">
+    <h2><span jhiTranslate="artWorkApp.conversation.detail.title">Conversation</span> {{conversation.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="artWorkApp.conversation.name">Name</span></dt>
+        <dd>
+            <span>{{conversation.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.conversation.time">Time</span></dt>
+        <dd>
+            <span>{{conversation.time | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.conversation.deleted">Deleted</span></dt>
+        <dd>
+            <span>{{conversation.deleted}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.conversation.userOne">User One</span></dt>
+        <dd>
+            {{conversation.userOne?.login}}
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.conversation.userTwo">User Two</span></dt>
+        <dd>
+            {{conversation.userTwo?.login}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'conversation/'+ conversation.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

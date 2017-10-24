@@ -1,0 +1,32 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "tool",
+            "otherEntityName": "tool",
+            "otherEntityField": "name",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "pricesT"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "phone",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "city",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20171024111743",
+    "entityTableName": "prices_t",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no"
+}

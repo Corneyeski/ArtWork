@@ -1,0 +1,23 @@
+{
+    "artWorkApp": {
+        "reasonReport" : {
+            "home": {
+                "title": "Reason Reports",
+                "createLabel": "Crear nuevo Reason Report",
+                "createOrEditLabel": "Crear o editar Reason Report"
+            },
+            "created": "Un nuevo Reason Report ha sido creado con el identificador {{ param }}",
+            "updated": "Un Reason Report ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Reason Report ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Reason Report {{ id }}?"
+            },
+            "detail": {
+                "title": "Reason Report"
+            },
+            "title": "Title",
+            "reason": "Reason",
+            "report": "Report"
+        }
+    }
+}

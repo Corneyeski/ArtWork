@@ -1,0 +1,29 @@
+
+<div *ngIf="language">
+    <h2><span jhiTranslate="artWorkApp.language.detail.title">Language</span> {{language.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="artWorkApp.language.code">Code</span></dt>
+        <dd>
+            <span>{{language.code}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.language.name">Name</span></dt>
+        <dd>
+            <span>{{language.name}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'language/'+ language.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

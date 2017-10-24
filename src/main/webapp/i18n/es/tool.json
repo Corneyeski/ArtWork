@@ -1,0 +1,26 @@
+{
+    "artWorkApp": {
+        "tool" : {
+            "home": {
+                "title": "Tools",
+                "createLabel": "Crear nuevo Tool",
+                "createOrEditLabel": "Crear o editar Tool"
+            },
+            "created": "Un nuevo Tool ha sido creado con el identificador {{ param }}",
+            "updated": "Un Tool ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Tool ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Tool {{ id }}?"
+            },
+            "detail": {
+                "title": "Tool"
+            },
+            "active": "Active",
+            "time": "Time",
+            "name": "Name",
+            "description": "Description",
+            "type": "Type",
+            "user": "User"
+        }
+    }
+}

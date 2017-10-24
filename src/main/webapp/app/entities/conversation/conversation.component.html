@@ -1,0 +1,68 @@
+<div>
+    <h2>
+        <span jhiTranslate="artWorkApp.conversation.home.title">Conversations</span>
+        <button class="btn btn-primary float-right jh-create-entity create-conversation" [routerLink]="['/', { outlets: { popup: ['conversation-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="artWorkApp.conversation.home.createLabel">
+            Create new Conversation
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="conversations">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="artWorkApp.conversation.name">Name</span></th>
+            <th><span jhiTranslate="artWorkApp.conversation.time">Time</span></th>
+            <th><span jhiTranslate="artWorkApp.conversation.deleted">Deleted</span></th>
+            <th><span jhiTranslate="artWorkApp.conversation.userOne">User One</span></th>
+            <th><span jhiTranslate="artWorkApp.conversation.userTwo">User Two</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let conversation of conversations ;trackBy: trackId">
+                <td><a [routerLink]="['../conversation', conversation.id ]">{{conversation.id}}</a></td>
+                <td>{{conversation.name}}</td>
+                <td>{{conversation.time | date:'medium'}}</td>
+                <td>{{conversation.deleted}}</td>
+                <td>
+                    {{conversation.userOne?.login}}
+                </td>
+                <td>
+                    {{conversation.userTwo?.login}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../conversation', conversation.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'conversation/'+ conversation.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'conversation/'+ conversation.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

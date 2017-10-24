@@ -1,0 +1,35 @@
+
+<div *ngIf="country">
+    <h2><span jhiTranslate="artWorkApp.country.detail.title">Country</span> {{country.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="artWorkApp.country.name">Name</span></dt>
+        <dd>
+            <span>{{country.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.country.totalUsers">Total Users</span></dt>
+        <dd>
+            <span>{{country.totalUsers}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.country.city">City</span></dt>
+        <dd>
+            <div *ngIf="country.city">
+                <a [routerLink]="['/city', country.city?.id]">{{country.city?.name}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'country/'+ country.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

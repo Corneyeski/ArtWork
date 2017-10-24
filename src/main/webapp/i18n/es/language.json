@@ -1,0 +1,22 @@
+{
+    "artWorkApp": {
+        "language" : {
+            "home": {
+                "title": "Languages",
+                "createLabel": "Crear nuevo Language",
+                "createOrEditLabel": "Crear o editar Language"
+            },
+            "created": "Un nuevo Language ha sido creado con el identificador {{ param }}",
+            "updated": "Un Language ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Language ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Language {{ id }}?"
+            },
+            "detail": {
+                "title": "Language"
+            },
+            "code": "Code",
+            "name": "Name"
+        }
+    }
+}

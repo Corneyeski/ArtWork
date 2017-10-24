@@ -1,0 +1,10 @@
+{
+    "artWorkApp": {
+        "Type" : {
+            "null": "",
+            "PHOTO": "PHOTO",
+            "VIDEO": "VIDEO",
+            "SONG": "SONG"
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "artWorkApp": {
+        "ToolType" : {
+            "null": "",
+            "BUTTON": "BUTTON",
+            "MODAL": "MODAL"
+        }
+    }
+}

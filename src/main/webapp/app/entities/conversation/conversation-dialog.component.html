@@ -1,0 +1,56 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myConversationLabel" jhiTranslate="artWorkApp.conversation.home.createOrEditLabel">Create or edit a Conversation</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!conversation.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="conversation.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.conversation.name" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                [(ngModel)]="conversation.name"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.conversation.time" for="field_time">Time</label>
+            <div class="d-flex">
+                <input id="field_time" type="datetime-local" class="form-control" name="time" [(ngModel)]="conversation.time"
+                  />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.conversation.deleted" for="field_deleted">Deleted</label>
+            <input type="checkbox" class="form-control" name="deleted" id="field_deleted"
+                [(ngModel)]="conversation.deleted"  />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.conversation.userOne" for="field_userOne">User One</label>
+            <select class="form-control" id="field_userOne" name="userOne" [(ngModel)]="conversation.userOne" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="userOption.id === conversation.userOne?.id ? conversation.userOne : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.conversation.userTwo" for="field_userTwo">User Two</label>
+            <select class="form-control" id="field_userTwo" name="userTwo" [(ngModel)]="conversation.userTwo" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="userOption.id === conversation.userTwo?.id ? conversation.userTwo : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,23 @@
+{
+    "artWorkApp": {
+        "blocked" : {
+            "home": {
+                "title": "Blockeds",
+                "createLabel": "Create a new Blocked",
+                "createOrEditLabel": "Create or edit a Blocked"
+            },
+            "created": "A new Blocked is created with identifier {{ param }}",
+            "updated": "A Blocked is updated with identifier {{ param }}",
+            "deleted": "A Blocked is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Blocked {{ id }}?"
+            },
+            "detail": {
+                "title": "Blocked"
+            },
+            "time": "Time",
+            "block": "Block",
+            "blocked": "Blocked"
+        }
+    }
+}

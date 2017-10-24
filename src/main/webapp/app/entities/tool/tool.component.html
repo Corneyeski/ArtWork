@@ -1,0 +1,70 @@
+<div>
+    <h2>
+        <span jhiTranslate="artWorkApp.tool.home.title">Tools</span>
+        <button class="btn btn-primary float-right jh-create-entity create-tool" [routerLink]="['/', { outlets: { popup: ['tool-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="artWorkApp.tool.home.createLabel">
+            Create new Tool
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="tools">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="artWorkApp.tool.active">Active</span></th>
+            <th><span jhiTranslate="artWorkApp.tool.time">Time</span></th>
+            <th><span jhiTranslate="artWorkApp.tool.name">Name</span></th>
+            <th><span jhiTranslate="artWorkApp.tool.description">Description</span></th>
+            <th><span jhiTranslate="artWorkApp.tool.type">Type</span></th>
+            <th><span jhiTranslate="artWorkApp.tool.user">User</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let tool of tools ;trackBy: trackId">
+                <td><a [routerLink]="['../tool', tool.id ]">{{tool.id}}</a></td>
+                <td>{{tool.active}}</td>
+                <td>{{tool.time | date:'medium'}}</td>
+                <td>{{tool.name}}</td>
+                <td>{{tool.description}}</td>
+                <td jhiTranslate="{{'artWorkApp.ToolType.' + tool.type}}">{{tool.type}}</td>
+                <td>
+                    <span *ngFor="let user of tool.users; let last = last">
+                            {{user.login}}{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../tool', tool.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'tool/'+ tool.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'tool/'+ tool.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

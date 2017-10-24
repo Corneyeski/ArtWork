@@ -1,0 +1,23 @@
+{
+    "artWorkApp": {
+        "following" : {
+            "home": {
+                "title": "Followings",
+                "createLabel": "Create a new Following",
+                "createOrEditLabel": "Create or edit a Following"
+            },
+            "created": "A new Following is created with identifier {{ param }}",
+            "updated": "A Following is updated with identifier {{ param }}",
+            "deleted": "A Following is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Following {{ id }}?"
+            },
+            "detail": {
+                "title": "Following"
+            },
+            "time": "Time",
+            "follower": "Follower",
+            "followed": "Followed"
+        }
+    }
+}

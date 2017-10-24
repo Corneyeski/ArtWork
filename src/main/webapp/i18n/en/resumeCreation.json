@@ -1,0 +1,33 @@
+{
+    "artWorkApp": {
+        "resumeCreation" : {
+            "home": {
+                "title": "Resume Creations",
+                "createLabel": "Create a new Resume Creation",
+                "createOrEditLabel": "Create or edit a Resume Creation"
+            },
+            "created": "A new Resume Creation is created with identifier {{ param }}",
+            "updated": "A Resume Creation is updated with identifier {{ param }}",
+            "deleted": "A Resume Creation is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Resume Creation {{ id }}?"
+            },
+            "detail": {
+                "title": "Resume Creation"
+            },
+            "name": "Name",
+            "lastName": "Last Name",
+            "birthdate": "Birthdate",
+            "photo": "Photo",
+            "email": "Email",
+            "phone": "Phone",
+            "address": "Address",
+            "skills": "Skills",
+            "tool": "Tool",
+            "language": "Language",
+            "city": "City",
+            "training": "Training",
+            "experience": "Experience"
+        }
+    }
+}

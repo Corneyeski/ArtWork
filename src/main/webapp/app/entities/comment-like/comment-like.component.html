@@ -1,0 +1,66 @@
+<div>
+    <h2>
+        <span jhiTranslate="artWorkApp.commentLike.home.title">Comment Likes</span>
+        <button class="btn btn-primary float-right jh-create-entity create-comment-like" [routerLink]="['/', { outlets: { popup: ['comment-like-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="artWorkApp.commentLike.home.createLabel">
+            Create new Comment Like
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="commentLikes">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="artWorkApp.commentLike.time">Time</span></th>
+            <th><span jhiTranslate="artWorkApp.commentLike.user">User</span></th>
+            <th><span jhiTranslate="artWorkApp.commentLike.comment">Comment</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let commentLike of commentLikes ;trackBy: trackId">
+                <td><a [routerLink]="['../comment-like', commentLike.id ]">{{commentLike.id}}</a></td>
+                <td>{{commentLike.time | date:'medium'}}</td>
+                <td>
+                    {{commentLike.user?.id}}
+                </td>
+                <td>
+                    <div *ngIf="commentLike.comment">
+                        <a [routerLink]="['../comment', commentLike.comment?.id ]" >{{commentLike.comment?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../comment-like', commentLike.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'comment-like/'+ commentLike.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'comment-like/'+ commentLike.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+
+<div *ngIf="comment">
+    <h2><span jhiTranslate="artWorkApp.comment.detail.title">Comment</span> {{comment.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="artWorkApp.comment.comment">Comment</span></dt>
+        <dd>
+            <span>{{comment.comment}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.comment.time">Time</span></dt>
+        <dd>
+            <span>{{comment.time | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.comment.likes">Likes</span></dt>
+        <dd>
+            <span>{{comment.likes}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.comment.multimedia">Multimedia</span></dt>
+        <dd>
+            <div *ngIf="comment.multimedia">
+                <a [routerLink]="['/multimedia', comment.multimedia?.id]">{{comment.multimedia?.title}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.comment.response">Response</span></dt>
+        <dd>
+            <div *ngIf="comment.response">
+                <a [routerLink]="['/comment', comment.response?.id]">{{comment.response?.title}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.comment.user">User</span></dt>
+        <dd>
+            {{comment.user?.login}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'comment/'+ comment.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

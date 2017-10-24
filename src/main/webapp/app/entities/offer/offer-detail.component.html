@@ -1,0 +1,67 @@
+
+<div *ngIf="offer">
+    <h2><span jhiTranslate="artWorkApp.offer.detail.title">Offer</span> {{offer.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="artWorkApp.offer.name">Name</span></dt>
+        <dd>
+            <span>{{offer.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.offer.description">Description</span></dt>
+        <dd>
+            <span>{{offer.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.offer.time">Time</span></dt>
+        <dd>
+            <span>{{offer.time | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.offer.salary">Salary</span></dt>
+        <dd>
+            <span>{{offer.salary}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.offer.duration">Duration</span></dt>
+        <dd>
+            <span>{{offer.duration}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.offer.status">Status</span></dt>
+        <dd>
+            <span>{{offer.status}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.offer.tags">Tags</span></dt>
+        <dd>
+            <span>{{offer.tags}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.offer.location">Location</span></dt>
+        <dd>
+            <span>{{offer.location}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.offer.contract">Contract</span></dt>
+        <dd>
+            <span>{{offer.contract}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.offer.creator">Creator</span></dt>
+        <dd>
+            {{offer.creator?.login}}
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.offer.user">User</span></dt>
+        <dd>
+            <span *ngFor="let user of offer.users; let last = last">
+                {{user.login}}{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'offer/'+ offer.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

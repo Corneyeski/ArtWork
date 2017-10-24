@@ -1,0 +1,64 @@
+<div>
+    <h2>
+        <span jhiTranslate="artWorkApp.blocked.home.title">Blockeds</span>
+        <button class="btn btn-primary float-right jh-create-entity create-blocked" [routerLink]="['/', { outlets: { popup: ['blocked-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="artWorkApp.blocked.home.createLabel">
+            Create new Blocked
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="blockeds">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="artWorkApp.blocked.time">Time</span></th>
+            <th><span jhiTranslate="artWorkApp.blocked.block">Block</span></th>
+            <th><span jhiTranslate="artWorkApp.blocked.blocked">Blocked</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let blocked of blockeds ;trackBy: trackId">
+                <td><a [routerLink]="['../blocked', blocked.id ]">{{blocked.id}}</a></td>
+                <td>{{blocked.time | date:'medium'}}</td>
+                <td>
+                    {{blocked.block?.login}}
+                </td>
+                <td>
+                    {{blocked.blocked?.login}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../blocked', blocked.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'blocked/'+ blocked.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'blocked/'+ blocked.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

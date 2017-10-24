@@ -1,0 +1,25 @@
+{
+    "artWorkApp": {
+        "conversation" : {
+            "home": {
+                "title": "Conversations",
+                "createLabel": "Crear nuevo Conversation",
+                "createOrEditLabel": "Crear o editar Conversation"
+            },
+            "created": "Un nuevo Conversation ha sido creado con el identificador {{ param }}",
+            "updated": "Un Conversation ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Conversation ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Conversation {{ id }}?"
+            },
+            "detail": {
+                "title": "Conversation"
+            },
+            "name": "Name",
+            "time": "Time",
+            "deleted": "Deleted",
+            "userOne": "User One",
+            "userTwo": "User Two"
+        }
+    }
+}

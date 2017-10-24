@@ -1,0 +1,108 @@
+<div>
+    <h2>
+        <span jhiTranslate="artWorkApp.userExt.home.title">User Exts</span>
+        <button class="btn btn-primary float-right jh-create-entity create-user-ext" [routerLink]="['/', { outlets: { popup: ['user-ext-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="artWorkApp.userExt.home.createLabel">
+            Create new User Ext
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="userExts">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.birthdate">Birthdate</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.image">Image</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.phone">Phone</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.kind">Kind</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.tags">Tags</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.address">Address</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.popular">Popular</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.companyPoints">Company Points</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.validated">Validated</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.age">Age</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.working">Working</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.theme">Theme</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.resume">Resume</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.user">User</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.city">City</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.language">Language</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.workingOn">Working On</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let userExt of userExts ;trackBy: trackId">
+                <td><a [routerLink]="['../user-ext', userExt.id ]">{{userExt.id}}</a></td>
+                <td>{{userExt.birthdate | date:'mediumDate'}}</td>
+                <td>
+                    <a *ngIf="userExt.image" (click)="openFile(userExt.imageContentType, userExt.image)">
+                        <img [src]="'data:' + userExt.imageContentType + ';base64,' + userExt.image" style="max-height: 30px;" alt="userExt image"/>
+                    </a>
+                    <span *ngIf="userExt.image">{{userExt.imageContentType}}, {{byteSize(userExt.image)}}</span>
+                </td>
+                <td>{{userExt.phone}}</td>
+                <td>{{userExt.kind}}</td>
+                <td>{{userExt.tags}}</td>
+                <td>{{userExt.address}}</td>
+                <td>{{userExt.popular}}</td>
+                <td>{{userExt.companyPoints}}</td>
+                <td>{{userExt.validated}}</td>
+                <td>{{userExt.age}}</td>
+                <td>{{userExt.working}}</td>
+                <td jhiTranslate="{{'artWorkApp.Theme.' + userExt.theme}}">{{userExt.theme}}</td>
+                <td>
+                    <a *ngIf="userExt.resume" (click)="openFile(userExt.resumeContentType, userExt.resume)" jhiTranslate="entity.action.open">open</a>
+                    <span *ngIf="userExt.resume">{{userExt.resumeContentType}}, {{byteSize(userExt.resume)}}</span>
+                </td>
+                <td>
+                    {{userExt.user?.login}}
+                </td>
+                <td>
+                    <div *ngIf="userExt.city">
+                        <a [routerLink]="['../city', userExt.city?.id ]" >{{userExt.city?.name}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="userExt.language">
+                        <a [routerLink]="['../language', userExt.language?.id ]" >{{userExt.language?.name}}</a>
+                    </div>
+                </td>
+                <td>
+                    {{userExt.workingOn?.login}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../user-ext', userExt.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'user-ext/'+ userExt.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'user-ext/'+ userExt.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

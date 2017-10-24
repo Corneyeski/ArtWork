@@ -1,0 +1,22 @@
+{
+    "artWorkApp": {
+        "city" : {
+            "home": {
+                "title": "Cities",
+                "createLabel": "Crear nuevo City",
+                "createOrEditLabel": "Crear o editar City"
+            },
+            "created": "Un nuevo City ha sido creado con el identificador {{ param }}",
+            "updated": "Un City ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un City ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar City {{ id }}?"
+            },
+            "detail": {
+                "title": "City"
+            },
+            "name": "Name",
+            "totalUsers": "Total Users"
+        }
+    }
+}

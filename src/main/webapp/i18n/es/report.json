@@ -1,0 +1,26 @@
+{
+    "artWorkApp": {
+        "report" : {
+            "home": {
+                "title": "Reports",
+                "createLabel": "Crear nuevo Report",
+                "createOrEditLabel": "Crear o editar Report"
+            },
+            "created": "Un nuevo Report ha sido creado con el identificador {{ param }}",
+            "updated": "Un Report ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Report ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Report {{ id }}?"
+            },
+            "detail": {
+                "title": "Report"
+            },
+            "title": "Title",
+            "reason": "Reason",
+            "reporter": "Reporter",
+            "reported": "Reported",
+            "offer": "Offer",
+            "multimedia": "Multimedia"
+        }
+    }
+}

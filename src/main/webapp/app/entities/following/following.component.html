@@ -1,0 +1,64 @@
+<div>
+    <h2>
+        <span jhiTranslate="artWorkApp.following.home.title">Followings</span>
+        <button class="btn btn-primary float-right jh-create-entity create-following" [routerLink]="['/', { outlets: { popup: ['following-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="artWorkApp.following.home.createLabel">
+            Create new Following
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="followings">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="time"><span jhiTranslate="artWorkApp.following.time">Time</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="follower.login"><span jhiTranslate="artWorkApp.following.follower">Follower</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="followed.login"><span jhiTranslate="artWorkApp.following.followed">Followed</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let following of followings ;trackBy: trackId">
+                <td><a [routerLink]="['../following', following.id ]">{{following.id}}</a></td>
+                <td>{{following.time | date:'medium'}}</td>
+                <td>
+                    {{following.follower?.login}}
+                </td>
+                <td>
+                    {{following.followed?.login}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../following', following.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'following/'+ following.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'following/'+ following.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

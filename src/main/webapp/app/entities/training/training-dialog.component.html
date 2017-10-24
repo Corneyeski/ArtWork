@@ -1,0 +1,63 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myTrainingLabel" jhiTranslate="artWorkApp.training.home.createOrEditLabel">Create or edit a Training</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!training.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="training.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.training.startYear" for="field_startYear">Start Year</label>
+            <input type="number" class="form-control" name="startYear" id="field_startYear"
+                [(ngModel)]="training.startYear"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.training.endingYear" for="field_endingYear">Ending Year</label>
+            <input type="number" class="form-control" name="endingYear" id="field_endingYear"
+                [(ngModel)]="training.endingYear"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.training.degree" for="field_degree">Degree</label>
+            <input type="text" class="form-control" name="degree" id="field_degree"
+                [(ngModel)]="training.degree"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.training.studyCenter" for="field_studyCenter">Study Center</label>
+            <input type="text" class="form-control" name="studyCenter" id="field_studyCenter"
+                [(ngModel)]="training.studyCenter"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.training.competitions" for="field_competitions">Competitions</label>
+            <div>
+                <div *ngIf="training.competitions" class="form-text text-danger clearfix">
+                    <a class="pull-left" (click)="openFile(training.competitionsContentType, training.competitions)" jhiTranslate="entity.action.open">open</a><br>
+                    <span class="pull-left">{{training.competitionsContentType}}, {{byteSize(training.competitions)}}</span>
+                    <button type="button" (click)="training.competitions=null;training.competitionsContentType=null;"
+                            class="btn btn-secondary btn-xs pull-right">
+                        <span class="fa fa-times"></span>
+                    </button>
+                </div>
+                <input type="file" id="file_competitions" (change)="setFileData($event, training, 'competitions', false)" jhiTranslate="entity.action.addblob"/>
+            </div>
+            <input type="hidden" class="form-control" name="competitions" id="field_competitions"
+                [(ngModel)]="training.competitions"  />
+            <input type="hidden" class="form-control" name="competitionsContentType" id="field_competitionsContentType"
+                [(ngModel)]="training.competitionsContentType" />
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,49 @@
+
+<div *ngIf="report">
+    <h2><span jhiTranslate="artWorkApp.report.detail.title">Report</span> {{report.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="artWorkApp.report.title">Title</span></dt>
+        <dd>
+            <span>{{report.title}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.report.reason">Reason</span></dt>
+        <dd>
+            <span>{{report.reason}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.report.reporter">Reporter</span></dt>
+        <dd>
+            {{report.reporter?.login}}
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.report.reported">Reported</span></dt>
+        <dd>
+            {{report.reported?.login}}
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.report.offer">Offer</span></dt>
+        <dd>
+            <div *ngIf="report.offer">
+                <a [routerLink]="['/offer', report.offer?.id]">{{report.offer?.login}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.report.multimedia">Multimedia</span></dt>
+        <dd>
+            <div *ngIf="report.multimedia">
+                <a [routerLink]="['/multimedia', report.multimedia?.id]">{{report.multimedia?.login}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'report/'+ report.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

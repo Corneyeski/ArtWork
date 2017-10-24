@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Multimedia.
+    -->
+    <changeSet id="20171024111747-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="multimedia"
+                                 constraintName="fk_multimedia_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="album_id"
+                                 baseTableName="multimedia"
+                                 constraintName="fk_multimedia_album_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="album"/>
+
+    </changeSet>
+</databaseChangeLog>

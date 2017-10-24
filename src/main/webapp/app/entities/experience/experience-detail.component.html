@@ -1,0 +1,41 @@
+
+<div *ngIf="experience">
+    <h2><span jhiTranslate="artWorkApp.experience.detail.title">Experience</span> {{experience.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="artWorkApp.experience.startYear">Start Year</span></dt>
+        <dd>
+            <span>{{experience.startYear}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.experience.endingYear">Ending Year</span></dt>
+        <dd>
+            <span>{{experience.endingYear}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.experience.name">Name</span></dt>
+        <dd>
+            <span>{{experience.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.experience.company">Company</span></dt>
+        <dd>
+            <span>{{experience.company}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.experience.competitions">Competitions</span></dt>
+        <dd>
+            <span>{{experience.competitions}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'experience/'+ experience.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

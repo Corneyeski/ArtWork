@@ -1,0 +1,23 @@
+{
+    "artWorkApp": {
+        "country" : {
+            "home": {
+                "title": "Countries",
+                "createLabel": "Crear nuevo Country",
+                "createOrEditLabel": "Crear o editar Country"
+            },
+            "created": "Un nuevo Country ha sido creado con el identificador {{ param }}",
+            "updated": "Un Country ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Country ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Country {{ id }}?"
+            },
+            "detail": {
+                "title": "Country"
+            },
+            "name": "Name",
+            "totalUsers": "Total Users",
+            "city": "City"
+        }
+    }
+}

@@ -1,0 +1,25 @@
+{
+    "artWorkApp": {
+        "training" : {
+            "home": {
+                "title": "Trainings",
+                "createLabel": "Crear nuevo Training",
+                "createOrEditLabel": "Crear o editar Training"
+            },
+            "created": "Un nuevo Training ha sido creado con el identificador {{ param }}",
+            "updated": "Un Training ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Training ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Training {{ id }}?"
+            },
+            "detail": {
+                "title": "Training"
+            },
+            "startYear": "Start Year",
+            "endingYear": "Ending Year",
+            "degree": "Degree",
+            "studyCenter": "Study Center",
+            "competitions": "Competitions"
+        }
+    }
+}
