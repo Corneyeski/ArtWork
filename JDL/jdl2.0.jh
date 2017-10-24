@@ -1,0 +1,292 @@
+// Extension de atributos de user
+entity UserExt{
+	birthdate LocalDate,
+	image ImageBlob,
+	phone Integer,
+	kind Integer,
+	tags String,
+	address String,
+	city String,
+	popular Double min (DEFAULT_MIN) max (DEFAULT_MAX),
+	companyPoints Double min (DEFAULT_MIN) max (DEFAULT_MAX),
+	validated Boolean,
+	age Integer,
+    working Boolean,
+    theme Theme,
+    resume Blob
+}
+
+// Tema de la pagina
+enum Theme{ BLACK, WHITE, MINIMAL }
+
+// Clase padre herramienta
+entity Tool{
+	active Boolean,
+    time ZonedDateTime,
+    name String,
+    description String,
+    type ToolType
+}
+
+enum ToolType{ BUTTON, MODAL }
+
+// Clase herencia herramienta, crear curriculum
+entity ResumeCreation{
+	name String,
+	lastName String,
+	birthdate LocalDate,
+	photo ImageBlob, 
+	email String,
+	phone Integer, 
+	address String,
+	skills Blob 
+}
+
+// Clase para definir idiomas
+entity Language {
+	code String,
+	name String
+}
+
+// Clase para crear formacion
+entity Training{
+	startYear Integer, 
+	endingYear Integer,
+	degree String,
+	studyCenter String,
+	competitions Blob
+}
+
+// Clase para crear experiencia
+entity Experience{
+	startYear Integer, 
+	endingYear Integer,
+	name String,
+	company String,
+	competitions TextBlob
+}
+
+// Clase herencia herramienta, de ejemplo
+entity PricesT{
+	phone Integer, 
+	name String,
+	city String
+}
+
+// Peticion de chat
+entity Connection{
+	acepted Boolean,
+	title String,
+	message String,
+	time ZonedDateTime
+}
+
+// Tabla para relacionar los seguidores
+entity Following{
+	time ZonedDateTime
+}
+
+// Oferta creada por usuarios tipo empresa
+entity Offer{
+	name String,
+	description TextBlob,
+	time ZonedDateTime,
+	salary Double,
+	duration Double,
+	status Boolean,
+	tags String,
+	location String,
+    contract String
+}
+
+// Foto, vídeo y cancion
+entity Multimedia{
+	title String,
+	image ImageBlob,
+	url String,
+	urlShare String,
+	time ZonedDateTime,
+	tags String,
+	totalValoration Double required min (DEFAULT_MIN) max (DEFAULT_MAX),
+    type Type,
+    description Blob
+}
+
+enum Type{ PHOTO, VIDEO, SONG }
+
+// Contenedor de multimedia
+entity Album{
+	name String,
+	time ZonedDateTime
+}
+
+// Para multimedia
+entity Valoration{
+	mark Double required min (DEFAULT_MIN) max (DEFAULT_MAX),
+	time ZonedDateTime
+}
+
+// Entorno donde se envian los mensajes de los usuarios
+entity Conversation{
+	name String,
+    time ZonedDateTime,
+    deleted Boolean
+}
+
+// Mensaje que escribe el usuario
+entity Message{
+	text String,
+	attached Blob,
+	time ZonedDateTime
+}
+
+// Empresa valora a un trabajador y trabajador a empresa
+entity UserProfileValoration{
+	value Double required min (DEFAULT_MIN) max (DEFAULT_MAX),
+	comments String
+}
+
+// Reportar contenido inadecuado
+entity Report{
+	title String,
+	reason TextBlob
+}
+
+// Entidades de motivos de report por defecto
+entity ReasonReport{
+	title String,
+	reason TextBlob
+}
+
+// Bloquear usuarios
+entity Blocked{
+	time ZonedDateTime
+}
+
+// Like a comentarios
+entity CommentLike{
+	time ZonedDateTime
+}
+
+// Comentarios en publicaciones
+entity Comment{
+	comment String,
+	time ZonedDateTime,
+	likes Integer
+}
+
+// Entidad de ciudades por defecto
+entity City{
+	name String,
+	totalUsers Integer
+}
+
+// Entidad de paises por defecto
+entity Country{
+	name String,
+	totalUsers Integer
+}
+
+relationship ManyToOne{
+	//La ciudad del usuario
+	UserExt{city(name)} to City,
+
+	//La ciudad a pais
+	Country{city(name)} to City,
+
+	//El idioma del usuario
+	UserExt{language(name)} to Language,
+
+	//Idiomas curriculum
+	ResumeCreation{language(name)} to Language,
+
+	//La ciudad del curriculum
+	ResumeCreation{city(name)} to City,
+
+	//Formación y experiencia de un usuario, curriculum
+	ResumeCreation{training} to Training,
+	ResumeCreation{experience} to Experience,
+
+	//El usuario que sube el contenido
+    Multimedia{user(login)} to User,
+
+    //Valoracion de los usuarios
+    Valoration{user(login)} to User,
+    Valoration{multimedia(title)} to Multimedia,
+
+	//Report de contenido inadecuado
+    Report{reporter(login)} to User,
+    Report{reported(login)} to User,
+    Report{offer(login)} to Offer,
+    Report{multimedia(login)} to Multimedia,
+
+	//Valoracion del perfil por parte de empresa
+    UserProfileValoration{valuator(login)} to User,
+    UserProfileValoration{valuated(login)} to User,
+
+	//El que sigue y a quien sigue
+    Following{follower(login)} to User,
+    Following{followed(login)} to User,
+
+    //En la conversacion se unen los usuarios
+    //El mensaje es lo que envia el user a la conversacion
+    Conversation{userOne(login)} to User,
+    Conversation{userTwo(login)} to User,
+    Message{user(login)} to User,
+    Message{conversation(name)} to Conversation,
+
+    //Se puede bloquear usuarios
+    Blocked{block(login)} to User,
+    Blocked{blocked(login)} to User,
+
+    //Peticion de conversacion
+    Connection{sender(login)} to User,
+    Connection{receiver(login)} to User,
+
+    //Una Oferta es creada por un Usuario
+    Offer{creator(login)} to User,
+
+	//Se pueden comentar las publicaciones
+    Comment{multimedia(title)} to Multimedia,
+    Comment{comment(title)} to Comment,
+    Comment{user(login)} to User,
+
+    //Puede gustar un comentario a un usuario
+    CommentLike{user} to User,
+    CommentLike{comment} to Comment,
+    
+    //Enpresa en la que trabaja un usuario
+    UserExt{workingOn(login)} to User,
+    
+    //Lista de razones para reportar
+    ReasonReport{report(title)} to Report
+}
+
+relationship OneToMany{
+	//Un Album puede contener muchas fotos/videos/canciones
+    Album{multimedia(title)} to Multimedia{album(name)}
+}
+
+relationship OneToOne{
+	//Extension de datos del usuario
+	UserExt{user(login)} to User,
+
+    //Relaciones de las herramientas con su padre
+    PricesT{tool(name)} to Tool,
+    ResumeCreation{tool(name)} to Tool
+}
+
+relationship ManyToMany{
+	//Relacion de users a ofertas de trabajo
+    Offer{user(login)} to User{offer(name)},
+
+    //Relacion de users y tool
+    Tool{user(login)} to User{tool(name)}
+}
+
+//PARA CREAR LA TIMELINE
+paginate Multimedia, Following with infinite-scroll
+
+//VALORES POR DEFECTO
+DEFAULT_MIN = 0
+DEFAULT_MAX = 5
