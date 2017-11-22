@@ -57,12 +57,12 @@ public class Offer implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_user",
+    @JoinTable(name = "offer_user_ext",
                joinColumns = @JoinColumn(name="offers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="users_id", referencedColumnName="id"))
-    private Set<User> users = new HashSet<>();
+               inverseJoinColumns = @JoinColumn(name="user_exts_id", referencedColumnName="id"))
+    private Set<UserExt> userExts = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -201,29 +201,31 @@ public class Offer implements Serializable {
         this.creator = user;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public Set<UserExt> getUserExts() {
+        return userExts;
     }
 
-    public Offer users(Set<User> users) {
-        this.users = users;
+    public Offer userExts(Set<UserExt> userExts) {
+        this.userExts = userExts;
         return this;
     }
 
-    public Offer addUser(User user) {
-        this.users.add(user);
+    public Offer addUserExt(UserExt userExt) {
+        this.userExts.add(userExt);
+        userExt.getOffers().add(this);
         return this;
     }
 
-    public Offer removeUser(User user) {
-        this.users.remove(user);
+    public Offer removeUserExt(UserExt userExt) {
+        this.userExts.remove(userExt);
+        userExt.getOffers().remove(this);
         return this;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setUserExts(Set<UserExt> userExts) {
+        this.userExts = userExts;
     }
-    // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {

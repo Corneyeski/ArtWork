@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Rx';
-import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { Multimedia } from './multimedia.model';
@@ -29,7 +29,7 @@ export class MultimediaDialogComponent implements OnInit {
     constructor(
         public activeModal: NgbActiveModal,
         private dataUtils: JhiDataUtils,
-        private alertService: JhiAlertService,
+        private jhiAlertService: JhiAlertService,
         private multimediaService: MultimediaService,
         private userService: UserService,
         private albumService: AlbumService,
@@ -93,7 +93,7 @@ export class MultimediaDialogComponent implements OnInit {
     }
 
     private onError(error: any) {
-        this.alertService.error(error.message, null, null);
+        this.jhiAlertService.error(error.message, null, null);
     }
 
     trackUserById(index: number, item: User) {

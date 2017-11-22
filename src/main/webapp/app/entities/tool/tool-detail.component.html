@@ -24,10 +24,10 @@
         <dd>
             <span jhiTranslate="{{'artWorkApp.ToolType.' + tool.type}}">{{tool.type}}</span>
         </dd>
-        <dt><span jhiTranslate="artWorkApp.tool.user">User</span></dt>
+        <dt><span jhiTranslate="artWorkApp.tool.userExt">User Ext</span></dt>
         <dd>
-            <span *ngFor="let user of tool.users; let last = last">
-                {{user.login}}{{last ? '' : ', '}}
+            <span *ngFor="let userExt of tool.userExts; let last = last">
+                <a [routerLink]="['/user-ext', userExt?.id ]">{{userExt.login}}</a>{{last ? '' : ', '}}
             </span>
         </dd>
     </dl>

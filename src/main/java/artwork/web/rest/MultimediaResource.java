@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import artwork.domain.Multimedia;
 
 import artwork.repository.MultimediaRepository;
+import artwork.web.rest.errors.BadRequestAlertException;
 import artwork.web.rest.util.HeaderUtil;
 import artwork.web.rest.util.PaginationUtil;
 import io.swagger.annotations.ApiParam;
@@ -53,7 +54,7 @@ public class MultimediaResource {
     public ResponseEntity<Multimedia> createMultimedia(@Valid @RequestBody Multimedia multimedia) throws URISyntaxException {
         log.debug("REST request to save Multimedia : {}", multimedia);
         if (multimedia.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new multimedia cannot already have an ID")).body(null);
+            throw new BadRequestAlertException("A new multimedia cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Multimedia result = multimediaRepository.save(multimedia);
         return ResponseEntity.created(new URI("/api/multimedias/" + result.getId()))

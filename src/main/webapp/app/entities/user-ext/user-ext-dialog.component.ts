@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Rx';
-import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { UserExt } from './user-ext.model';
@@ -12,6 +12,9 @@ import { UserExtService } from './user-ext.service';
 import { User, UserService } from '../../shared';
 import { City, CityService } from '../city';
 import { Language, LanguageService } from '../language';
+import { Profession, ProfessionService } from '../profession';
+import { Offer, OfferService } from '../offer';
+import { Tool, ToolService } from '../tool';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -28,16 +31,25 @@ export class UserExtDialogComponent implements OnInit {
     cities: City[];
 
     languages: Language[];
+
+    professions: Profession[];
+
+    offers: Offer[];
+
+    tools: Tool[];
     birthdateDp: any;
 
     constructor(
         public activeModal: NgbActiveModal,
         private dataUtils: JhiDataUtils,
-        private alertService: JhiAlertService,
+        private jhiAlertService: JhiAlertService,
         private userExtService: UserExtService,
         private userService: UserService,
         private cityService: CityService,
         private languageService: LanguageService,
+        private professionService: ProfessionService,
+        private offerService: OfferService,
+        private toolService: ToolService,
         private elementRef: ElementRef,
         private eventManager: JhiEventManager
     ) {
@@ -51,6 +63,12 @@ export class UserExtDialogComponent implements OnInit {
             .subscribe((res: ResponseWrapper) => { this.cities = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.languageService.query()
             .subscribe((res: ResponseWrapper) => { this.languages = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.professionService.query()
+            .subscribe((res: ResponseWrapper) => { this.professions = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.offerService.query()
+            .subscribe((res: ResponseWrapper) => { this.offers = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.toolService.query()
+            .subscribe((res: ResponseWrapper) => { this.tools = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     byteSize(field) {
@@ -100,7 +118,7 @@ export class UserExtDialogComponent implements OnInit {
     }
 
     private onError(error: any) {
-        this.alertService.error(error.message, null, null);
+        this.jhiAlertService.error(error.message, null, null);
     }
 
     trackUserById(index: number, item: User) {
@@ -113,6 +131,29 @@ export class UserExtDialogComponent implements OnInit {
 
     trackLanguageById(index: number, item: Language) {
         return item.id;
+    }
+
+    trackProfessionById(index: number, item: Profession) {
+        return item.id;
+    }
+
+    trackOfferById(index: number, item: Offer) {
+        return item.id;
+    }
+
+    trackToolById(index: number, item: Tool) {
+        return item.id;
+    }
+
+    getSelected(selectedVals: Array<any>, option: any) {
+        if (selectedVals) {
+            for (let i = 0; i < selectedVals.length; i++) {
+                if (option.id === selectedVals[i].id) {
+                    return selectedVals[i];
+                }
+            }
+        }
+        return option;
     }
 }
 

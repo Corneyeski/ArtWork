@@ -19,6 +19,7 @@
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="title"><span jhiTranslate="artWorkApp.multimedia.title">Title</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="image"><span jhiTranslate="artWorkApp.multimedia.image">Image</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="song"><span jhiTranslate="artWorkApp.multimedia.song">Song</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="url"><span jhiTranslate="artWorkApp.multimedia.url">Url</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="urlShare"><span jhiTranslate="artWorkApp.multimedia.urlShare">Url Share</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="time"><span jhiTranslate="artWorkApp.multimedia.time">Time</span> <span class="fa fa-sort"></span></th>
@@ -26,6 +27,8 @@
             <th jhiSortBy="totalValoration"><span jhiTranslate="artWorkApp.multimedia.totalValoration">Total Valoration</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="type"><span jhiTranslate="artWorkApp.multimedia.type">Type</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="description"><span jhiTranslate="artWorkApp.multimedia.description">Description</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="usersTag"><span jhiTranslate="artWorkApp.multimedia.usersTag">Users Tag</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="copyright"><span jhiTranslate="artWorkApp.multimedia.copyright">Copyright</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="user.login"><span jhiTranslate="artWorkApp.multimedia.user">User</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="album.name"><span jhiTranslate="artWorkApp.multimedia.album">Album</span> <span class="fa fa-sort"></span></th>
             <th></th>
@@ -41,16 +44,19 @@
                     </a>
                     <span *ngIf="multimedia.image">{{multimedia.imageContentType}}, {{byteSize(multimedia.image)}}</span>
                 </td>
+                <td>
+                    <a *ngIf="multimedia.song" (click)="openFile(multimedia.songContentType, multimedia.song)" jhiTranslate="entity.action.open">open</a>
+                    <span *ngIf="multimedia.song">{{multimedia.songContentType}}, {{byteSize(multimedia.song)}}</span>
+                </td>
                 <td>{{multimedia.url}}</td>
                 <td>{{multimedia.urlShare}}</td>
                 <td>{{multimedia.time | date:'medium'}}</td>
                 <td>{{multimedia.tags}}</td>
                 <td>{{multimedia.totalValoration}}</td>
                 <td jhiTranslate="{{'artWorkApp.Type.' + multimedia.type}}">{{multimedia.type}}</td>
-                <td>
-                    <a *ngIf="multimedia.description" (click)="openFile(multimedia.descriptionContentType, multimedia.description)" jhiTranslate="entity.action.open">open</a>
-                    <span *ngIf="multimedia.description">{{multimedia.descriptionContentType}}, {{byteSize(multimedia.description)}}</span>
-                </td>
+                <td>{{multimedia.description}}</td>
+                <td>{{multimedia.usersTag}}</td>
+                <td>{{multimedia.copyright}}</td>
                 <td>
                     {{multimedia.user?.login}}
                 </td>

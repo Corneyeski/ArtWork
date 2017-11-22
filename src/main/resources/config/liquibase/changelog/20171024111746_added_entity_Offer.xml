@@ -66,8 +66,8 @@
         </createTable>
         <dropDefaultValue tableName="offer" columnName="jhi_time" columnDataType="datetime"/>
         
-        <createTable tableName="offer_user">
-            <column name="users_id" type="bigint">
+        <createTable tableName="offer_user_ext">
+            <column name="user_exts_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
             <column name="offers_id" type="bigint">
@@ -75,7 +75,7 @@
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="offers_id, users_id" tableName="offer_user"/>
+        <addPrimaryKey columnNames="offers_id, user_exts_id" tableName="offer_user_ext"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

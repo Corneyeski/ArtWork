@@ -35,6 +35,13 @@ public class Multimedia implements Serializable {
     @Column(name = "image_content_type")
     private String imageContentType;
 
+    @Lob
+    @Column(name = "song")
+    private byte[] song;
+
+    @Column(name = "song_content_type")
+    private String songContentType;
+
     @Column(name = "url")
     private String url;
 
@@ -59,10 +66,13 @@ public class Multimedia implements Serializable {
 
     @Lob
     @Column(name = "description")
-    private byte[] description;
+    private String description;
 
-    @Column(name = "description_content_type")
-    private String descriptionContentType;
+    @Column(name = "users_tag")
+    private String usersTag;
+
+    @Column(name = "copyright")
+    private String copyright;
 
     @ManyToOne
     private User user;
@@ -70,7 +80,7 @@ public class Multimedia implements Serializable {
     @ManyToOne
     private Album album;
 
-    // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -116,6 +126,32 @@ public class Multimedia implements Serializable {
 
     public void setImageContentType(String imageContentType) {
         this.imageContentType = imageContentType;
+    }
+
+    public byte[] getSong() {
+        return song;
+    }
+
+    public Multimedia song(byte[] song) {
+        this.song = song;
+        return this;
+    }
+
+    public void setSong(byte[] song) {
+        this.song = song;
+    }
+
+    public String getSongContentType() {
+        return songContentType;
+    }
+
+    public Multimedia songContentType(String songContentType) {
+        this.songContentType = songContentType;
+        return this;
+    }
+
+    public void setSongContentType(String songContentType) {
+        this.songContentType = songContentType;
     }
 
     public String getUrl() {
@@ -196,30 +232,43 @@ public class Multimedia implements Serializable {
         this.type = type;
     }
 
-    public byte[] getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public Multimedia description(byte[] description) {
+    public Multimedia description(String description) {
         this.description = description;
         return this;
     }
 
-    public void setDescription(byte[] description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getDescriptionContentType() {
-        return descriptionContentType;
+    public String getUsersTag() {
+        return usersTag;
     }
 
-    public Multimedia descriptionContentType(String descriptionContentType) {
-        this.descriptionContentType = descriptionContentType;
+    public Multimedia usersTag(String usersTag) {
+        this.usersTag = usersTag;
         return this;
     }
 
-    public void setDescriptionContentType(String descriptionContentType) {
-        this.descriptionContentType = descriptionContentType;
+    public void setUsersTag(String usersTag) {
+        this.usersTag = usersTag;
+    }
+
+    public String getCopyright() {
+        return copyright;
+    }
+
+    public Multimedia copyright(String copyright) {
+        this.copyright = copyright;
+        return this;
+    }
+
+    public void setCopyright(String copyright) {
+        this.copyright = copyright;
     }
 
     public User getUser() {
@@ -247,7 +296,7 @@ public class Multimedia implements Serializable {
     public void setAlbum(Album album) {
         this.album = album;
     }
-    // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -276,6 +325,8 @@ public class Multimedia implements Serializable {
             ", title='" + getTitle() + "'" +
             ", image='" + getImage() + "'" +
             ", imageContentType='" + imageContentType + "'" +
+            ", song='" + getSong() + "'" +
+            ", songContentType='" + songContentType + "'" +
             ", url='" + getUrl() + "'" +
             ", urlShare='" + getUrlShare() + "'" +
             ", time='" + getTime() + "'" +
@@ -283,7 +334,8 @@ public class Multimedia implements Serializable {
             ", totalValoration='" + getTotalValoration() + "'" +
             ", type='" + getType() + "'" +
             ", description='" + getDescription() + "'" +
-            ", descriptionContentType='" + descriptionContentType + "'" +
+            ", usersTag='" + getUsersTag() + "'" +
+            ", copyright='" + getCopyright() + "'" +
             "}";
     }
 }

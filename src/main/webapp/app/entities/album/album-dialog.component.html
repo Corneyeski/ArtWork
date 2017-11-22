@@ -18,6 +18,11 @@
                 [(ngModel)]="album.name"  />
         </div>
         <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.album.description" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                [(ngModel)]="album.description"  />
+        </div>
+        <div class="form-group">
             <label class="form-control-label" jhiTranslate="artWorkApp.album.time" for="field_time">Time</label>
             <div class="d-flex">
                 <input id="field_time" type="datetime-local" class="form-control" name="time" [(ngModel)]="album.time"

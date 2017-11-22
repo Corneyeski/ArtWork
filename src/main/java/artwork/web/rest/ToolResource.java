@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import artwork.domain.Tool;
 
 import artwork.repository.ToolRepository;
+import artwork.web.rest.errors.BadRequestAlertException;
 import artwork.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -46,7 +47,7 @@ public class ToolResource {
     public ResponseEntity<Tool> createTool(@RequestBody Tool tool) throws URISyntaxException {
         log.debug("REST request to save Tool : {}", tool);
         if (tool.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new tool cannot already have an ID")).body(null);
+            throw new BadRequestAlertException("A new tool cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Tool result = toolRepository.save(tool);
         return ResponseEntity.created(new URI("/api/tools/" + result.getId()))

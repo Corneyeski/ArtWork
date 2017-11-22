@@ -68,9 +68,9 @@
             </select>
         </div>
         <div class="form-group">
-            <label jhiTranslate="artWorkApp.offer.user" for="field_user">User</label>
-            <select class="form-control" id="field_user" multiple name="user" [(ngModel)]="offer.users">
-                <option [ngValue]="getSelected(offer.users, userOption)" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+            <label jhiTranslate="artWorkApp.offer.userExt" for="field_userExt">User Ext</label>
+            <select class="form-control" id="field_userExt" multiple name="userExt" [(ngModel)]="offer.userExts">
+                <option [ngValue]="getSelected(offer.userExts, userExtOption)" *ngFor="let userExtOption of userexts; trackBy: trackUserExtById">{{userExtOption.login}}</option>
             </select>
         </div>
     </div>

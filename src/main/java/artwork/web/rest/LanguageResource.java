@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import artwork.domain.Language;
 
 import artwork.repository.LanguageRepository;
+import artwork.web.rest.errors.BadRequestAlertException;
 import artwork.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -46,7 +47,7 @@ public class LanguageResource {
     public ResponseEntity<Language> createLanguage(@RequestBody Language language) throws URISyntaxException {
         log.debug("REST request to save Language : {}", language);
         if (language.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new language cannot already have an ID")).body(null);
+            throw new BadRequestAlertException("A new language cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Language result = languageRepository.save(language);
         return ResponseEntity.created(new URI("/api/languages/" + result.getId()))

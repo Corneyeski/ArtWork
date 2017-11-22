@@ -44,10 +44,10 @@
         <dd>
             {{offer.creator?.login}}
         </dd>
-        <dt><span jhiTranslate="artWorkApp.offer.user">User</span></dt>
+        <dt><span jhiTranslate="artWorkApp.offer.userExt">User Ext</span></dt>
         <dd>
-            <span *ngFor="let user of offer.users; let last = last">
-                {{user.login}}{{last ? '' : ', '}}
+            <span *ngFor="let userExt of offer.userExts; let last = last">
+                <a [routerLink]="['/user-ext', userExt?.id ]">{{userExt.login}}</a>{{last ? '' : ', '}}
             </span>
         </dd>
     </dl>

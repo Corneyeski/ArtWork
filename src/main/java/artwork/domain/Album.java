@@ -28,6 +28,9 @@ public class Album implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "jhi_time")
     private ZonedDateTime time;
 
@@ -36,7 +39,7 @@ public class Album implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Multimedia> multimedias = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -56,6 +59,19 @@ public class Album implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Album description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public ZonedDateTime getTime() {
@@ -95,7 +111,7 @@ public class Album implements Serializable {
     public void setMultimedias(Set<Multimedia> multimedias) {
         this.multimedias = multimedias;
     }
-    // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -122,6 +138,7 @@ public class Album implements Serializable {
         return "Album{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", description='" + getDescription() + "'" +
             ", time='" + getTime() + "'" +
             "}";
     }

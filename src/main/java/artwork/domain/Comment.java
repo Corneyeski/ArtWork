@@ -22,8 +22,8 @@ public class Comment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "jhi_comment")
-    private String comment;
+    @Column(name = "text")
+    private String text;
 
     @Column(name = "jhi_time")
     private ZonedDateTime time;
@@ -35,12 +35,12 @@ public class Comment implements Serializable {
     private Multimedia multimedia;
 
     @ManyToOne
-    private Comment response;
+    private Comment comment;
 
     @ManyToOne
     private User user;
 
-    // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -49,17 +49,17 @@ public class Comment implements Serializable {
         this.id = id;
     }
 
-    public String getComment() {
-        return comment;
+    public String getText() {
+        return text;
     }
 
-    public Comment comment(String comment) {
-        this.comment = comment;
+    public Comment text(String text) {
+        this.text = text;
         return this;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public ZonedDateTime getTime() {
@@ -101,17 +101,17 @@ public class Comment implements Serializable {
         this.multimedia = multimedia;
     }
 
-    public Comment getResponse() {
-        return response;
+    public Comment getComment() {
+        return comment;
     }
 
-    public Comment response(Comment comment) {
-        this.response = comment;
+    public Comment comment(Comment comment) {
+        this.comment = comment;
         return this;
     }
 
-    public void setResponse(Comment comment) {
-        this.response = comment;
+    public void setComment(Comment comment) {
+        this.comment = comment;
     }
 
     public User getUser() {
@@ -126,7 +126,7 @@ public class Comment implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
-    // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -152,7 +152,7 @@ public class Comment implements Serializable {
     public String toString() {
         return "Comment{" +
             "id=" + getId() +
-            ", comment='" + getComment() + "'" +
+            ", text='" + getText() + "'" +
             ", time='" + getTime() + "'" +
             ", likes='" + getLikes() + "'" +
             "}";

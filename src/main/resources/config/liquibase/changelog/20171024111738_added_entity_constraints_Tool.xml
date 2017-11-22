@@ -9,15 +9,15 @@
     <changeSet id="20171024111738-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="tools_id"
-                                 baseTableName="tool_user"
-                                 constraintName="fk_tool_user_tools_id"
+                                 baseTableName="tool_user_ext"
+                                 constraintName="fk_tool_user_ext_tools_id"
                                  referencedColumnNames="id"
                                  referencedTableName="tool"/>
-        <addForeignKeyConstraint baseColumnNames="users_id"
-                                 baseTableName="tool_user"
-                                 constraintName="fk_tool_user_users_id"
+        <addForeignKeyConstraint baseColumnNames="user_exts_id"
+                                 baseTableName="tool_user_ext"
+                                 constraintName="fk_tool_user_ext_user_exts_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
+                                 referencedTableName="user_ext"/>
         
     </changeSet>
 </databaseChangeLog>

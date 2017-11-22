@@ -15,11 +15,11 @@
             "detail": {
                 "title": "Comment"
             },
-            "comment": "Comment",
+            "text": "Text",
             "time": "Time",
             "likes": "Likes",
             "multimedia": "Multimedia",
-            "response": "Response",
+            "comment": "Comment",
             "user": "User"
         }
     }

@@ -4,9 +4,9 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="artWorkApp.comment.comment">Comment</span></dt>
+        <dt><span jhiTranslate="artWorkApp.comment.text">Text</span></dt>
         <dd>
-            <span>{{comment.comment}}</span>
+            <span>{{comment.text}}</span>
         </dd>
         <dt><span jhiTranslate="artWorkApp.comment.time">Time</span></dt>
         <dd>
@@ -22,10 +22,10 @@
                 <a [routerLink]="['/multimedia', comment.multimedia?.id]">{{comment.multimedia?.title}}</a>
             </div>
         </dd>
-        <dt><span jhiTranslate="artWorkApp.comment.response">Response</span></dt>
+        <dt><span jhiTranslate="artWorkApp.comment.comment">Comment</span></dt>
         <dd>
-            <div *ngIf="comment.response">
-                <a [routerLink]="['/comment', comment.response?.id]">{{comment.response?.title}}</a>
+            <div *ngIf="comment.comment">
+                <a [routerLink]="['/comment', comment.comment?.id]">{{comment.comment?.title}}</a>
             </div>
         </dd>
         <dt><span jhiTranslate="artWorkApp.comment.user">User</span></dt>

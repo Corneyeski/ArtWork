@@ -17,6 +17,7 @@
             },
             "title": "Title",
             "image": "Image",
+            "song": "Song",
             "url": "Url",
             "urlShare": "Url Share",
             "time": "Time",
@@ -24,6 +25,8 @@
             "totalValoration": "Total Valoration",
             "type": "Type",
             "description": "Description",
+            "usersTag": "Users Tag",
+            "copyright": "Copyright",
             "user": "User",
             "album": "Album"
         }

@@ -13,10 +13,10 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface ToolRepository extends JpaRepository<Tool, Long> {
-    @Query("select distinct tool from Tool tool left join fetch tool.users")
+    @Query("select distinct tool from Tool tool left join fetch tool.userExts")
     List<Tool> findAllWithEagerRelationships();
 
-    @Query("select tool from Tool tool left join fetch tool.users where tool.id =:id")
+    @Query("select tool from Tool tool left join fetch tool.userExts where tool.id =:id")
     Tool findOneWithEagerRelationships(@Param("id") Long id);
 
 }

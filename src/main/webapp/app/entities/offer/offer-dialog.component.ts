@@ -3,13 +3,14 @@ import { ActivatedRoute } from '@angular/router';
 import { Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Rx';
-import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { Offer } from './offer.model';
 import { OfferPopupService } from './offer-popup.service';
 import { OfferService } from './offer.service';
 import { User, UserService } from '../../shared';
+import { UserExt, UserExtService } from '../user-ext';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -23,12 +24,15 @@ export class OfferDialogComponent implements OnInit {
 
     users: User[];
 
+    userexts: UserExt[];
+
     constructor(
         public activeModal: NgbActiveModal,
         private dataUtils: JhiDataUtils,
-        private alertService: JhiAlertService,
+        private jhiAlertService: JhiAlertService,
         private offerService: OfferService,
         private userService: UserService,
+        private userExtService: UserExtService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -37,6 +41,8 @@ export class OfferDialogComponent implements OnInit {
         this.isSaving = false;
         this.userService.query()
             .subscribe((res: ResponseWrapper) => { this.users = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.userExtService.query()
+            .subscribe((res: ResponseWrapper) => { this.userexts = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     byteSize(field) {
@@ -82,10 +88,14 @@ export class OfferDialogComponent implements OnInit {
     }
 
     private onError(error: any) {
-        this.alertService.error(error.message, null, null);
+        this.jhiAlertService.error(error.message, null, null);
     }
 
     trackUserById(index: number, item: User) {
+        return item.id;
+    }
+
+    trackUserExtById(index: number, item: UserExt) {
         return item.id;
     }
 

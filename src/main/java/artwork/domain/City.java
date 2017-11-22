@@ -27,7 +27,7 @@ public class City implements Serializable {
     @Column(name = "total_users")
     private Integer totalUsers;
 
-    // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -61,7 +61,7 @@ public class City implements Serializable {
     public void setTotalUsers(Integer totalUsers) {
         this.totalUsers = totalUsers;
     }
-    // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {

@@ -25,6 +25,11 @@
             "fieldTypeBlobContent": "image"
         },
         {
+            "fieldName": "song",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        },
+        {
             "fieldName": "url",
             "fieldType": "String"
         },
@@ -59,12 +64,21 @@
         {
             "fieldName": "description",
             "fieldType": "byte[]",
-            "fieldTypeBlobContent": "any"
+            "fieldTypeBlobContent": "text"
+        },
+        {
+            "fieldName": "usersTag",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "copyright",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20171024111747",
     "entityTableName": "multimedia",
     "dto": "no",
     "pagination": "infinite-scroll",
-    "service": "no"
+    "service": "no",
+    "jpaMetamodelFiltering": false
 }

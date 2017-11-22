@@ -30,6 +30,7 @@
                 "comment": "Comment",
                 "city": "City",
                 "country": "Country",
+                "profession": "Profession",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

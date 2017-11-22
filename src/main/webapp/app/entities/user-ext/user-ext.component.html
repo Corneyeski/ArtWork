@@ -33,6 +33,7 @@
             <th><span jhiTranslate="artWorkApp.userExt.user">User</span></th>
             <th><span jhiTranslate="artWorkApp.userExt.city">City</span></th>
             <th><span jhiTranslate="artWorkApp.userExt.language">Language</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.profession">Profession</span></th>
             <th><span jhiTranslate="artWorkApp.userExt.workingOn">Working On</span></th>
             <th></th>
             </tr>
@@ -72,6 +73,11 @@
                 <td>
                     <div *ngIf="userExt.language">
                         <a [routerLink]="['../language', userExt.language?.id ]" >{{userExt.language?.name}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="userExt.profession">
+                        <a [routerLink]="['../profession', userExt.profession?.id ]" >{{userExt.profession?.name}}</a>
                     </div>
                 </td>
                 <td>

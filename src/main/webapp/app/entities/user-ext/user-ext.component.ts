@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
-import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
+import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { UserExt } from './user-ext.model';
 import { UserExtService } from './user-ext.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
-import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
 @Component({
     selector: 'jhi-user-ext',
@@ -19,7 +18,7 @@ userExts: UserExt[];
 
     constructor(
         private userExtService: UserExtService,
-        private alertService: JhiAlertService,
+        private jhiAlertService: JhiAlertService,
         private dataUtils: JhiDataUtils,
         private eventManager: JhiEventManager,
         private principal: Principal
@@ -62,6 +61,6 @@ userExts: UserExt[];
     }
 
     private onError(error) {
-        this.alertService.error(error.message, null, null);
+        this.jhiAlertService.error(error.message, null, null);
     }
 }

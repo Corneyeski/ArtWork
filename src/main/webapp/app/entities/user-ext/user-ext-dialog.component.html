@@ -161,6 +161,13 @@
             </select>
         </div>
         <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.userExt.profession" for="field_profession">Profession</label>
+            <select class="form-control" id="field_profession" name="profession" [(ngModel)]="userExt.profession" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="professionOption.id === userExt.profession?.id ? userExt.profession : professionOption" *ngFor="let professionOption of professions; trackBy: trackProfessionById">{{professionOption.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
             <label class="form-control-label" jhiTranslate="artWorkApp.userExt.workingOn" for="field_workingOn">Working On</label>
             <select class="form-control" id="field_workingOn" name="workingOn" [(ngModel)]="userExt.workingOn" >
                 <option [ngValue]="null"></option>

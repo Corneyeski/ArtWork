@@ -35,6 +35,24 @@
                 [(ngModel)]="multimedia.imageContentType" />
         </div>
         <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.song" for="field_song">Song</label>
+            <div>
+                <div *ngIf="multimedia.song" class="form-text text-danger clearfix">
+                    <a class="pull-left" (click)="openFile(multimedia.songContentType, multimedia.song)" jhiTranslate="entity.action.open">open</a><br>
+                    <span class="pull-left">{{multimedia.songContentType}}, {{byteSize(multimedia.song)}}</span>
+                    <button type="button" (click)="multimedia.song=null;multimedia.songContentType=null;"
+                            class="btn btn-secondary btn-xs pull-right">
+                        <span class="fa fa-times"></span>
+                    </button>
+                </div>
+                <input type="file" id="file_song" (change)="setFileData($event, multimedia, 'song', false)" jhiTranslate="entity.action.addblob"/>
+            </div>
+            <input type="hidden" class="form-control" name="song" id="field_song"
+                [(ngModel)]="multimedia.song"  />
+            <input type="hidden" class="form-control" name="songContentType" id="field_songContentType"
+                [(ngModel)]="multimedia.songContentType" />
+        </div>
+        <div class="form-group">
             <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.url" for="field_url">Url</label>
             <input type="text" class="form-control" name="url" id="field_url"
                 [(ngModel)]="multimedia.url"  />
@@ -89,21 +107,18 @@
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.description" for="field_description">Description</label>
-            <div>
-                <div *ngIf="multimedia.description" class="form-text text-danger clearfix">
-                    <a class="pull-left" (click)="openFile(multimedia.descriptionContentType, multimedia.description)" jhiTranslate="entity.action.open">open</a><br>
-                    <span class="pull-left">{{multimedia.descriptionContentType}}, {{byteSize(multimedia.description)}}</span>
-                    <button type="button" (click)="multimedia.description=null;multimedia.descriptionContentType=null;"
-                            class="btn btn-secondary btn-xs pull-right">
-                        <span class="fa fa-times"></span>
-                    </button>
-                </div>
-                <input type="file" id="file_description" (change)="setFileData($event, multimedia, 'description', false)" jhiTranslate="entity.action.addblob"/>
-            </div>
-            <input type="hidden" class="form-control" name="description" id="field_description"
-                [(ngModel)]="multimedia.description"  />
-            <input type="hidden" class="form-control" name="descriptionContentType" id="field_descriptionContentType"
-                [(ngModel)]="multimedia.descriptionContentType" />
+            <textarea class="form-control" name="description" id="field_description"
+                [(ngModel)]="multimedia.description"  ></textarea>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.usersTag" for="field_usersTag">Users Tag</label>
+            <input type="text" class="form-control" name="usersTag" id="field_usersTag"
+                [(ngModel)]="multimedia.usersTag"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.copyright" for="field_copyright">Copyright</label>
+            <input type="text" class="form-control" name="copyright" id="field_copyright"
+                [(ngModel)]="multimedia.copyright"  />
         </div>
 
         <div class="form-group">

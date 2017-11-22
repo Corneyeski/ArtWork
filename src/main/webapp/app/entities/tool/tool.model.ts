@@ -1,4 +1,4 @@
-import { BaseEntity, User } from './../../shared';
+import { BaseEntity } from './../../shared';
 
 export const enum ToolType {
     'BUTTON',
@@ -13,7 +13,7 @@ export class Tool implements BaseEntity {
         public name?: string,
         public description?: string,
         public type?: ToolType,
-        public users?: User[],
+        public userExts?: BaseEntity[],
     ) {
         this.active = false;
     }

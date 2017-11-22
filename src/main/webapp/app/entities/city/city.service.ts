@@ -16,20 +16,23 @@ export class CityService {
     create(city: City): Observable<City> {
         const copy = this.convert(city);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            return res.json();
+            const jsonResponse = res.json();
+            return this.convertItemFromServer(jsonResponse);
         });
     }
 
     update(city: City): Observable<City> {
         const copy = this.convert(city);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {
-            return res.json();
+            const jsonResponse = res.json();
+            return this.convertItemFromServer(jsonResponse);
         });
     }
 
     find(id: number): Observable<City> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
-            return res.json();
+            const jsonResponse = res.json();
+            return this.convertItemFromServer(jsonResponse);
         });
     }
 
@@ -45,9 +48,24 @@ export class CityService {
 
     private convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
-        return new ResponseWrapper(res.headers, jsonResponse, res.status);
+        const result = [];
+        for (let i = 0; i < jsonResponse.length; i++) {
+            result.push(this.convertItemFromServer(jsonResponse[i]));
+        }
+        return new ResponseWrapper(res.headers, result, res.status);
     }
 
+    /**
+     * Convert a returned JSON object to City.
+     */
+    private convertItemFromServer(json: any): City {
+        const entity: City = Object.assign(new City(), json);
+        return entity;
+    }
+
+    /**
+     * Convert a City to a JSON which can be sent to the server.
+     */
     private convert(city: City): City {
         const copy: City = Object.assign({}, city);
         return copy;

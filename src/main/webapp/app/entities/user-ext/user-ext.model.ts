@@ -27,7 +27,10 @@ export class UserExt implements BaseEntity {
         public user?: User,
         public city?: BaseEntity,
         public language?: BaseEntity,
+        public profession?: BaseEntity,
         public workingOn?: User,
+        public offers?: BaseEntity[],
+        public tools?: BaseEntity[],
     ) {
         this.validated = false;
         this.working = false;

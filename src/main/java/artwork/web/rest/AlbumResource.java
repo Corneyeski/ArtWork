@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import artwork.domain.Album;
 
 import artwork.repository.AlbumRepository;
+import artwork.web.rest.errors.BadRequestAlertException;
 import artwork.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -46,7 +47,7 @@ public class AlbumResource {
     public ResponseEntity<Album> createAlbum(@RequestBody Album album) throws URISyntaxException {
         log.debug("REST request to save Album : {}", album);
         if (album.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new album cannot already have an ID")).body(null);
+            throw new BadRequestAlertException("A new album cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Album result = albumRepository.save(album);
         return ResponseEntity.created(new URI("/api/albums/" + result.getId()))

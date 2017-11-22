@@ -27,7 +27,7 @@
             <th><span jhiTranslate="artWorkApp.offer.location">Location</span></th>
             <th><span jhiTranslate="artWorkApp.offer.contract">Contract</span></th>
             <th><span jhiTranslate="artWorkApp.offer.creator">Creator</span></th>
-            <th><span jhiTranslate="artWorkApp.offer.user">User</span></th>
+            <th><span jhiTranslate="artWorkApp.offer.userExt">User Ext</span></th>
             <th></th>
             </tr>
             </thead>
@@ -47,8 +47,8 @@
                     {{offer.creator?.login}}
                 </td>
                 <td>
-                    <span *ngFor="let user of offer.users; let last = last">
-                            {{user.login}}{{last ? '' : ', '}}
+                    <span *ngFor="let userExt of offer.userExts; let last = last">
+                            <a class="form-control-static" [routerLink]="['../user-ext', userExt?.id ]">{{userExt.login}}</a>{{last ? '' : ', '}}
                         </span>
                 </td>
                 <td class="text-right">

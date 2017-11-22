@@ -1,0 +1,247 @@
+
+entity UserExt{
+	birthdate LocalDate,
+	image ImageBlob,
+	phone Integer,
+	kind Integer,
+	tags String,
+	address String,
+	popular Double min (DEFAULT_MIN) max (DEFAULT_MAX),
+	companyPoints Double min (DEFAULT_MIN) max (DEFAULT_MAX),
+	validated Boolean,
+	age Integer,
+    working Boolean,
+    theme Theme,
+    resume Blob
+}
+
+enum Theme{ BLACK, WHITE, MINIMAL }
+
+entity Tool{
+	active Boolean,
+    time ZonedDateTime,
+    name String,
+    description String,
+    type ToolType
+}
+
+enum ToolType{ BUTTON, MODAL }
+
+entity ResumeCreation{
+	name String,
+	lastName String,
+	birthdate LocalDate,
+	photo ImageBlob,
+	email String,
+	phone Integer,
+	address String,
+	skills Blob
+}
+
+entity Language {
+	code String,
+	name String
+}
+entity Training{
+	startYear Integer,
+	endingYear Integer,
+	degree String,
+	studyCenter String,
+	competitions Blob
+}
+entity Experience{
+	startYear Integer,
+	endingYear Integer,
+	name String,
+	company String,
+	competitions TextBlob
+}
+entity PricesT{
+	phone Integer,
+	name String,
+	city String
+}
+entity Connection{
+	acepted Boolean,
+	title String,
+	message String,
+	time ZonedDateTime
+}
+entity Following{
+	time ZonedDateTime
+}
+
+entity Offer{
+	name String,
+	description TextBlob,
+	time ZonedDateTime,
+	salary Double,
+	duration Double,
+	status Boolean,
+	tags String,
+	location String,
+    contract String
+}
+
+entity Multimedia{
+	title String,
+	image ImageBlob,
+    song AnyBlob,
+	url String,
+	urlShare String,
+	time ZonedDateTime,
+	tags String,
+	totalValoration Double required min (DEFAULT_MIN) max (DEFAULT_MAX),
+    type Type,
+    description TextBlob,
+    usersTag String,
+    copyright String,
+
+}
+enum Type{ PHOTO, VIDEO, SONG }
+
+entity Album{
+	name String,
+    description String,
+	time ZonedDateTime
+}
+
+entity Valoration{
+	mark Double required min (DEFAULT_MIN) max (DEFAULT_MAX),
+	time ZonedDateTime
+}
+
+entity Conversation{
+	name String,
+    time ZonedDateTime,
+    deleted Boolean
+}
+
+entity Message{
+	text String,
+	attached Blob,
+	time ZonedDateTime
+}
+
+entity UserProfileValoration{
+	value Double required min (DEFAULT_MIN) max (DEFAULT_MAX),
+	comments String
+}
+
+entity Report{
+	title String,
+	reason TextBlob
+}
+
+entity ReasonReport{
+	title String,
+	reason TextBlob
+}
+
+entity Blocked{
+	time ZonedDateTime
+}
+
+entity CommentLike{
+	time ZonedDateTime
+}
+
+entity Comment{
+	text String,
+	time ZonedDateTime,
+	likes Integer
+}
+
+entity City{
+	name String,
+	totalUsers Integer
+}
+
+entity Country{
+	name String,
+	totalUsers Integer
+}
+
+entity Profession{
+	name String,
+    sector String,
+    workersNum Integer
+}
+relationship ManyToOne{
+
+    UserExt{city(name)} to City,
+
+    UserExt{language(name)} to Language,
+
+    UserExt{profession(name)} to Profession,
+
+	Country{city(name)} to City,
+
+	ResumeCreation{language(name)} to Language,
+
+	ResumeCreation{city(name)} to City,
+
+	ResumeCreation{training} to Training,
+	ResumeCreation{experience} to Experience,
+
+    Multimedia{user(login)} to User,
+
+    Valoration{user(login)} to User,
+    Valoration{multimedia(title)} to Multimedia,
+
+    Report{reporter(login)} to User,
+    Report{reported(login)} to User,
+    Report{offer(login)} to Offer,
+    Report{multimedia(login)} to Multimedia,
+
+    UserProfileValoration{valuator(login)} to User,
+    UserProfileValoration{valuated(login)} to User,
+
+    Following{follower(login)} to User,
+    Following{followed(login)} to User,
+
+    Conversation{userOne(login)} to User,
+    Conversation{userTwo(login)} to User,
+    Message{user(login)} to User,
+    Message{conversation(name)} to Conversation,
+
+    Blocked{block(login)} to User,
+    Blocked{blocked(login)} to User,
+
+    Connection{sender(login)} to User,
+    Connection{receiver(login)} to User,
+
+    Offer{creator(login)} to User,
+
+    Comment{multimedia(title)} to Multimedia,
+    Comment{comment(title)} to Comment,
+    Comment{user(login)} to User,
+
+    CommentLike{user} to User,
+    CommentLike{comment} to Comment,
+
+    UserExt{workingOn(login)} to User,
+
+    ReasonReport{report(title)} to Report
+}
+
+relationship OneToMany{
+    Album{multimedia(title)} to Multimedia{album(name)}
+}
+
+relationship OneToOne{
+	UserExt{user(login)} to User,
+
+    PricesT{tool(name)} to Tool,
+    ResumeCreation{tool(name)} to Tool
+}
+
+relationship ManyToMany{
+    Offer{userExt(login)} to UserExt{offer(name)},
+
+    Tool{userExt(login)} to UserExt{tool(name)}
+}
+paginate Multimedia, Following with infinite-scroll
+
+DEFAULT_MIN = 0
+DEFAULT_MAX = 5

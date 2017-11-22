@@ -44,12 +44,12 @@ public class Tool implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "tool_user",
+    @JoinTable(name = "tool_user_ext",
                joinColumns = @JoinColumn(name="tools_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="users_id", referencedColumnName="id"))
-    private Set<User> users = new HashSet<>();
+               inverseJoinColumns = @JoinColumn(name="user_exts_id", referencedColumnName="id"))
+    private Set<UserExt> userExts = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -123,29 +123,31 @@ public class Tool implements Serializable {
         this.type = type;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public Set<UserExt> getUserExts() {
+        return userExts;
     }
 
-    public Tool users(Set<User> users) {
-        this.users = users;
+    public Tool userExts(Set<UserExt> userExts) {
+        this.userExts = userExts;
         return this;
     }
 
-    public Tool addUser(User user) {
-        this.users.add(user);
+    public Tool addUserExt(UserExt userExt) {
+        this.userExts.add(userExt);
+        userExt.getTools().add(this);
         return this;
     }
 
-    public Tool removeUser(User user) {
-        this.users.remove(user);
+    public Tool removeUserExt(UserExt userExt) {
+        this.userExts.remove(userExt);
+        userExt.getTools().remove(this);
         return this;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setUserExts(Set<UserExt> userExts) {
+        this.userExts = userExts;
     }
-    // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {

@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import artwork.domain.Offer;
 
 import artwork.repository.OfferRepository;
+import artwork.web.rest.errors.BadRequestAlertException;
 import artwork.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -46,7 +47,7 @@ public class OfferResource {
     public ResponseEntity<Offer> createOffer(@RequestBody Offer offer) throws URISyntaxException {
         log.debug("REST request to save Offer : {}", offer);
         if (offer.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new offer cannot already have an ID")).body(null);
+            throw new BadRequestAlertException("A new offer cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Offer result = offerRepository.save(offer);
         return ResponseEntity.created(new URI("/api/offers/" + result.getId()))

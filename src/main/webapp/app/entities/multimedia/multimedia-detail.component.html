@@ -17,6 +17,13 @@
                 {{multimedia.imageContentType}}, {{byteSize(multimedia.image)}}
             </div>
         </dd>
+        <dt><span jhiTranslate="artWorkApp.multimedia.song">Song</span></dt>
+        <dd>
+            <div *ngIf="multimedia.song">
+                <a (click)="openFile(multimedia.songContentType, multimedia.song)" jhiTranslate="entity.action.open">open</a>
+                {{multimedia.songContentType}}, {{byteSize(multimedia.song)}}
+            </div>
+        </dd>
         <dt><span jhiTranslate="artWorkApp.multimedia.url">Url</span></dt>
         <dd>
             <span>{{multimedia.url}}</span>
@@ -43,10 +50,15 @@
         </dd>
         <dt><span jhiTranslate="artWorkApp.multimedia.description">Description</span></dt>
         <dd>
-            <div *ngIf="multimedia.description">
-                <a (click)="openFile(multimedia.descriptionContentType, multimedia.description)" jhiTranslate="entity.action.open">open</a>
-                {{multimedia.descriptionContentType}}, {{byteSize(multimedia.description)}}
-            </div>
+            <span>{{multimedia.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.multimedia.usersTag">Users Tag</span></dt>
+        <dd>
+            <span>{{multimedia.usersTag}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.multimedia.copyright">Copyright</span></dt>
+        <dd>
+            <span>{{multimedia.copyright}}</span>
         </dd>
         <dt><span jhiTranslate="artWorkApp.multimedia.user">User</span></dt>
         <dd>

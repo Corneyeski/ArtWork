@@ -15,15 +15,15 @@
                                  referencedTableName="jhi_user"/>
 
         <addForeignKeyConstraint baseColumnNames="offers_id"
-                                 baseTableName="offer_user"
-                                 constraintName="fk_offer_user_offers_id"
+                                 baseTableName="offer_user_ext"
+                                 constraintName="fk_offer_user_ext_offers_id"
                                  referencedColumnNames="id"
                                  referencedTableName="offer"/>
-        <addForeignKeyConstraint baseColumnNames="users_id"
-                                 baseTableName="offer_user"
-                                 constraintName="fk_offer_user_users_id"
+        <addForeignKeyConstraint baseColumnNames="user_exts_id"
+                                 baseTableName="offer_user_ext"
+                                 constraintName="fk_offer_user_ext_user_exts_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
+                                 referencedTableName="user_ext"/>
         
     </changeSet>
 </databaseChangeLog>

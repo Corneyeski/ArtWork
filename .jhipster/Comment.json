@@ -9,7 +9,7 @@
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "response",
+            "relationshipName": "comment",
             "otherEntityName": "comment",
             "otherEntityField": "title"
         },
@@ -22,7 +22,7 @@
     ],
     "fields": [
         {
-            "fieldName": "comment",
+            "fieldName": "text",
             "fieldType": "String"
         },
         {
@@ -38,5 +38,6 @@
     "entityTableName": "comment",
     "dto": "no",
     "pagination": "no",
-    "service": "no"
+    "service": "no",
+    "jpaMetamodelFiltering": false
 }

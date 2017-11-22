@@ -3,9 +3,9 @@
     "relationships": [
         {
             "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "",
-            "relationshipName": "user",
-            "otherEntityName": "user",
+            "otherEntityRelationshipName": "tool",
+            "relationshipName": "userExt",
+            "otherEntityName": "userExt",
             "otherEntityField": "login",
             "ownerSide": true
         }
@@ -37,5 +37,6 @@
     "entityTableName": "tool",
     "dto": "no",
     "pagination": "no",
-    "service": "no"
+    "service": "no",
+    "jpaMetamodelFiltering": false
 }

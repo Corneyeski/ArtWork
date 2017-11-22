@@ -14,9 +14,9 @@
                                  referencedColumnNames="id"
                                  referencedTableName="multimedia"/>
 
-        <addForeignKeyConstraint baseColumnNames="response_id"
+        <addForeignKeyConstraint baseColumnNames="comment_id"
                                  baseTableName="comment"
-                                 constraintName="fk_comment_response_id"
+                                 constraintName="fk_comment_comment_id"
                                  referencedColumnNames="id"
                                  referencedTableName="comment"/>
 

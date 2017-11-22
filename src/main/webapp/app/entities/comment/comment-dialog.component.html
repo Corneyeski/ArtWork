@@ -13,9 +13,9 @@
                    [(ngModel)]="comment.id" readonly />
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="artWorkApp.comment.comment" for="field_comment">Comment</label>
-            <input type="text" class="form-control" name="comment" id="field_comment"
-                [(ngModel)]="comment.comment"  />
+            <label class="form-control-label" jhiTranslate="artWorkApp.comment.text" for="field_text">Text</label>
+            <input type="text" class="form-control" name="text" id="field_text"
+                [(ngModel)]="comment.text"  />
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="artWorkApp.comment.time" for="field_time">Time</label>
@@ -38,10 +38,10 @@
             </select>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="artWorkApp.comment.response" for="field_response">Response</label>
-            <select class="form-control" id="field_response" name="response" [(ngModel)]="comment.response" >
+            <label class="form-control-label" jhiTranslate="artWorkApp.comment.comment" for="field_comment">Comment</label>
+            <select class="form-control" id="field_comment" name="comment" [(ngModel)]="comment.comment" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="commentOption.id === comment.response?.id ? comment.response : commentOption" *ngFor="let commentOption of comments; trackBy: trackCommentById">{{commentOption.title}}</option>
+                <option [ngValue]="commentOption.id === comment.comment?.id ? comment.comment : commentOption" *ngFor="let commentOption of comments; trackBy: trackCommentById">{{commentOption.title}}</option>
             </select>
         </div>
         <div class="form-group">

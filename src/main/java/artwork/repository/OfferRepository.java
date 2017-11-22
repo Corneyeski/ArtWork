@@ -16,10 +16,10 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 
     @Query("select offer from Offer offer where offer.creator.login = ?#{principal.username}")
     List<Offer> findByCreatorIsCurrentUser();
-    @Query("select distinct offer from Offer offer left join fetch offer.users")
+    @Query("select distinct offer from Offer offer left join fetch offer.userExts")
     List<Offer> findAllWithEagerRelationships();
 
-    @Query("select offer from Offer offer left join fetch offer.users where offer.id =:id")
+    @Query("select offer from Offer offer left join fetch offer.userExts where offer.id =:id")
     Offer findOneWithEagerRelationships(@Param("id") Long id);
 
 }

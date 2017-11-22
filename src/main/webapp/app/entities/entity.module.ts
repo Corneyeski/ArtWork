@@ -23,6 +23,7 @@ import { ArtWorkCommentLikeModule } from './comment-like/comment-like.module';
 import { ArtWorkCommentModule } from './comment/comment.module';
 import { ArtWorkCityModule } from './city/city.module';
 import { ArtWorkCountryModule } from './country/country.module';
+import { ArtWorkProfessionModule } from './profession/profession.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -50,6 +51,7 @@ import { ArtWorkCountryModule } from './country/country.module';
         ArtWorkCommentModule,
         ArtWorkCityModule,
         ArtWorkCountryModule,
+        ArtWorkProfessionModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

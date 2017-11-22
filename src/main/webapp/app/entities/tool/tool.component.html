@@ -22,7 +22,7 @@
             <th><span jhiTranslate="artWorkApp.tool.name">Name</span></th>
             <th><span jhiTranslate="artWorkApp.tool.description">Description</span></th>
             <th><span jhiTranslate="artWorkApp.tool.type">Type</span></th>
-            <th><span jhiTranslate="artWorkApp.tool.user">User</span></th>
+            <th><span jhiTranslate="artWorkApp.tool.userExt">User Ext</span></th>
             <th></th>
             </tr>
             </thead>
@@ -35,8 +35,8 @@
                 <td>{{tool.description}}</td>
                 <td jhiTranslate="{{'artWorkApp.ToolType.' + tool.type}}">{{tool.type}}</td>
                 <td>
-                    <span *ngFor="let user of tool.users; let last = last">
-                            {{user.login}}{{last ? '' : ', '}}
+                    <span *ngFor="let userExt of tool.userExts; let last = last">
+                            <a class="form-control-static" [routerLink]="['../user-ext', userExt?.id ]">{{userExt.login}}</a>{{last ? '' : ', '}}
                         </span>
                 </td>
                 <td class="text-right">

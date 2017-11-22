@@ -1,5 +1,6 @@
 package artwork.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -7,6 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 import artwork.domain.enumeration.Theme;
@@ -88,9 +91,22 @@ public class UserExt implements Serializable {
     private Language language;
 
     @ManyToOne
+    private Profession profession;
+
+    @ManyToOne
     private User workingOn;
 
-    // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
+    @ManyToMany(mappedBy = "userExts")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Offer> offers = new HashSet<>();
+
+    @ManyToMany(mappedBy = "userExts")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Tool> tools = new HashSet<>();
+
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -333,6 +349,19 @@ public class UserExt implements Serializable {
         this.language = language;
     }
 
+    public Profession getProfession() {
+        return profession;
+    }
+
+    public UserExt profession(Profession profession) {
+        this.profession = profession;
+        return this;
+    }
+
+    public void setProfession(Profession profession) {
+        this.profession = profession;
+    }
+
     public User getWorkingOn() {
         return workingOn;
     }
@@ -345,7 +374,57 @@ public class UserExt implements Serializable {
     public void setWorkingOn(User user) {
         this.workingOn = user;
     }
-    // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
+
+    public Set<Offer> getOffers() {
+        return offers;
+    }
+
+    public UserExt offers(Set<Offer> offers) {
+        this.offers = offers;
+        return this;
+    }
+
+    public UserExt addOffer(Offer offer) {
+        this.offers.add(offer);
+        offer.getUserExts().add(this);
+        return this;
+    }
+
+    public UserExt removeOffer(Offer offer) {
+        this.offers.remove(offer);
+        offer.getUserExts().remove(this);
+        return this;
+    }
+
+    public void setOffers(Set<Offer> offers) {
+        this.offers = offers;
+    }
+
+    public Set<Tool> getTools() {
+        return tools;
+    }
+
+    public UserExt tools(Set<Tool> tools) {
+        this.tools = tools;
+        return this;
+    }
+
+    public UserExt addTool(Tool tool) {
+        this.tools.add(tool);
+        tool.getUserExts().add(this);
+        return this;
+    }
+
+    public UserExt removeTool(Tool tool) {
+        this.tools.remove(tool);
+        tool.getUserExts().remove(this);
+        return this;
+    }
+
+    public void setTools(Set<Tool> tools) {
+        this.tools = tools;
+    }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {

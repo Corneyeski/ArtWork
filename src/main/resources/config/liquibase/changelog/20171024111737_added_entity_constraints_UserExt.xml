@@ -26,6 +26,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="language"/>
 
+        <addForeignKeyConstraint baseColumnNames="profession_id"
+                                 baseTableName="user_ext"
+                                 constraintName="fk_user_ext_profession_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profession"/>
+
         <addForeignKeyConstraint baseColumnNames="working_on_id"
                                  baseTableName="user_ext"
                                  constraintName="fk_user_ext_working_on_id"

@@ -67,6 +67,14 @@ public class CacheConfiguration {
             cm.createCache(artwork.domain.Comment.class.getName(), jcacheConfiguration);
             cm.createCache(artwork.domain.City.class.getName(), jcacheConfiguration);
             cm.createCache(artwork.domain.Country.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Language.class.getName() + ".users", jcacheConfiguration);
+            cm.createCache(artwork.domain.City.class.getName() + ".users", jcacheConfiguration);
+            cm.createCache(artwork.domain.Profession.class.getName(), jcacheConfiguration);
+            cm.createCache(artwork.domain.Profession.class.getName() + ".users", jcacheConfiguration);
+            cm.createCache(artwork.domain.UserExt.class.getName() + ".offers", jcacheConfiguration);
+            cm.createCache(artwork.domain.UserExt.class.getName() + ".tools", jcacheConfiguration);
+            cm.createCache(artwork.domain.Tool.class.getName() + ".userExts", jcacheConfiguration);
+            cm.createCache(artwork.domain.Offer.class.getName() + ".userExts", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

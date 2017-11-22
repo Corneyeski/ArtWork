@@ -13,7 +13,7 @@ export class Offer implements BaseEntity {
         public location?: string,
         public contract?: string,
         public creator?: User,
-        public users?: User[],
+        public userExts?: BaseEntity[],
     ) {
         this.status = false;
     }

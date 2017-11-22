@@ -17,11 +17,11 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="artWorkApp.comment.comment">Comment</span></th>
+            <th><span jhiTranslate="artWorkApp.comment.text">Text</span></th>
             <th><span jhiTranslate="artWorkApp.comment.time">Time</span></th>
             <th><span jhiTranslate="artWorkApp.comment.likes">Likes</span></th>
             <th><span jhiTranslate="artWorkApp.comment.multimedia">Multimedia</span></th>
-            <th><span jhiTranslate="artWorkApp.comment.response">Response</span></th>
+            <th><span jhiTranslate="artWorkApp.comment.comment">Comment</span></th>
             <th><span jhiTranslate="artWorkApp.comment.user">User</span></th>
             <th></th>
             </tr>
@@ -29,7 +29,7 @@
             <tbody>
             <tr *ngFor="let comment of comments ;trackBy: trackId">
                 <td><a [routerLink]="['../comment', comment.id ]">{{comment.id}}</a></td>
-                <td>{{comment.comment}}</td>
+                <td>{{comment.text}}</td>
                 <td>{{comment.time | date:'medium'}}</td>
                 <td>{{comment.likes}}</td>
                 <td>
@@ -38,8 +38,8 @@
                     </div>
                 </td>
                 <td>
-                    <div *ngIf="comment.response">
-                        <a [routerLink]="['../comment', comment.response?.id ]" >{{comment.response?.title}}</a>
+                    <div *ngIf="comment.comment">
+                        <a [routerLink]="['../comment', comment.comment?.id ]" >{{comment.comment?.title}}</a>
                     </div>
                 </td>
                 <td>

@@ -16,6 +16,7 @@
                 "title": "Album"
             },
             "name": "Name",
+            "description": "Description",
             "time": "Time",
             "multimedia": "Multimedia"
         }

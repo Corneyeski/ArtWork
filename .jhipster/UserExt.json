@@ -23,9 +23,29 @@
         },
         {
             "relationshipType": "many-to-one",
+            "relationshipName": "profession",
+            "otherEntityName": "profession",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-one",
             "relationshipName": "workingOn",
             "otherEntityName": "user",
             "otherEntityField": "login"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "offer",
+            "otherEntityName": "offer",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "userExt"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "tool",
+            "otherEntityName": "tool",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "userExt"
         }
     ],
     "fields": [
@@ -101,5 +121,6 @@
     "entityTableName": "user_ext",
     "dto": "no",
     "pagination": "no",
-    "service": "no"
+    "service": "no",
+    "jpaMetamodelFiltering": false
 }

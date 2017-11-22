@@ -31,7 +31,10 @@
             "user": "User",
             "city": "City",
             "language": "Language",
-            "workingOn": "Working On"
+            "profession": "Profession",
+            "workingOn": "Working On",
+            "offer": "Offer",
+            "tool": "Tool"
         }
     }
 }

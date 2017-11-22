@@ -33,6 +33,13 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="song" type="longblob">
+                <constraints nullable="true" />
+            </column>
+            <column name="song_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="url" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -57,10 +64,15 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="description" type="longblob">
+            <column name="description" type="clob">
                 <constraints nullable="true" />
             </column>
-            <column name="description_content_type" type="varchar(255)">
+
+            <column name="users_tag" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="copyright" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
