@@ -23,6 +23,7 @@ export class Multimedia implements BaseEntity {
         public description?: any,
         public usersTag?: string,
         public copyright?: string,
+        public resolution?: string,
         public user?: User,
         public album?: BaseEntity,
     ) {

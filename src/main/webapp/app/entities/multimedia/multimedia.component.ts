@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
-import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
+import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { Multimedia } from './multimedia.model';
 import { MultimediaService } from './multimedia.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
+import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
 @Component({
     selector: 'jhi-multimedia',
@@ -26,7 +27,7 @@ export class MultimediaComponent implements OnInit, OnDestroy {
 
     constructor(
         private multimediaService: MultimediaService,
-        private jhiAlertService: JhiAlertService,
+        private alertService: JhiAlertService,
         private dataUtils: JhiDataUtils,
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
@@ -107,6 +108,6 @@ export class MultimediaComponent implements OnInit, OnDestroy {
     }
 
     private onError(error) {
-        this.jhiAlertService.error(error.message, null, null);
+        this.alertService.error(error.message, null, null);
     }
 }

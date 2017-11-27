@@ -73,12 +73,15 @@
         {
             "fieldName": "copyright",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "resolution",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20171024111747",
     "entityTableName": "multimedia",
     "dto": "no",
     "pagination": "infinite-scroll",
-    "service": "no",
-    "jpaMetamodelFiltering": false
+    "service": "no"
 }

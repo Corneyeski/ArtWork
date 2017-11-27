@@ -3,41 +3,36 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { SERVER_API_URL } from '../../app.constants';
 
-import { JhiDateUtils } from 'ng-jhipster';
-
-import { Multimedia } from './multimedia.model';
+import { Profession } from './profession.model';
 import { ResponseWrapper, createRequestOption } from '../../shared';
 
 @Injectable()
-export class MultimediaService {
+export class ProfessionService {
 
-    private resourceUrl = SERVER_API_URL + 'api/multimedias';
+    private resourceUrl = SERVER_API_URL + 'api/professions';
 
-    constructor(private http: Http, private dateUtils: JhiDateUtils) { }
+    constructor(private http: Http) { }
 
-    create(multimedia: Multimedia): Observable<Multimedia> {
-        const copy = this.convert(multimedia);
+    create(profession: Profession): Observable<Profession> {
+        const copy = this.convert(profession);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
-            this.convertItemFromServer(jsonResponse);
-            return jsonResponse;
+            return this.convertItemFromServer(jsonResponse);
         });
     }
 
-    update(multimedia: Multimedia): Observable<Multimedia> {
-        const copy = this.convert(multimedia);
+    update(profession: Profession): Observable<Profession> {
+        const copy = this.convert(profession);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
-            this.convertItemFromServer(jsonResponse);
-            return jsonResponse;
+            return this.convertItemFromServer(jsonResponse);
         });
     }
 
-    find(id: number): Observable<Multimedia> {
+    find(id: number): Observable<Profession> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
-            this.convertItemFromServer(jsonResponse);
-            return jsonResponse;
+            return this.convertItemFromServer(jsonResponse);
         });
     }
 
@@ -53,21 +48,26 @@ export class MultimediaService {
 
     private convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
+        const result = [];
         for (let i = 0; i < jsonResponse.length; i++) {
-            this.convertItemFromServer(jsonResponse[i]);
+            result.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return new ResponseWrapper(res.headers, jsonResponse, res.status);
+        return new ResponseWrapper(res.headers, result, res.status);
     }
 
-    private convertItemFromServer(entity: any) {
-        entity.time = this.dateUtils
-            .convertDateTimeFromServer(entity.time);
+    /**
+     * Convert a returned JSON object to Profession.
+     */
+    private convertItemFromServer(json: any): Profession {
+        const entity: Profession = Object.assign(new Profession(), json);
+        return entity;
     }
 
-    private convert(multimedia: Multimedia): Multimedia {
-        const copy: Multimedia = Object.assign({}, multimedia);
-
-        copy.time = this.dateUtils.toDate(multimedia.time);
+    /**
+     * Convert a Profession to a JSON which can be sent to the server.
+     */
+    private convert(profession: Profession): Profession {
+        const copy: Profession = Object.assign({}, profession);
         return copy;
     }
 }

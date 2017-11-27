@@ -74,13 +74,16 @@ public class Multimedia implements Serializable {
     @Column(name = "copyright")
     private String copyright;
 
+    @Column(name = "resolution")
+    private String resolution;
+
     @ManyToOne
     private User user;
 
     @ManyToOne
     private Album album;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -271,6 +274,19 @@ public class Multimedia implements Serializable {
         this.copyright = copyright;
     }
 
+    public String getResolution() {
+        return resolution;
+    }
+
+    public Multimedia resolution(String resolution) {
+        this.resolution = resolution;
+        return this;
+    }
+
+    public void setResolution(String resolution) {
+        this.resolution = resolution;
+    }
+
     public User getUser() {
         return user;
     }
@@ -296,7 +312,7 @@ public class Multimedia implements Serializable {
     public void setAlbum(Album album) {
         this.album = album;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -336,6 +352,7 @@ public class Multimedia implements Serializable {
             ", description='" + getDescription() + "'" +
             ", usersTag='" + getUsersTag() + "'" +
             ", copyright='" + getCopyright() + "'" +
+            ", resolution='" + getResolution() + "'" +
             "}";
     }
 }

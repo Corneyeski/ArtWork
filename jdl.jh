@@ -96,7 +96,7 @@ entity Multimedia{
     description TextBlob,
     usersTag String,
     copyright String,
-
+    resolution String
 }
 enum Type{ PHOTO, VIDEO, SONG }
 

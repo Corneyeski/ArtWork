@@ -27,6 +27,7 @@
             "description": "Description",
             "usersTag": "Users Tag",
             "copyright": "Copyright",
+            "resolution": "Resolution",
             "user": "User",
             "album": "Album"
         }

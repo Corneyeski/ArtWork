@@ -1,0 +1,33 @@
+
+<div *ngIf="profession">
+    <h2><span jhiTranslate="artWorkApp.profession.detail.title">Profession</span> {{profession.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="artWorkApp.profession.name">Name</span></dt>
+        <dd>
+            <span>{{profession.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.profession.sector">Sector</span></dt>
+        <dd>
+            <span>{{profession.sector}}</span>
+        </dd>
+        <dt><span jhiTranslate="artWorkApp.profession.workersNum">Workers Num</span></dt>
+        <dd>
+            <span>{{profession.workersNum}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'profession/'+ profession.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
