@@ -1,5 +1,6 @@
 package artwork.repository;
 
+import artwork.domain.User;
 import artwork.domain.UserExt;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +17,5 @@ public interface UserExtRepository extends JpaRepository<UserExt, Long> {
     @Query("select user_ext from UserExt user_ext where user_ext.workingOn.login = ?#{principal.username}")
     List<UserExt> findByWorkingOnIsCurrentUser();
 
+    UserExt findOneByUser(User user);
 }

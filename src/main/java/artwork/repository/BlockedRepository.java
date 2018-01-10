@@ -1,6 +1,7 @@
 package artwork.repository;
 
 import artwork.domain.Blocked;
+import artwork.domain.User;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
@@ -18,5 +19,10 @@ public interface BlockedRepository extends JpaRepository<Blocked, Long> {
 
     @Query("select blocked from Blocked blocked where blocked.blocked.login = ?#{principal.username}")
     List<Blocked> findByBlockedIsCurrentUser();
+
+    /*@Query("")
+    List<Blocked>findAllUsersBlockedByCurrent();*/
+
+    List<User> findBlockedByBlock(User user);
 
 }
