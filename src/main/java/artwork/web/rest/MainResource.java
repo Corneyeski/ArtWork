@@ -52,9 +52,7 @@ public class MainResource {
 
         List<User> blockedUsers = blockedRepository.findBlockedByBlock(currentUser.getUser());
 
-        for(User u : blockedUsers){
-            System.out.println(u.getLogin());
-        }
+        blockedUsers.forEach(System.out::println);
 
         return null;
     }
