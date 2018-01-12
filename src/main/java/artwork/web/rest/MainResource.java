@@ -1,5 +1,6 @@
 package artwork.web.rest;
 
+import artwork.domain.Blocked;
 import artwork.domain.User;
 import artwork.domain.UserExt;
 import artwork.repository.BlockedRepository;
@@ -14,11 +15,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.awt.print.Pageable;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
 /**
- *  Controller for the main page
+ * Controller for the main page
  */
 @RestController
 @RequestMapping("/api")
@@ -36,23 +38,21 @@ public class MainResource {
         this.userExtRepository = userExtRepository;
     }
 
-    @RequestMapping(value = "/main", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
+    @GetMapping("/main")
     @Transactional
-    public ResponseEntity<MainRDTO> firstLogin(){
+    public ResponseEntity<MainRDTO> firstLogin() throws URISyntaxException {
 
         Optional<User> optionalUser = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
 
-
-            if(!optionalUser.isPresent()){
-
-            }
+        if (!optionalUser.isPresent()) return null;
 
         UserExt currentUser = userExtRepository.findOneByUser(optionalUser.get());
+        User user = optionalUser.get();
 
-        List<User> blockedUsers = blockedRepository.findBlockedByBlock(currentUser.getUser());
+        List<User> blockedUsers = blockedRepository.selectBlockedFindByBlock(user);
 
         blockedUsers.forEach(System.out::println);
+
 
         return null;
     }
