@@ -81,6 +81,7 @@ public class UserExt implements Serializable {
     private String resumeContentType;
 
     @OneToOne
+    @NotNull
     @JoinColumn(unique = true)
     private User user;
 

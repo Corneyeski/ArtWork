@@ -18,4 +18,11 @@ public interface UserExtRepository extends JpaRepository<UserExt, Long> {
     List<UserExt> findByWorkingOnIsCurrentUser();
 
     UserExt findOneByUser(User user);
+
+    /**
+     * Encuentra el nombre de la ciudad del usuario actual
+     * @return String
+     */
+    @Query("select user_ext.city.name from UserExt user_ext where user_ext.user.login = ?#{principal.username}")
+    String findCityByUser();
 }
