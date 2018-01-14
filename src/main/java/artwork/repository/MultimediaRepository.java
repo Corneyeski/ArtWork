@@ -78,5 +78,5 @@ public interface MultimediaRepository extends JpaRepository<Multimedia, Long> {
     @Query("SELECT multimedia FROM Multimedia multimedia" +
         " WHERE multimedia.user IN :followedUsers " +
         "ORDER BY multimedia.time DESC")
-    List<Multimedia> findMultimediaOfFollowing(@Param("followedUsers")Collection<User> followedUsers);
+    Collection<Multimedia> findMultimediaOfFollowing(@Param("followedUsers")Collection<User> followedUsers);
 }

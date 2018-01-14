@@ -39,7 +39,7 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public final JdbcTokenStore jdbcTokenStore;
+    private final JdbcTokenStore jdbcTokenStore;
 
     private final AuthorityRepository authorityRepository;
 
@@ -197,8 +197,7 @@ public class UserService {
     }
 
     public void deleteUser(String login) {
-        jdbcTokenStore.findTokensByUserName(login).forEach(token ->
-            jdbcTokenStore.removeAccessToken(token));
+        jdbcTokenStore.findTokensByUserName(login).forEach(jdbcTokenStore::removeAccessToken);
         userRepository.findOneByLogin(login).ifPresent(user -> {
             userRepository.delete(user);
             cacheManager.getCache("users").evict(login);

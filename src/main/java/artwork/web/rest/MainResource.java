@@ -5,15 +5,22 @@ import artwork.domain.User;
 import artwork.repository.*;
 import artwork.security.SecurityUtils;
 import artwork.web.rest.rdto.main.MainRDTO;
+import artwork.web.rest.rdto.main.MultimediaRDTO;
+import artwork.web.rest.util.HeaderUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 /**
  * Controller for the main page
@@ -23,14 +30,12 @@ import java.util.Collection;
 public class MainResource {
 
     private final BlockedRepository blockedRepository;
-    private final UserRepository userRepository;
     private final UserExtRepository userExtRepository;
     private final FollowingRepository followingRepository;
     private final MultimediaRepository multimediaRepository;
 
     public MainResource(BlockedRepository blockedRepository, UserRepository userRepository, UserExtRepository userExtRepository, FollowingRepository followingRepository, MultimediaRepository multimediaRepository) {
         this.blockedRepository = blockedRepository;
-        this.userRepository = userRepository;
         this.userExtRepository = userExtRepository;
         this.followingRepository = followingRepository;
         this.multimediaRepository = multimediaRepository;
@@ -46,43 +51,56 @@ public class MainResource {
     public ResponseEntity<MainRDTO> firstLogin(Pageable pageable) throws URISyntaxException {
 
         if (SecurityUtils.getCurrentUserLogin() == null)
-            //TODO añadir mensaje: 'necesitas estar logueado'
-            return null;
-
-        /*
-        Optional<User> optionalUser = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin());
-        UserExt currentUser = userExtRepository.findOneByUser(optionalUser.get());
-        User user = optionalUser.get();
-        */
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "badLogin", "Necesitas estar logueado para usar esto")).body(null);
 
         String cityUser = userExtRepository.findCityByUser();
-
         Collection<User> blockedUsers = blockedRepository.selectBlockedFromCurrentUser();
         Collection<User> followedUsers = followingRepository.selectFollowedByCurrentUser();
 
         Page<Multimedia> filter = null;
 
-        if(!blockedUsers.isEmpty() && !followedUsers.isEmpty())
+        if(!blockedUsers.isEmpty() && !followedUsers.isEmpty()) {
             filter = multimediaRepository.
-                findMultimediaPopularGreaterNoBlockedAndNoFollowed(cityUser,blockedUsers,followedUsers,pageable);
-        else if(blockedUsers.isEmpty() && !followedUsers.isEmpty())
+                findMultimediaPopularGreaterNoBlockedAndNoFollowed(cityUser, blockedUsers, followedUsers, pageable);
+            filter.getContent().addAll(multimediaRepository.findMultimediaOfFollowing(followedUsers));
+        }
+        else if(blockedUsers.isEmpty() && !followedUsers.isEmpty()) {
             filter = multimediaRepository.
-                findMultimediaPopularGreaterNoBlockedOrFollowed(cityUser,followedUsers,pageable);
+                findMultimediaPopularGreaterNoBlockedOrFollowed(cityUser, followedUsers, pageable);
+            filter.getContent().addAll(multimediaRepository.findMultimediaOfFollowing(followedUsers));
+        }
         else if(!blockedUsers.isEmpty() && followedUsers.isEmpty())
             filter = multimediaRepository.
                 findMultimediaPopularGreaterNoBlockedOrFollowed(cityUser,blockedUsers,pageable);
+
         else if(blockedUsers.isEmpty() && followedUsers.isEmpty())
             filter = multimediaRepository.
-                findMultimediaPopularGreaterThan("",pageable);
+                findMultimediaPopularGreaterThan(cityUser,pageable);
+
 
         blockedUsers.forEach(System.out::println);
         followedUsers.forEach(System.out::println);
-        if(filter != null && filter.getContent() != null)filter.getContent().forEach(System.out::println);
 
+        if(filter != null && filter.getContent() != null) {
+            filter.getContent().forEach(System.out::println);
 
+            MainRDTO result = new MainRDTO();
 
+            filter.getContent().forEach(e -> {
+                MultimediaRDTO m = new MultimediaRDTO();
+                BeanUtils.copyProperties(e,m);
+                result.getMultimedia().add(m);
+            });
 
-        return null;
+            System.gc();
+
+            return ResponseEntity.ok()
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "set"))
+                .body(result);
+        }
+        else return ResponseEntity.noContent()
+            .headers(HeaderUtil.createAlert("empty content","empty")).build();
     }
 
     //TODO metodo para obtener detalle de multimedia

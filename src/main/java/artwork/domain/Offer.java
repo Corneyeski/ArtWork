@@ -31,6 +31,10 @@ public class Offer implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @Lob
+    @Column(name = "short_description")
+    private String shortDescription;
+
     @Column(name = "jhi_time")
     private ZonedDateTime time;
 
@@ -220,6 +224,14 @@ public class Offer implements Serializable {
         this.userExts.remove(userExt);
         userExt.getOffers().remove(this);
         return this;
+    }
+
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
     }
 
     public void setUserExts(Set<UserExt> userExts) {
