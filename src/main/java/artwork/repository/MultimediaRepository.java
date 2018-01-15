@@ -33,8 +33,7 @@ public interface MultimediaRepository extends JpaRepository<Multimedia, Long> {
      */
     @Query("SELECT multimedia FROM Multimedia multimedia" +
         " WHERE multimedia.totalValoration > 2.9" +
-        " AND multimedia.user.userExt.city.name = :city" +
-        " ORDER BY multimedia.time DESC ")
+        " AND multimedia.user.userExt.city.name = :city")
     Page<Multimedia> findMultimediaPopularGreaterThan(@Param("city")String city, Pageable pageable);
     /**
      * Devuelve elementos multimedia filtrados por puntuacion y de usuarios de la misma ciudad ordenado de mas reciente a antiguo y filtrando usuarios bloqueados y seguidos con paginacion
@@ -48,8 +47,7 @@ public interface MultimediaRepository extends JpaRepository<Multimedia, Long> {
         "WHERE multimedia.totalValoration > 2.9 " +
         "AND multimedia.user.userExt.city.name = :city " +
         "AND multimedia.user NOT IN :blocked " +
-        "AND multimedia.user NOT IN :followed " +
-        "ORDER BY multimedia.time DESC ")
+        "AND multimedia.user NOT IN :followed ")
     Page<Multimedia> findMultimediaPopularGreaterNoBlockedAndNoFollowed(@Param("city")String city,
                                                                         @Param("blocked")Collection<User> blocked,
                                                                         @Param("followed")Collection<User> followed,
@@ -64,8 +62,7 @@ public interface MultimediaRepository extends JpaRepository<Multimedia, Long> {
     @Query("SELECT multimedia FROM Multimedia multimedia" +
         " WHERE multimedia.totalValoration > 2.9" +
         " AND multimedia.user.userExt.city.name = :city" +
-        " AND multimedia.user NOT IN :users" +
-        " ORDER BY multimedia.time DESC ")
+        " AND multimedia.user NOT IN :users")
     Page<Multimedia> findMultimediaPopularGreaterNoBlockedOrFollowed(@Param("city")String city,
                                                            @Param("users")Collection<User> users,
                                                            Pageable pageable);
@@ -76,7 +73,6 @@ public interface MultimediaRepository extends JpaRepository<Multimedia, Long> {
      * @return List<Multimedia>
      */
     @Query("SELECT multimedia FROM Multimedia multimedia" +
-        " WHERE multimedia.user IN :followedUsers " +
-        "ORDER BY multimedia.time DESC")
+        " WHERE multimedia.user IN :followedUsers ")
     Collection<Multimedia> findMultimediaOfFollowing(@Param("followedUsers")Collection<User> followedUsers);
 }

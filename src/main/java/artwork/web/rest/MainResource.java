@@ -16,9 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
@@ -92,6 +91,13 @@ public class MainResource {
                 BeanUtils.copyProperties(e,m);
                 result.getMultimedia().add(m);
             });
+
+            /*result.getMultimedia()
+             .stream().sorted((e1, e2) -> e1.getTime()
+             .compareTo(e2.getTime())).collect(Collectors.toList());*/
+
+            result.getMultimedia()
+                .stream().sorted(Comparator.comparing(MultimediaRDTO::getTime));
 
             System.gc();
 
