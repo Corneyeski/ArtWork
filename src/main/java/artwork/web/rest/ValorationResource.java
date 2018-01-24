@@ -20,6 +20,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -150,13 +151,14 @@ public class ValorationResource {
 
             if (valoration != null) {
                 valoration.setMark(value);
+                valoration.setTime(ZonedDateTime.now());
                 valorationRepository.save(valoration);
             } else {
                 valoration = new Valoration();
                 valoration.setUser(user);
                 valoration.setMultimedia(multimedia);
                 valoration.setMark(value);
-
+                valoration.setTime(ZonedDateTime.now());
                 valorationRepository.save(valoration);
             }
             Double points = valorationRepository.avgMultimedia(multimedia);
