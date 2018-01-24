@@ -1,5 +1,10 @@
 package artwork.web.rest;
 
+import artwork.domain.Multimedia;
+import artwork.domain.User;
+import artwork.repository.MultimediaRepository;
+import artwork.repository.UserRepository;
+import artwork.security.SecurityUtils;
 import com.codahale.metrics.annotation.Timed;
 import artwork.domain.Valoration;
 
@@ -30,9 +35,15 @@ public class ValorationResource {
     private static final String ENTITY_NAME = "valoration";
 
     private final ValorationRepository valorationRepository;
+    private final MultimediaRepository multimediaRepository;
+    private final UserRepository userRepository;
 
-    public ValorationResource(ValorationRepository valorationRepository) {
+    public ValorationResource(ValorationRepository valorationRepository,
+                              MultimediaRepository multimediaRepository,
+                              UserRepository userRepository) {
         this.valorationRepository = valorationRepository;
+        this.multimediaRepository = multimediaRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -115,5 +126,44 @@ public class ValorationResource {
         log.debug("REST request to delete Valoration : {}", id);
         valorationRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/setUpdateValorationPhoto")
+    @Timed
+    public ResponseEntity<Void> setUpdateValoration(@RequestParam Long voted,
+                                                    @RequestParam Double value) throws URISyntaxException {
+
+        if (SecurityUtils.getCurrentUserLogin() == null)
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "badLogin", "Necesitas estar logueado para usar esto")).body(null);
+
+        if (value < 0 || value > 5) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.
+                createEntityDeletionAlert(ENTITY_NAME, "bad score")).build();
+        } else {
+
+            User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
+
+            Multimedia multimedia = multimediaRepository.findOne(voted);
+
+            Valoration valoration = valorationRepository.findByUserAndMultimedia(user, multimedia);
+
+            if (valoration != null) {
+                valoration.setMark(value);
+                valorationRepository.save(valoration);
+            } else {
+                valoration = new Valoration();
+                valoration.setUser(user);
+                valoration.setMultimedia(multimedia);
+                valoration.setMark(value);
+
+                valorationRepository.save(valoration);
+            }
+            Double points = valorationRepository.avgMultimedia(multimedia);
+            multimedia.setTotalValoration(points);
+            multimediaRepository.save(multimedia);
+
+            return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, "updated")).build();
+        }
     }
 }
