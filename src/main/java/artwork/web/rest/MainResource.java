@@ -14,10 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
@@ -32,12 +30,18 @@ public class MainResource {
     private final UserExtRepository userExtRepository;
     private final FollowingRepository followingRepository;
     private final MultimediaRepository multimediaRepository;
+    private final OfferRepository offerRepository;
 
-    public MainResource(BlockedRepository blockedRepository, UserRepository userRepository, UserExtRepository userExtRepository, FollowingRepository followingRepository, MultimediaRepository multimediaRepository) {
+    public MainResource(BlockedRepository blockedRepository,
+                        UserExtRepository userExtRepository,
+                        FollowingRepository followingRepository,
+                        MultimediaRepository multimediaRepository,
+                        OfferRepository offerRepository) {
         this.blockedRepository = blockedRepository;
         this.userExtRepository = userExtRepository;
         this.followingRepository = followingRepository;
         this.multimediaRepository = multimediaRepository;
+        this.offerRepository = offerRepository;
     }
 
     /**
@@ -100,6 +104,8 @@ public class MainResource {
                 .stream().sorted(Comparator.comparing(MultimediaRDTO::getTime));
 
             System.gc();
+
+
 
             return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "set"))
