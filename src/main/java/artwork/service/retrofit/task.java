@@ -9,12 +9,12 @@ import java.net.URLConnection;
 
 public class task {
 
-    public void genData(){
+    public static void main(String[] args){
 
         InputStream in = null;
         try {
-
-            String urlStr = "";
+            String appId = "01907a24370e291c3494c6d185612066075a3cc81852ea977fe6949da5daa234";
+            String urlStr = "https://api.unsplash.com/photos/random?client_id="+appId;
 
             URL url = new URL(urlStr);
             URLConnection conn = url.openConnection();
