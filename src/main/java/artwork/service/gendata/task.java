@@ -1,4 +1,4 @@
-package artwork.service.retrofit;
+package artwork.service.gendata;
 
 import com.google.gson.Gson;
 
