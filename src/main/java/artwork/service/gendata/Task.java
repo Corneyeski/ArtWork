@@ -104,15 +104,29 @@ public class Task {
         Multimedia m = new Multimedia();
         m.setTotalValoration(5.0);
         m.setType(Type.PHOTO);
-        m.setTitle("prueba");
+        m.setTitle("prueba2");
 
-        URL url = new URL("https://images.unsplash.com/photo-1414608808981-2e2977ed40d5?ixlib=rb-0.3.5&q=85&fm=jpg&crop=entropy&cs=srgb&s=8bb2740b5c5f3f3a0462c873eb1306b9");
-        BufferedImage image = ImageIO.read(url);
+        URL url = new URL(imageUrl);
+        //BufferedImage image = ImageIO.read(url);
+
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+        try (InputStream inputStream = url.openStream()) {
+            int n = 0;
+            byte [] buffer = new byte[ 1024 ];
+            while (-1 != (n = inputStream.read(buffer))) {
+                output.write(buffer, 0, n);
+            }
+        }
+        m.setImage(output.toByteArray());
+        m.setImageContentType("image/jpeg");
+
+        /*
 
         ByteArrayOutputStream byteOutStream=new ByteArrayOutputStream();
         ImageIO.write(image, "jpg", byteOutStream);
 
-        m.setImage(byteOutStream.toByteArray());
+        m.setImage(byteOutStream.toByteArray());*/
 
         return m;
     }
