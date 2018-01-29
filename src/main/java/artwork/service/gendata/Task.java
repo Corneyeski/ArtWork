@@ -6,9 +6,6 @@ import artwork.repository.MultimediaRepository;
 import artwork.service.gendata.entitiesPhoto.LinksRetrofit;
 import com.google.gson.Gson;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
@@ -17,14 +14,15 @@ import java.util.List;
 
 public class Task {
 
-    public static Multimedia genData(){
+    public List<Multimedia> genData(){
 
         InputStream in = null;
         try {
 
+            List<Multimedia> multimediaList = new ArrayList<>();
             List<String> links = new ArrayList<>();
             int i = 0;
-            while(i++ < 1) {
+            while(i++ < 10) {
 
                 String appId = "01907a24370e291c3494c6d185612066075a3cc81852ea977fe6949da5daa234";
                 String urlStr = "https://api.unsplash.com/photos/random?client_id=" + appId;
@@ -33,7 +31,6 @@ public class Task {
                 URLConnection conn = url.openConnection();
                 conn.setConnectTimeout(2000);
                 conn.setReadTimeout(1000);
-                int length = conn.getContentLength();
 
 
                 in = url.openStream();
@@ -51,14 +48,13 @@ public class Task {
                 LinksRetrofit list = gson.fromJson(json, LinksRetrofit.class);
 
                 links.add(list.getLinks().getDownload());
-            }
 
-            String imageUrl = "http://www.avajava.com/images/avajavalogo.jpg";
-            String destinationFile = "image.jpg";
+                multimediaList.add(saveImage(list.getLinks().getDownload()));
+            }
 
             links.forEach(System.out::println);
 
-            return saveImage(links.get(0),destinationFile);
+            return multimediaList;
         }
         catch (Exception e) {
             System.out.println(e);
@@ -69,45 +65,13 @@ public class Task {
         }
     }
 
-    public static Multimedia saveImage(String imageUrl, String destinationFile) throws IOException {
-        /*URL url = new URL(imageUrl);
-        InputStream is = url.openStream();
-        OutputStream os = new FileOutputStream(destinationFile);
-
-        byte[] b = new byte[2048];
-        int length;
-
-        while ((length = is.read(b)) != -1) {
-            os.write(b, 0, length);
-        }
-
-        Multimedia m = new Multimedia();
-        m.setTotalValoration(5.0);
-        m.setImage(b);
-        m.setType(Type.PHOTO);
-        m.setTitle("prueba");
-
-        is.close();
-        os.close();
-
-        File file = new File("image.jpg");
-        if(file.exists()){
-            try {
-                BufferedImage bufferedImage=ImageIO.read(file);
-                ByteArrayOutputStream byteOutStream=new ByteArrayOutputStream();
-                ImageIO.write(bufferedImage, "jpg", byteOutStream);
-                m.setImage( byteOutStream.toByteArray());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }*/
+    private static Multimedia saveImage(String imageUrl) throws IOException {
         Multimedia m = new Multimedia();
         m.setTotalValoration(5.0);
         m.setType(Type.PHOTO);
-        m.setTitle("prueba2");
+        m.setTitle("autoGen");
 
         URL url = new URL(imageUrl);
-        //BufferedImage image = ImageIO.read(url);
 
         ByteArrayOutputStream output = new ByteArrayOutputStream();
 
@@ -120,13 +84,6 @@ public class Task {
         }
         m.setImage(output.toByteArray());
         m.setImageContentType("image/jpeg");
-
-        /*
-
-        ByteArrayOutputStream byteOutStream=new ByteArrayOutputStream();
-        ImageIO.write(image, "jpg", byteOutStream);
-
-        m.setImage(byteOutStream.toByteArray());*/
 
         return m;
     }

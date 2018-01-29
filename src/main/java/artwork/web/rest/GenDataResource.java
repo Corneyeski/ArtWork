@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.Transactional;
 
-
 @RestController
 @RequestMapping("/api")
 public class GenDataResource {
@@ -21,10 +20,11 @@ public class GenDataResource {
         this.multimediaRepository = multimediaRepository;
     }
 
-
     @GetMapping("/genData")
     @Transactional
     public void genData(){
-        multimediaRepository.save(Task.genData());
+        Task t = new Task();
+
+        multimediaRepository.save( t.genData());
     }
 }
