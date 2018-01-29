@@ -1,10 +1,15 @@
 package artwork.service.gendata;
 
 import artwork.domain.Multimedia;
+import artwork.domain.User;
 import artwork.domain.enumeration.Type;
 import artwork.repository.MultimediaRepository;
+import artwork.repository.UserRepository;
+import artwork.security.SecurityUtils;
+import artwork.service.UserService;
 import artwork.service.gendata.entitiesPhoto.LinksRetrofit;
 import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.*;
 import java.net.URL;
@@ -12,16 +17,21 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Task {
+public class GenData {
 
-    public List<Multimedia> genData(){
+    @Autowired
+    private UserRepository userRepository;
+
+    public GenDataDTO genData(Long id, String password, User user){
 
         InputStream in = null;
         try {
 
+            //List<User> users = genUsers(id,password);
             List<Multimedia> multimediaList = new ArrayList<>();
             List<String> links = new ArrayList<>();
             int i = 0;
+
             while(i++ < 10) {
 
                 String appId = "01907a24370e291c3494c6d185612066075a3cc81852ea977fe6949da5daa234";
@@ -49,12 +59,19 @@ public class Task {
 
                 links.add(list.getLinks().getDownload());
 
-                multimediaList.add(saveImage(list.getLinks().getDownload()));
+
+                Multimedia m = saveImage(list.getLinks().getDownload());
+                m.setUser(user);
+                multimediaList.add(m);
             }
+
+            GenDataDTO genDataDTO = new GenDataDTO();
+            //genDataDTO.setUsers(users);
+            genDataDTO.setMultimedia(multimediaList);
 
             links.forEach(System.out::println);
 
-            return multimediaList;
+            return genDataDTO;
         }
         catch (Exception e) {
             System.out.println(e);
@@ -63,6 +80,28 @@ public class Task {
         finally {
             try { if (in != null) in.close(); } catch (Exception ignored) { }
         }
+    }
+
+    public List<User> genUsers(Long id, String password){
+
+        int i = 0;
+        List<User> users = new ArrayList<>();
+        do {
+            i++;
+
+            User user = new User();
+            user.setActivated(true);
+            user.setEmail("user" + id + "@user.com");
+            user.setLogin("user" + id);
+            user.setPassword(password);
+            user.setPassword("user");
+            user.setFirstName("user" + id);
+            id++;
+
+            users.add(user);
+        }while(i <= 5);
+
+        return users;
     }
 
     private static Multimedia saveImage(String imageUrl) throws IOException {
