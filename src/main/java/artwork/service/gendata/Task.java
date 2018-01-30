@@ -2,7 +2,6 @@ package artwork.service.gendata;
 
 import artwork.domain.Multimedia;
 import artwork.domain.enumeration.Type;
-import artwork.repository.MultimediaRepository;
 import artwork.service.gendata.entitiesPhoto.LinksRetrofit;
 import com.google.gson.Gson;
 
@@ -36,10 +35,9 @@ public class Task {
                 in = url.openStream();
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 byte[] buffer = new byte[1024];
-                int total = 0, nRead;
+                int nRead;
                 while ((nRead = in.read(buffer)) != -1) {
                     out.write(buffer, 0, nRead);
-                    total += nRead;
                 }
                 String json = new String(out.toByteArray());
 
@@ -57,7 +55,7 @@ public class Task {
             return multimediaList;
         }
         catch (Exception e) {
-            System.out.println(e);
+            System.err.println(e);
             return null;
         }
         finally {
@@ -76,7 +74,7 @@ public class Task {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
 
         try (InputStream inputStream = url.openStream()) {
-            int n = 0;
+            int n;
             byte [] buffer = new byte[ 1024 ];
             while (-1 != (n = inputStream.read(buffer))) {
                 output.write(buffer, 0, n);
