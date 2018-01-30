@@ -30,7 +30,7 @@ public class AsyncConfiguration implements AsyncConfigurer {
     @Override
     @Bean(name = "taskExecutor")
     public Executor getAsyncExecutor() {
-        log.debug("Creating Async Task Executor");
+        log.debug("Creating Async GenData Executor");
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(jHipsterProperties.getAsync().getCorePoolSize());
         executor.setMaxPoolSize(jHipsterProperties.getAsync().getMaxPoolSize());
