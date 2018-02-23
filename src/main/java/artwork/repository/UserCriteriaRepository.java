@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -44,6 +45,13 @@ public class UserCriteriaRepository {
         userCriteriaQuery = builder.createQuery( User.class );
 
         userRoot = userCriteriaQuery.from(User.class);
+    }
+
+    public List<UserExt> filterUserDefinitions(Map<String, Object> parameters) {
+
+        filterByValidated(parameters);
+
+        return entityManager.createQuery( userExtCriteriaQuery ).getResultList();
     }
 
     private void filterByValidated(Map<String, Object> parameters) {
