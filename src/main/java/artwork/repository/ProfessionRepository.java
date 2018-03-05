@@ -13,4 +13,5 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface ProfessionRepository extends JpaRepository<Profession, Long> {
 
+    Profession findByName(String name);
 }

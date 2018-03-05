@@ -1,6 +1,10 @@
 package artwork.web.rest;
 
+import artwork.domain.City;
+import artwork.domain.Profession;
 import artwork.domain.UserExt;
+import artwork.repository.CityRepository;
+import artwork.repository.ProfessionRepository;
 import artwork.repository.UserCriteriaRepository;
 import com.codahale.metrics.annotation.Timed;
 import org.springframework.http.HttpStatus;
@@ -25,6 +29,12 @@ public class SearchResource {
     @Inject
     private UserCriteriaRepository userCriteriaRepository;
 
+    @Inject
+    private CityRepository cityRepository;
+
+    @Inject
+    private ProfessionRepository professionRepository;
+
     @RequestMapping(value = "/search/users",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
@@ -34,14 +44,19 @@ public class SearchResource {
         @RequestParam(value = "maxPoints", required = false) Double maxPopular,
         @RequestParam(value = "tags", required = false) String tags,
         @RequestParam(value = "validated", required = false) boolean validated,
-        @RequestParam(value = "ageMin", required = false) Integer ageMin,
-        @RequestParam(value = "ageMax", required = false) Integer ageMax
+        @RequestParam(value = "minAge", required = false) Integer ageMin,
+        @RequestParam(value = "maxAge", required = false) Integer ageMax,
+        @RequestParam(value = "kind", required = false) Integer kind,
+        @RequestParam(value = "profession", required = false) String profession
     ) throws URISyntaxException {
 
         Map<String, Object> params = new HashMap<>();
 
         if (city != null && !city.equalsIgnoreCase("")) {
-            params.put("city",city);
+
+            City cityFind = cityRepository.findByName(city);
+
+            params.put("city",cityFind);
         }
         if(maxPopular != null && maxPopular > 0.0 && maxPopular > minPopular){
             params.put("maxPopular",maxPopular);
@@ -56,10 +71,19 @@ public class SearchResource {
             params.put("validated",validated);
         }
         if(ageMin != null && ageMin > 0){
-            params.put("agemin",ageMin);
+            params.put("minAge",ageMin);
         }
         if(ageMax != null && ageMax > 0){
-            params.put("agemax",ageMax);
+            params.put("maxAge",ageMax);
+        }
+
+        if(kind != null) params.put("kind",kind);
+
+        if(profession != null && !profession.equals("")) {
+
+            Profession professionFind = professionRepository.findByName(profession);
+
+            params.put("profession",professionFind);
         }
 
         List<UserExt> result = userCriteriaRepository.filterUserDefinitions(params);
