@@ -1,6 +1,7 @@
 package artwork.repository;
 
 import artwork.domain.*;
+import artwork.domain.UserExt_;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -58,19 +59,6 @@ public class UserCriteriaRepository {
         return entityManager.createQuery(userExtCriteriaQuery).getResultList();
     }
 
-    private void filterByValidated(Map<String, Object> parameters) {
-        if (parameters.containsKey("validated")) {
-            boolean validated = (boolean) parameters.get("validated");
-
-            userExtCriteriaQuery.select(userExtRoot);
-            if (validated) {
-                userExtCriteriaQuery.where(builder.isTrue(userExtRoot.get(UserExt_.validated)));
-            } else {
-                userExtCriteriaQuery.where(builder.isFalse(userExtRoot.get(UserExt_.validated)));
-            }
-        }
-    }
-
     private void filterByCity(Map<String, Object> parameters) {
         if (parameters.containsKey("city")) {
             City city = (City) parameters.get("city");
@@ -123,13 +111,13 @@ public class UserCriteriaRepository {
 
                 Integer minPopular = (Integer) parameters.get("minAge");
 
-                userExtCriteriaQuery.where(builder.lessThanOrEqualTo(userExtRoot.get(UserExt_.age), minPopular));
+                userExtCriteriaQuery.where(builder.greaterThanOrEqualTo(userExtRoot.get(UserExt_.age), minPopular));
             }
             if(parameters.containsKey("maxAge") && !parameters.containsKey("minAge")){
 
                 Integer maxPopular = (Integer) parameters.get("maxAge");
 
-                userExtCriteriaQuery.where(builder.greaterThanOrEqualTo(userExtRoot.get(UserExt_.age), maxPopular));
+                userExtCriteriaQuery.where(builder.lessThanOrEqualTo(userExtRoot.get(UserExt_.age), maxPopular));
             }
         }
     }
@@ -166,6 +154,17 @@ public class UserCriteriaRepository {
 
             userExtCriteriaQuery.select(userExtRoot);
             userExtCriteriaQuery.where(builder.equal(userExtRoot.get(UserExt_.kind), kind));
+        }
+    }
+
+    private void filterByValidated(Map<String, Object> parameters){
+        if(parameters.containsKey("validated")){
+            boolean validated = (boolean) parameters.get("validated");
+            userExtCriteriaQuery.select(userExtRoot);
+
+            if(validated)
+                userExtCriteriaQuery.where(builder.isTrue(userExtRoot.get(UserExt_.validated)));
+            else userExtCriteriaQuery.where(builder.isFalse(userExtRoot.get(UserExt_.validated)));
         }
     }
 }
