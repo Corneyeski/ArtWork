@@ -26,9 +26,9 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/artWork?useUnicode=true&characterEncoding=utf8&useSSL=false
-        username: root
-        password:
+        url: jdbc:mysql://artworkbbdd.chkvwqnvxfcz.eu-west-3.rds.amazonaws.com:3306/artwork?useUnicode=true&characterEncoding=utf8&useSSL=false
+        username: artwork
+        password: artworkroot
         hikari:
             data-source-properties:
                 cachePrepStmts: true
