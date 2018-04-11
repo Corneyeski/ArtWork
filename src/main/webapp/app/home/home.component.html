@@ -27,8 +27,8 @@
 
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label class="form-control-label" for="login">Nombre de usuario</label>
-                            <input type="text" class="form-control" [(ngModel)]="registerCredentials.login" id="login" name="login" #login="ngModel"
+                            <label class="form-control-label" for="registerLogin">Nombre de usuario</label>
+                            <input type="text" class="form-control" [(ngModel)]="registerCredentials.login" id="registerLogin" name="registerLogin" #registerLogin  ="ngModel"
                                 placeholder="Nombre de usuario" required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$">
                         </div>
                         <div class="form-group col-md-6">
@@ -88,8 +88,7 @@
             <div class="col-md-3"></div>
             <div class="col-md-6">
 
-                <h1 style="text-align:center;margin-top:20px">Accede a ArtWork!</h1>
-
+                <h1 style="text-align:center;margin-top:20px">Accede a ArtWork!</h1> 
                 <form class="form" role="form" (ngSubmit)="login()">
                     <div class="form-group">
                         <label for="username">Nombre de usuario</label>
@@ -99,8 +98,9 @@
                         <label for="password">Contraseña</label>
                         <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña" [(ngModel)]="password">
                     </div>
-                    <button type="submit" class="btn btn-primary">Entra</button>
+                    <button type="submit" class="btn btn-primary col-md-12">Entra</button>
                 </form>
+
             </div>
             <div class="col-md-3"></div>
         </div>

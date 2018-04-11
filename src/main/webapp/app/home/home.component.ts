@@ -62,7 +62,6 @@ export class HomeComponent implements OnInit {
     }
 
     login() {
-        console.log(this.username)
         this.loginCredentials.username = this.username;
         this.loginCredentials.password = this.password;
     
