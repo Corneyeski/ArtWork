@@ -115,6 +115,8 @@ public class MainResource {
             .headers(HeaderUtil.createAlert("empty content","empty")).build();
     }
 
+    //TODO Añadir metodo para que puedan subir fotos/videos etc
+
     //TODO metodo para obtener detalle de multimedia
 
     //TODO metodo para obtener detalle de oferta
