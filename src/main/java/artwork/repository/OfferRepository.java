@@ -5,9 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
-
-import java.awt.print.Pageable;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -25,7 +22,4 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
     @Query("select offer from Offer offer left join fetch offer.userExts where offer.id =:id")
     Offer findOneWithEagerRelationships(@Param("id") Long id);
 
-    //TODO Añadir paginacion
-    @Query("select offer from Offer offer where offer.status = true order by offer.time desc")
-    Collection<Offer> findRecentOffers();
 }

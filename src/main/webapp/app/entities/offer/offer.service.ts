@@ -19,7 +19,8 @@ export class OfferService {
         const copy = this.convert(offer);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
+            this.convertItemFromServer(jsonResponse);
+            return jsonResponse;
         });
     }
 
@@ -27,14 +28,16 @@ export class OfferService {
         const copy = this.convert(offer);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
+            this.convertItemFromServer(jsonResponse);
+            return jsonResponse;
         });
     }
 
     find(id: number): Observable<Offer> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
+            this.convertItemFromServer(jsonResponse);
+            return jsonResponse;
         });
     }
 
@@ -50,26 +53,17 @@ export class OfferService {
 
     private convertResponse(res: Response): ResponseWrapper {
         const jsonResponse = res.json();
-        const result = [];
         for (let i = 0; i < jsonResponse.length; i++) {
-            result.push(this.convertItemFromServer(jsonResponse[i]));
+            this.convertItemFromServer(jsonResponse[i]);
         }
-        return new ResponseWrapper(res.headers, result, res.status);
+        return new ResponseWrapper(res.headers, jsonResponse, res.status);
     }
 
-    /**
-     * Convert a returned JSON object to Offer.
-     */
-    private convertItemFromServer(json: any): Offer {
-        const entity: Offer = Object.assign(new Offer(), json);
+    private convertItemFromServer(entity: any) {
         entity.time = this.dateUtils
-            .convertDateTimeFromServer(json.time);
-        return entity;
+            .convertDateTimeFromServer(entity.time);
     }
 
-    /**
-     * Convert a Offer to a JSON which can be sent to the server.
-     */
     private convert(offer: Offer): Offer {
         const copy: Offer = Object.assign({}, offer);
 

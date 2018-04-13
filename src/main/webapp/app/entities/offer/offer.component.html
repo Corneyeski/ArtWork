@@ -26,6 +26,7 @@
             <th><span jhiTranslate="artWorkApp.offer.tags">Tags</span></th>
             <th><span jhiTranslate="artWorkApp.offer.location">Location</span></th>
             <th><span jhiTranslate="artWorkApp.offer.contract">Contract</span></th>
+            <th><span jhiTranslate="artWorkApp.offer.profession">Profession</span></th>
             <th><span jhiTranslate="artWorkApp.offer.creator">Creator</span></th>
             <th><span jhiTranslate="artWorkApp.offer.userExt">User Ext</span></th>
             <th></th>
@@ -43,6 +44,11 @@
                 <td>{{offer.tags}}</td>
                 <td>{{offer.location}}</td>
                 <td>{{offer.contract}}</td>
+                <td>
+                    <div *ngIf="offer.profession">
+                        <a [routerLink]="['../profession', offer.profession?.id ]" >{{offer.profession?.name}}</a>
+                    </div>
+                </td>
                 <td>
                     {{offer.creator?.login}}
                 </td>

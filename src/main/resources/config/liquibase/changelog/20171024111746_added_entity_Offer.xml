@@ -58,6 +58,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="profession_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <column name="creator_id" type="bigint">
                 <constraints nullable="true" />
             </column>
