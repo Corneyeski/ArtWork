@@ -1,9 +1,6 @@
 package artwork.web.rest;
 
-import artwork.domain.Multimedia;
-import artwork.domain.Offer;
-import artwork.domain.Profession;
-import artwork.domain.User;
+import artwork.domain.*;
 import artwork.repository.*;
 import artwork.security.SecurityUtils;
 import artwork.web.rest.rdto.main.MainRDTO;
@@ -33,17 +30,20 @@ public class MainResource {
     private final FollowingRepository followingRepository;
     private final MultimediaRepository multimediaRepository;
     private final OfferRepository offerRepository;
+    private final UserRepository userRepository;
 
     public MainResource(BlockedRepository blockedRepository,
                         UserExtRepository userExtRepository,
                         FollowingRepository followingRepository,
                         MultimediaRepository multimediaRepository,
-                        OfferRepository offerRepository) {
+                        OfferRepository offerRepository,
+                        UserRepository userRepository) {
         this.blockedRepository = blockedRepository;
         this.userExtRepository = userExtRepository;
         this.followingRepository = followingRepository;
         this.multimediaRepository = multimediaRepository;
         this.offerRepository = offerRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -109,9 +109,12 @@ public class MainResource {
 
             //TODO TEST
 
-          /*  User user = userExtRepository.findOneByUser(SecurityUtils.getCurrentUserLogin()):
+            UserExt user = userExtRepository.findOneByUser(
+                userRepository.findOneByLogin(
+                    SecurityUtils.getCurrentUserLogin()).get());
 
-            Collection<Offer> recieved = offerRepository.findOffersByProfessionAndStatusOrderByTimeDesc();*/
+            Collection<Offer> recieved = offerRepository.findOffersByProfessionAndStatusOrderByTimeDesc(
+                user.getProfession(), true);
 
             return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "set"))
@@ -121,6 +124,26 @@ public class MainResource {
             .headers(HeaderUtil.createAlert("empty content","empty")).build();
     }
 
+    @GetMapping("/main/offers")
+    @Transactional
+    public ResponseEntity<MainRDTO> offersMain(Pageable pageable) throws URISyntaxException {
+
+        UserExt user = userExtRepository.findOneByUser(
+            userRepository.findOneByLogin(
+                SecurityUtils.getCurrentUserLogin()).get());
+
+        Collection<Offer> recieved = offerRepository.findOffersByProfessionAndStatusOrderByTimeDesc(
+            user.getProfession(), true);
+
+
+        String[] tags = user.getTags().split("#");
+
+        for(String tag : tags){
+            System.out.println(tag);
+        }
+
+        return null;
+    }
     //TODO Añadir metodo para que puedan subir fotos/videos etc
 
     //TODO metodo para obtener detalle de multimedia
