@@ -1,6 +1,8 @@
 package artwork.web.rest;
 
 import artwork.domain.Multimedia;
+import artwork.domain.Offer;
+import artwork.domain.Profession;
 import artwork.domain.User;
 import artwork.repository.*;
 import artwork.security.SecurityUtils;
@@ -105,7 +107,11 @@ public class MainResource {
 
             System.gc();
 
+            //TODO TEST
 
+          /*  User user = userExtRepository.findOneByUser(SecurityUtils.getCurrentUserLogin()):
+
+            Collection<Offer> recieved = offerRepository.findOffersByProfessionAndStatusOrderByTimeDesc();*/
 
             return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "set"))
