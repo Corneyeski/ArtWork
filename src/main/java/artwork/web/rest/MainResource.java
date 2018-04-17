@@ -148,7 +148,7 @@ public class MainResource {
             });
 
             System.gc();
-            
+
             return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "set"))
                 .body(result);
@@ -161,7 +161,7 @@ public class MainResource {
 
     @GetMapping("/main/offers")
     @Transactional
-    public ResponseEntity<MainRDTO> offersMain(Pageable pageable) throws URISyntaxException {
+    public ResponseEntity<Collection<Offer>> offersMain(Pageable pageable) throws URISyntaxException {
 
         UserExt user = userExtRepository.findOneByUser(
             userRepository.findOneByLogin(
@@ -186,7 +186,9 @@ public class MainResource {
             }
         }
 
-        return null;
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "set"))
+            .body(received);
     }
     //TODO Añadir metodo para que puedan subir fotos/videos etc
 
