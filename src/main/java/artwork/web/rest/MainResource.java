@@ -5,6 +5,7 @@ import artwork.repository.*;
 import artwork.security.SecurityUtils;
 import artwork.web.rest.rdto.main.MainRDTO;
 import artwork.web.rest.rdto.main.MultimediaRDTO;
+import artwork.web.rest.rdto.main.OfferRDTO;
 import artwork.web.rest.util.HeaderUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -109,18 +110,52 @@ public class MainResource {
 
             //TODO TEST
 
-            UserExt user = userExtRepository.findOneByUser(
+         /*   UserExt user = userExtRepository.findOneByUser(
                 userRepository.findOneByLogin(
                     SecurityUtils.getCurrentUserLogin()).get());
 
             Collection<Offer> recieved = offerRepository.findOffersByProfessionAndStatusOrderByTimeDesc(
-                user.getProfession(), true);
+                user.getProfession(), true);*/
 
+
+            UserExt user = userExtRepository.findOneByUser(
+                userRepository.findOneByLogin(
+                    SecurityUtils.getCurrentUserLogin()).get());
+
+            Collection<Offer> received = new ArrayList<>();
+            String[] tags = user.getTags().split("#");
+
+            if(user.getProfession() != null) {
+                received = offerRepository.findOffersByProfessionAndStatusOrderByTimeDesc(
+                    user.getProfession(), true);
+
+
+                for (String tag : tags) {
+                    System.out.println(tag);
+                    received.addAll(offerRepository.findRecentOffersByTags(tag, received));
+                }
+            }else {
+                for (String tag : tags) {
+                    System.out.println(tag);
+                    received.addAll(offerRepository.findRecentOffersByTagsNoOffers(tag));
+                }
+            }
+
+            received.forEach(e -> {
+                OfferRDTO m = new OfferRDTO();
+                BeanUtils.copyProperties(e,m);
+                result.getOffers().add(m);
+            });
+
+            System.gc();
+            
             return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "set"))
                 .body(result);
-        }
-        else return ResponseEntity.noContent()
+
+
+
+        } else return ResponseEntity.noContent()
             .headers(HeaderUtil.createAlert("empty content","empty")).build();
     }
 
@@ -132,14 +167,23 @@ public class MainResource {
             userRepository.findOneByLogin(
                 SecurityUtils.getCurrentUserLogin()).get());
 
-        Collection<Offer> recieved = offerRepository.findOffersByProfessionAndStatusOrderByTimeDesc(
-            user.getProfession(), true);
-
-
+        Collection<Offer> received = new ArrayList<>();
         String[] tags = user.getTags().split("#");
 
-        for(String tag : tags){
-            System.out.println(tag);
+        if(user.getProfession() != null) {
+            received = offerRepository.findOffersByProfessionAndStatusOrderByTimeDesc(
+                user.getProfession(), true);
+
+
+            for (String tag : tags) {
+                System.out.println(tag);
+                received.addAll(offerRepository.findRecentOffersByTags(tag, received));
+            }
+        }else {
+            for (String tag : tags) {
+                System.out.println(tag);
+                received.addAll(offerRepository.findRecentOffersByTagsNoOffers(tag));
+            }
         }
 
         return null;

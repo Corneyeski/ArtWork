@@ -36,6 +36,11 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
         " and offer not in :offersReceived order by offer.time desc")
     Collection<Offer> findRecentOffersByTags(@Param("tag") String tag, @Param("offersReceived") Collection<Offer> offers);
 
+    @Query("select offer from Offer offer where offer.status = true" +
+        " and offer.tags like %:tag%" +
+        " order by offer.time desc")
+    Collection<Offer> findRecentOffersByTagsNoOffers(@Param("tag") String tag);
+
     //TODO Añadir paginacion
     @Query("select offer from Offer offer where offer.status = true and offer.profession = :profession order by offer.time desc")
     Collection<Offer> findRecentOffers(@Param("profession") Profession profession);
