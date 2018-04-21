@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -32,6 +33,9 @@ public class MainResource {
     private final MultimediaRepository multimediaRepository;
     private final OfferRepository offerRepository;
     private final UserRepository userRepository;
+
+    @Inject
+    private OfferCriteriaRepository offerCriteriaRepository;
 
     public MainResource(BlockedRepository blockedRepository,
                         UserExtRepository userExtRepository,

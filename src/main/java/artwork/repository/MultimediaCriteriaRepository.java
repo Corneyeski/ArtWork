@@ -74,6 +74,5 @@ public class MultimediaCriteriaRepository {
                 multimediaCriteriaQuery.where(builder.like(multimediaRoot.get(Multimedia_.tags), "%" + tag[i] + "%"));
             }
         }
-
     }
 }

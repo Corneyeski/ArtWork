@@ -1,9 +1,6 @@
 package artwork.web.rest;
 
-import artwork.domain.City;
-import artwork.domain.Multimedia;
-import artwork.domain.Profession;
-import artwork.domain.UserExt;
+import artwork.domain.*;
 import artwork.domain.enumeration.Type;
 import artwork.repository.*;
 import com.codahale.metrics.annotation.Timed;
@@ -34,10 +31,10 @@ public class SearchResource {
     private ProfessionRepository professionRepository;
 
     @Inject
-    private MultimediaRepository multimediaRepository;
+    private MultimediaCriteriaRepository multimediaCriteriaRepository;
 
     @Inject
-    private MultimediaCriteriaRepository multimediaCriteriaRepository;
+    private OfferCriteriaRepository offerCriteriaRepository;
 
     @RequestMapping(value = "/search/users",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -119,7 +116,6 @@ public class SearchResource {
         if(username != null && !username.equals("")){
             params.put("username",username);
         }
-
         if(maxPopular != null && maxPopular > 0.0 && maxPopular > minPopular){
             params.put("maxPopular",maxPopular);
         }
@@ -150,6 +146,55 @@ public class SearchResource {
 
         List<Multimedia> result = multimediaCriteriaRepository
             .filterMultimediaDefinitions(params);
+
+        return new ResponseEntity<>(
+            result,
+            HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/search/offer",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Transactional
+    public ResponseEntity<List<Offer>> searchOffers(
+        @RequestParam(value = "username", required = false) String username,
+        @RequestParam(value = "name", required = false) String name,
+        @RequestParam(value = "minSalary", required = false) Double minSalary,
+        @RequestParam(value = "maxSalary", required = false) Double maxSalary,
+        @RequestParam(value = "contract", required = false) String contract,
+        @RequestParam(value = "tags", required = false) String tags,
+        @RequestParam(value = "date", required = false) Date time,
+        @RequestParam(value = "profession", required = false) Profession profession
+    ) throws URISyntaxException {
+
+        Map<String, Object> params = new HashMap<>();
+
+        if(username != null && !username.equals("")){
+            params.put("username",username);
+        }
+        if(name != null && !name.equals("")){
+            params.put("name",name);
+        }
+        if(maxSalary != null && maxSalary > 0.0 && maxSalary > minSalary){
+            params.put("maxPopular",maxSalary);
+        }
+        if(minSalary != null && minSalary > 0.0){
+            params.put("minPopular",minSalary);
+        }
+        if(contract != null && !contract.equals("")){
+            params.put("contract", contract);
+        }
+        if(tags != null && !tags.equals("")){
+            params.put("tags",tags);
+        }
+        if(time != null){
+            params.put("time",time);
+        }
+        if(profession != null){
+            params.put("profession",profession);
+        }
+
+        List<Offer> result = offerCriteriaRepository
+            .filterOfferDefinitions(params);
 
         return new ResponseEntity<>(
             result,
