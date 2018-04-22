@@ -127,23 +127,13 @@ public class MainResource {
                     SecurityUtils.getCurrentUserLogin()).get());
 
             Collection<Offer> received = new ArrayList<>();
-            String[] tags = user.getTags().split("#");
 
             if(user.getProfession() != null) {
                 received = offerRepository.findOffersByProfessionAndStatusOrderByTimeDesc(
                     user.getProfession(), true);
-
-
-                for (String tag : tags) {
-                    System.out.println(tag);
-                    received.addAll(offerRepository.findRecentOffersByTags(tag, received));
-                }
-            }else {
-                for (String tag : tags) {
-                    System.out.println(tag);
-                    received.addAll(offerRepository.findRecentOffersByTagsNoOffers(tag));
-                }
             }
+
+            received.addAll(offerCriteriaRepository.searchTags(user.getTags(), received));
 
             received.forEach(e -> {
                 OfferRDTO m = new OfferRDTO();
@@ -172,23 +162,13 @@ public class MainResource {
                 SecurityUtils.getCurrentUserLogin()).get());
 
         Collection<Offer> received = new ArrayList<>();
-        String[] tags = user.getTags().split("#");
 
         if(user.getProfession() != null) {
             received = offerRepository.findOffersByProfessionAndStatusOrderByTimeDesc(
                 user.getProfession(), true);
-
-
-            for (String tag : tags) {
-                System.out.println(tag);
-                received.addAll(offerRepository.findRecentOffersByTags(tag, received));
-            }
-        }else {
-            for (String tag : tags) {
-                System.out.println(tag);
-                received.addAll(offerRepository.findRecentOffersByTagsNoOffers(tag));
-            }
         }
+
+        received.addAll(offerCriteriaRepository.searchTags(user.getTags(), received));
 
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "set"))

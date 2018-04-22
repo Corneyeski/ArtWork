@@ -11,10 +11,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class OfferCriteriaRepository {
@@ -145,13 +142,23 @@ public class OfferCriteriaRepository {
         }
     }
 
-    public List<Offer> searchTags(String tags){
+    public List<Offer> searchTags(String tags, Collection<Offer> offers){
 
         Map<String, Object> params = new HashMap<>();
 
         params.put("tags",tags);
 
         filterByTags(params);
+
+        if (offers != null && !offers.isEmpty()) {
+
+            Collection ids = new ArrayList();
+
+            offers.forEach(o -> ids.add(o.getId()));
+
+            offerCriteriaQuery.select(offerRoot);
+            offerCriteriaQuery.where(builder.not(offerRoot.get(Offer_.id).in(offers)));
+        }
 
         return entityManager.createQuery( offerCriteriaQuery ).getResultList();
     }
