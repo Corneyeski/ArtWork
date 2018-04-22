@@ -2,6 +2,7 @@ package artwork.domain;
 
 import artwork.config.Constants;
 
+import artwork.service.dto.NewUserDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
@@ -99,6 +100,13 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JoinColumn(unique = true)
     @JsonIgnore
     private UserExt userExt;
+
+    public User() {}
+
+    //TODO copiar propiedades para hacer la alta del usuario
+    public User(NewUserDTO newUserDTO) {
+
+    }
 
     public Long getId() {
         return id;
