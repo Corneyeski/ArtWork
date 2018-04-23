@@ -132,9 +132,24 @@ public class UserResource {
     public ResponseEntity createUserWithExt(@Valid @RequestBody NewUserDTO newUserDTO) throws URISyntaxException {
         log.debug("REST request to save User : {}", newUserDTO);
 
+        //TODO Añadir Profesion al registro(?)
+        //TODO Añadir metodos para comprobar si login o email ya estan en uso(?)
 
-
-        return null;
+         if (userRepository.findOneByLogin(newUserDTO.getLogin().toLowerCase()).isPresent()) {
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "userexists", "Login already in use"))
+                .body(null);
+        } else if (userRepository.findOneByEmail(newUserDTO.getEmail()).isPresent()) {
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "emailexists", "Email already in use"))
+                .body(null);
+        } else {
+            User newUser = userService.createUser(newUserDTO);
+            mailService.sendCreationEmail(newUser);
+            return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
+                .headers(HeaderUtil.createAlert( "userManagement.created", newUser.getLogin()))
+                .body(newUser);
+        }
     }
 
     /**

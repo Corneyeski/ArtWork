@@ -9,6 +9,7 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -105,7 +106,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     //TODO copiar propiedades para hacer la alta del usuario
     public User(NewUserDTO newUserDTO) {
-
+        BeanUtils.copyProperties(newUserDTO,this);
+        UserExt userExt = new UserExt();
+        userExt.setUser(this);
+        BeanUtils.copyProperties(newUserDTO.getNewUserExtDTO(), userExt);
+        this.setUserExt(userExt);
     }
 
     public Long getId() {

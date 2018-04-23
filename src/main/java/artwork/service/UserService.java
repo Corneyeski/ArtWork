@@ -4,9 +4,11 @@ import artwork.domain.Authority;
 import artwork.domain.User;
 import artwork.repository.AuthorityRepository;
 import artwork.config.Constants;
+import artwork.repository.UserExtRepository;
 import artwork.repository.UserRepository;
 import artwork.security.AuthoritiesConstants;
 import artwork.security.SecurityUtils;
+import artwork.service.dto.NewUserDTO;
 import artwork.service.util.RandomUtil;
 import artwork.service.dto.UserDTO;
 
@@ -37,6 +39,8 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final UserExtRepository userExtRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     private final JdbcTokenStore jdbcTokenStore;
@@ -45,8 +49,14 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JdbcTokenStore jdbcTokenStore, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    public UserService(UserRepository userRepository,
+                       UserExtRepository userExtRepository,
+                       PasswordEncoder passwordEncoder,
+                       JdbcTokenStore jdbcTokenStore,
+                       AuthorityRepository authorityRepository,
+                       CacheManager cacheManager) {
         this.userRepository = userRepository;
+        this.userExtRepository = userExtRepository;
         this.passwordEncoder = passwordEncoder;
         this.jdbcTokenStore = jdbcTokenStore;
         this.authorityRepository = authorityRepository;
@@ -142,6 +152,37 @@ public class UserService {
         user.setResetDate(Instant.now());
         user.setActivated(true);
         userRepository.save(user);
+        log.debug("Created Information for User: {}", user);
+        return user;
+    }
+
+    public User createUser(NewUserDTO newUserDTO) {
+        User user = new User(newUserDTO);
+
+        if (user.getLangKey() == null) {
+            user.setLangKey("es"); // default language
+        } else {
+           user.setLangKey(newUserDTO.getLangKey());
+        }
+
+        //TODO añadir authorities
+        if (user.getAuthorities() != null) {
+            Set<Authority> authorities = new HashSet<>();
+            /*user.getAuthorities().forEach(
+                authority -> authorities.add(authorityRepository.findOne(authority))
+            );*/
+            user.setAuthorities(authorities);
+        }
+        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+        user.setPassword(encryptedPassword);
+        user.setResetKey(RandomUtil.generateResetKey());
+        user.setResetDate(Instant.now());
+        user.setActivated(true);
+
+        userRepository.save(user);
+        userExtRepository.save(user.getUserExt());
+        userRepository.save(user);
+
         log.debug("Created Information for User: {}", user);
         return user;
     }

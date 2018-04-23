@@ -44,11 +44,14 @@ public class NewUserDTO {
     @NotNull
     private Boolean working;
 
+    @Size(min = 2, max = 5)
+    private String langKey;
+
     private NewUserExtDTO newUserExtDTO;
 
     public NewUserDTO() {}
 
-    public NewUserDTO(String login, String email, String firstName, String lastName, byte[] image, String imageContentType, String password, Boolean working, NewUserExtDTO newUserExtDTO) {
+    public NewUserDTO(String login, String email, String firstName, String lastName, byte[] image, String imageContentType, String password, Boolean working, String langKey, NewUserExtDTO newUserExtDTO) {
         this.login = login;
         this.email = email;
         this.firstName = firstName;
@@ -57,6 +60,7 @@ public class NewUserDTO {
         this.imageContentType = imageContentType;
         this.password = password;
         this.working = working;
+        this.langKey = langKey;
         this.newUserExtDTO = newUserExtDTO;
     }
 
@@ -130,5 +134,11 @@ public class NewUserDTO {
 
     public void setNewUserExtDTO(NewUserExtDTO newUserExtDTO) {
         this.newUserExtDTO = newUserExtDTO;
+    }
+
+    public String getLangKey() { return langKey; }
+
+    public void setLangKey(String langKey) {
+        this.langKey = langKey;
     }
 }
