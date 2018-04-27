@@ -82,7 +82,7 @@ public class OfferCriteriaRepository {
 
             for(int i = 1; i < tag.length-1; i++){
 
-                System.out.println(i + " " + tag);
+                System.out.println(i + " " + tag[i]);
 
                 offerCriteriaQuery.where(builder.like(offerRoot.get(Offer_.tags), "%" + tag[i] + "%"));
             }
@@ -157,7 +157,7 @@ public class OfferCriteriaRepository {
             offers.forEach(o -> ids.add(o.getId()));
 
             offerCriteriaQuery.select(offerRoot);
-            offerCriteriaQuery.where(builder.not(offerRoot.get(Offer_.id).in(offers)));
+            offerCriteriaQuery.where(builder.not(offerRoot.get(Offer_.id).in(ids)));
         }
 
         return entityManager.createQuery( offerCriteriaQuery ).getResultList();
