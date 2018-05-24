@@ -1,4 +1,4 @@
-package artwork.web.rest.rdto.main;
+package artwork.web.rest.rdto;
 
 import java.time.ZonedDateTime;
 

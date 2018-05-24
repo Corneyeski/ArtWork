@@ -1,5 +1,8 @@
 package artwork.web.rest;
 
+import artwork.domain.User;
+import artwork.repository.UserRepository;
+import artwork.web.rest.rdto.connection.NewConnectionRDTO;
 import com.codahale.metrics.annotation.Timed;
 import artwork.domain.Connection;
 
@@ -8,12 +11,14 @@ import artwork.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,9 +34,11 @@ public class ConnectionResource {
     private static final String ENTITY_NAME = "connection";
 
     private final ConnectionRepository connectionRepository;
+    private final UserRepository userRepository;
 
-    public ConnectionResource(ConnectionRepository connectionRepository) {
+    public ConnectionResource(ConnectionRepository connectionRepository, UserRepository userRepository) {
         this.connectionRepository = connectionRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -52,6 +59,50 @@ public class ConnectionResource {
         return ResponseEntity.created(new URI("/api/connections/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
+    }
+
+    /**
+     *
+     * Crear nueva solicitud de conexion
+     *
+     * @param request
+     * @return
+     * @throws URISyntaxException
+     */
+    @PostMapping("/requestConnection")
+    @Timed
+    public ResponseEntity<Connection> requestConnection(@RequestBody NewConnectionRDTO request)
+        throws URISyntaxException {
+
+        if(request.getReceiver() != null && request.getSender() != null){
+
+            User sender = userRepository.findOne(request.getSender());
+            User receiver = userRepository.findOne(request.getReceiver());
+
+            if(sender != null && receiver != null){
+
+                if (request.getMessage().equalsIgnoreCase("")) request.setMessage("Me gustaria contactar contigo");
+
+                Connection connection = new Connection();
+                BeanUtils.copyProperties(request, connection);
+
+                connection.setSender(sender);
+                connection.setReceiver(receiver);
+                connection.setTime(ZonedDateTime.now());
+
+                connectionRepository.save(connection);
+
+                return ResponseEntity.created(new URI("/api/connections/" + connection.getId()))
+                    .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, connection.getId().toString()))
+                    .body(connection);
+            }
+            return  ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME,
+                    "id missing", "ids no validos")).body(null);
+        }
+        return  ResponseEntity.badRequest()
+            .headers(HeaderUtil.createFailureAlert(ENTITY_NAME,
+                "id missing", "Es necesaria la id del solicitante y el solicitado")).body(null);
     }
 
     /**
