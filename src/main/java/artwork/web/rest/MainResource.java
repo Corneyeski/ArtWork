@@ -103,10 +103,6 @@ public class MainResource {
                 result.getMultimedia().add(m);
             });
 
-            /*result.getMultimedia()
-             .stream().sorted((e1, e2) -> e1.getTime()
-             .compareTo(e2.getTime())).collect(Collectors.toList());*/
-
             result.getMultimedia()
                 .stream().sorted(Comparator.comparing(MultimediaRDTO::getTime));
 
@@ -122,7 +118,8 @@ public class MainResource {
                 user.getProfession(), true);*/
 
 
-            UserExt user = userExtRepository.findOneByUser(
+         //TODO Esta en el bloque de ofertas
+           /* UserExt user = userExtRepository.findOneByUser(
                 userRepository.findOneByLogin(
                     SecurityUtils.getCurrentUserLogin()).get());
 
@@ -141,7 +138,7 @@ public class MainResource {
                 result.getOffers().add(m);
             });
 
-            System.gc();
+            System.gc();*/
 
             return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "set"))
@@ -176,9 +173,13 @@ public class MainResource {
     }
     //TODO Añadir metodo para que puedan subir fotos/videos etc
 
-    //TODO metodo para obtener detalle de multimedia
-
-    //TODO metodo para obtener detalle de oferta
+    /*
+    TODO metodo para obtener detalle de multimedia
+    TODO metodo para obtener detalle de oferta
+    (ESTO ES EL CRUD BASICO)
+    */
 
     //TODO metodo para obtener detalle de publicidad (falta clase)
+
+    //TODO REST para obtener notificaciones
 }

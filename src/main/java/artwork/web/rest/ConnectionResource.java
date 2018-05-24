@@ -79,7 +79,17 @@ public class ConnectionResource {
             User sender = userRepository.findOne(request.getSender());
             User receiver = userRepository.findOne(request.getReceiver());
 
+            //TODO tambien actualizar la Connection para saber si ha sido rechazada
+
             if(sender != null && receiver != null){
+
+                //TODO comprobar si ya existe y en ese caso, devolver error
+
+                if(connectionRepository.findByReceiverAndSender(receiver, sender) != null)
+                    return  ResponseEntity.badRequest()
+                        .headers(HeaderUtil.createFailureAlert(ENTITY_NAME,
+                            "alredy sended", "ya existe una solicitud")).body(null);
+
 
                 if (request.getMessage().equalsIgnoreCase("")) request.setMessage("Me gustaria contactar contigo");
 
