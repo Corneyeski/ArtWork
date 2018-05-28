@@ -80,7 +80,7 @@ public class OfferCriteriaRepository {
             String[] tag = tags.split("#");
 
 
-            for(int i = 1; i < tag.length-1; i++){
+            for(int i = 1; i < tag.length; i++){
 
                 System.out.println(i + " " + tag[i]);
 
@@ -144,13 +144,15 @@ public class OfferCriteriaRepository {
 
     public List<Offer> searchTags(String tags, Collection<Offer> offers){
 
+        //TODO Salen duplicados si tiene tag y tipo de job
+
         Map<String, Object> params = new HashMap<>();
 
         params.put("tags",tags);
 
         filterByTags(params);
 
-        if (offers != null && !offers.isEmpty()) {
+        /*if (offers != null && !offers.isEmpty()) {
 
             Collection ids = new ArrayList();
 
@@ -158,7 +160,7 @@ public class OfferCriteriaRepository {
 
             offerCriteriaQuery.select(offerRoot);
             offerCriteriaQuery.where(builder.not(offerRoot.get(Offer_.id).in(ids)));
-        }
+        }*/
 
         return entityManager.createQuery( offerCriteriaQuery ).getResultList();
     }

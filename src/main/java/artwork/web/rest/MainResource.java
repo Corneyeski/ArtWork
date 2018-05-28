@@ -160,17 +160,18 @@ public class MainResource {
 
         Collection<Offer> received = new ArrayList<>();
 
-        if(user.getProfession() != null) {
-            received = offerRepository.findOffersByProfessionAndStatusOrderByTimeDesc(
-                user.getProfession(), true);
-        }
-
         received.addAll(offerCriteriaRepository.searchTags(user.getTags(), received));
+
+        if(user.getProfession() != null) {
+            received.addAll(offerRepository.findRecentOffersByProfessionAndStatusOrderByTimeDesc(
+                user.getProfession(), received));
+        }
 
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "set"))
             .body(received);
     }
+
     //TODO Añadir metodo para que puedan subir fotos/videos etc
 
     /*

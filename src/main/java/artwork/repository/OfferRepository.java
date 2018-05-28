@@ -25,11 +25,15 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
     @Query("select offer from Offer offer left join fetch offer.userExts where offer.id =:id")
     Offer findOneWithEagerRelationships(@Param("id") Long id);
 
-//    //TODO Añadir paginacion
-//    @Query("select offer from Offer offer where offer.status = true and offer.profession = :profession order by offer.time desc")
-//    Collection<Offer> findRecentOffersByProfessionAndStatusOrderByTimeDesc(@Param("profession") Profession profession);
+    //TODO Añadir paginacion
+    @Query("SELECT offer FROM Offer offer " +
+        "WHERE offer.status = true " +
+        "AND offer.profession = :profession " +
+        "AND offer NOT IN :offers " +
+        "order by offer.time desc")
+    Collection<Offer> findRecentOffersByProfessionAndStatusOrderByTimeDesc(@Param("profession") Profession profession, @Param("offers") Collection<Offer> offers);
 
-    Collection<Offer> findOffersByProfessionAndStatusOrderByTimeDesc(Profession profession,boolean status);
+    //Collection<Offer> findOffersNotInByProfessionAndStatusOrderByTimeDesc(Collection<Offer> offers, Profession profession, boolean status);
 
     @Query("select offer from Offer offer where offer.status = true" +
         " and offer.tags LIKE %:tag%" +
