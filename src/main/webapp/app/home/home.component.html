@@ -2,7 +2,26 @@
     <!-- NO ESTÁ REGISTRADO -->
     <div class="col-md-12" *ngIf="!isAuthenticated()">
 
+        <div class="row login">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
 
+                <h1 style="text-align:center;margin-top:20px">Accede a ArtWork!</h1>
+                <form class="form" role="form" (ngSubmit)="login()">
+                    <div class="form-group">
+                        <label for="username">Nombre de usuario</label>
+                        <input type="text" class="form-control" name="username" id="username" placeholder="Nombre de usuario" [(ngModel)]="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña" [(ngModel)]="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary col-md-12">Entra</button>
+                </form>
+
+            </div>
+            <div class="col-md-3"></div>
+        </div>
 
         <div class="row register">
             <div class="col-md-2"></div>
@@ -60,7 +79,29 @@
                         </div>
                     </div>
 
-                    <button type="submit" [disabled]="registerForm.form.invalid" class="btn btn-primary">Registrar</button>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+
+                            <label class="form-control-label"  for="field_image">Image</label>
+                            <div>
+                                <img [src]="'data:' + registerCredentials.imageContentType + ';base64,' + registerCredentials.image" style="max-height: 100px;" *ngIf="registerCredentials.image" alt="userExt image"/>
+                                <div *ngIf="registerCredentials.image" class="form-text text-danger clearfix">
+                                    <span class="pull-left">{{registerCredentials.imageContentType}}, {{byteSize(registerCredentials.image)}}</span>
+                                    <button type="button" (click)="clearInputImage('image', 'imageContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                                        <span class="fa fa-times"></span>
+                                    </button>
+                                </div>
+                                <input type="file" id="file_image" (change)="setFileData($event, registerCredentials, 'image', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+                            </div>
+                            <input type="hidden" class="form-control" name="image" id="field_image"
+                                   [(ngModel)]="registerCredentials.image"  />
+                            <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
+                                   [(ngModel)]="registerCredentials.imageContentType" />
+
+                        </div>
+                    </div>
+
+                        <button type="submit" [disabled]="registerForm.form.invalid" class="btn btn-primary col-md-12">Registrar</button>
 
                     <div class="row justify-content-center">
                         <div class="col-md-8">
@@ -78,49 +119,77 @@
             </div>
             <div class="col-md-2"></div>
         </div>
-
-
-
-
-
-
-        <div class="row login">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
-
-                <h1 style="text-align:center;margin-top:20px">Accede a ArtWork!</h1> 
-                <form class="form" role="form" (ngSubmit)="login()">
-                    <div class="form-group">
-                        <label for="username">Nombre de usuario</label>
-                        <input type="text" class="form-control" name="username" id="username" placeholder="Nombre de usuario" [(ngModel)]="username">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Contraseña</label>
-                        <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña" [(ngModel)]="password">
-                    </div>
-                    <button type="submit" class="btn btn-primary col-md-12">Entra</button>
-                </form>
-
-            </div>
-            <div class="col-md-3"></div>
-        </div>
     </div>
 
     <!-- ESTÁ REGISTRADO -->
-    <div class="col-md-12" *ngIf="isAuthenticated()">
+    <div class="col-md-12 home-page" *ngIf="isAuthenticated()">
         <div class="row">
             <h2>Bienvenido de nuevo, {{account.login}}</h2>
         </div>
         <div class="row">
-            <div class="flex-container" *ngFor="let multimedia of multimedias">
-                <!-- {{multimedia |json}} -->
-                <div *ngIf="multimedia.image" class="image">
-                    <a (click)="openFile(multimedia.imageContentType, multimedia.image)">
-                        <img [src]="'data:' + multimedia.imageContentType + ';base64,' + multimedia.image" style="max-width: 100%;" alt="multimedia image"
-                        />
-                    </a>
+        <div class="col-md-3">
+                <div class="row">
+                    <img src="../../content/images/default-user.png" alt="user login image" class="account-image"/>
+                </div>
+                <p></p>
+
+                <div class="row">
+                    <div class="list-group">
+                        <div class="list-group-item">{{account.login}}</div>
+                        <div class="list-group-item">{{account.firstName}}
+                            {{account.lastName}}
+                        </div>
+                        <!--<div class="list-group-item">
+                            <a ui-sref="evento.new">
+                                <span data-translate="global.navbar-functions.create-event">Create event</span>
+                            </a>
+                        </div>
+                        <div class="list-group-item"
+                             ng-if="account.authorities[0] == 'ROLE_ADMIN' || account.authorities[1] == 'ROLE_ADMIN'">
+                            <a ui-sref="reto.new">
+                                    <span >Create challenge</span>
+                            </a>
+                        </div>
+                        <div class="list-group-item">
+                            <a ui-sref="user-participations">
+                                <span data-translate="global.navbar-functions.yourParticipations"></span>
+                            </a>
+                        </div>-->
+                    </div>
                 </div>
             </div>
+
+        <div class="col-md-9">
+            <div class="row" style="padding:10px 5px 10px 5px">
+                <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4"/>
+                <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4"/>
+                <img src="../../content/images/test2.jpg" alt="user login image" class="account-image col-md-4"/>
+            </div>
+            <div class="row" style="padding:10px 5px 10px 5px">
+                <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4"/>
+                <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4"/>
+                <img src="../../content/images/test3.jpg" alt="user login image" class="account-image col-md-4"/>
+            </div>
+            <div class="row" style="padding:10px 5px 10px 5px">
+                <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4"/>
+                <img src="../../content/images/test2.jpg" alt="user login image" class="account-image col-md-4"/>
+                <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4"/>
+            </div>
+            <div class="row" style="padding:10px 5px 10px 5px">
+                <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4"/>
+                <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4"/>
+                <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4"/>
+            </div>
+           <!-- <div class="flex-container" *ngFor="let multimedia of multimedias">
+               &lt;!&ndash; {{multimedia |json}} &ndash;&gt;
+               <div *ngIf="multimedia.image" class="image">
+                   <a (click)="openFile(multimedia.imageContentType, multimedia.image)">
+                       <img [src]="'data:' + multimedia.imageContentType + ';base64,' + multimedia.image" style="max-width: 100%;" alt="multimedia image"
+                       />
+                   </a>
+               </div>
+           </div>-->
+        </div>
         </div>
     </div>
 </div>
