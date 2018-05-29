@@ -1,5 +1,7 @@
 package artwork.web.rest.rdto;
 
+import artwork.web.rest.rdto.multimedia.MultimediaRDTO;
+
 import java.util.HashSet;
 import java.util.Set;
 

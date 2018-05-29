@@ -1,11 +1,12 @@
 package artwork.web.rest;
 
 import artwork.domain.*;
+import artwork.domain.enumeration.Type;
 import artwork.repository.*;
 import artwork.security.SecurityUtils;
 import artwork.web.rest.rdto.MainRDTO;
-import artwork.web.rest.rdto.MultimediaRDTO;
-import artwork.web.rest.rdto.OfferRDTO;
+import artwork.web.rest.rdto.multimedia.MultimediaRDTO;
+import artwork.web.rest.rdto.multimedia.NewMultimediaRDTO;
 import artwork.web.rest.util.HeaderUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,7 @@ public class MainResource {
     private final MultimediaRepository multimediaRepository;
     private final OfferRepository offerRepository;
     private final UserRepository userRepository;
+    private final AlbumRepository albumRepository;
 
     @Inject
     private OfferCriteriaRepository offerCriteriaRepository;
@@ -42,13 +44,15 @@ public class MainResource {
                         FollowingRepository followingRepository,
                         MultimediaRepository multimediaRepository,
                         OfferRepository offerRepository,
-                        UserRepository userRepository) {
+                        UserRepository userRepository,
+                        AlbumRepository albumRepository) {
         this.blockedRepository = blockedRepository;
         this.userExtRepository = userExtRepository;
         this.followingRepository = followingRepository;
         this.multimediaRepository = multimediaRepository;
         this.offerRepository = offerRepository;
         this.userRepository = userRepository;
+        this.albumRepository = albumRepository;
     }
 
     /**
@@ -108,38 +112,6 @@ public class MainResource {
 
             System.gc();
 
-            //TODO TEST
-
-         /*   UserExt user = userExtRepository.findOneByUser(
-                userRepository.findOneByLogin(
-                    SecurityUtils.getCurrentUserLogin()).get());
-
-            Collection<Offer> recieved = offerRepository.findOffersByProfessionAndStatusOrderByTimeDesc(
-                user.getProfession(), true);*/
-
-
-         //TODO Esta en el bloque de ofertas
-           /* UserExt user = userExtRepository.findOneByUser(
-                userRepository.findOneByLogin(
-                    SecurityUtils.getCurrentUserLogin()).get());
-
-            Collection<Offer> received = new ArrayList<>();
-
-            if(user.getProfession() != null) {
-                received = offerRepository.findOffersByProfessionAndStatusOrderByTimeDesc(
-                    user.getProfession(), true);
-            }
-
-            received.addAll(offerCriteriaRepository.searchTags(user.getTags(), received));
-
-            received.forEach(e -> {
-                OfferRDTO m = new OfferRDTO();
-                BeanUtils.copyProperties(e,m);
-                result.getOffers().add(m);
-            });
-
-            System.gc();*/
-
             return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "set"))
                 .body(result);
@@ -173,6 +145,42 @@ public class MainResource {
     }
 
     //TODO Añadir metodo para que puedan subir fotos/videos etc
+
+    @PostMapping("/main/upload")
+    @Transactional
+    public ResponseEntity<Boolean> upload(@RequestBody NewMultimediaRDTO newMultimedia) {
+
+        User user = userRepository.findOne(newMultimedia.getUser());
+
+        if(user == null) return ResponseEntity.badRequest()
+            .headers(HeaderUtil.createFailureAlert(ENTITY_NAME,
+                "bad user", "usuario no valido")).body(null);
+
+        Multimedia multimedia = new Multimedia();
+        BeanUtils.copyProperties(newMultimedia, multimedia);
+
+        if(newMultimedia.getAlbum() != null) {
+            Album album = albumRepository.findOne(newMultimedia.getAlbum());
+            if (album != null) multimedia.setAlbum(album);
+        }
+
+        multimedia.setUser(user);
+
+
+        if((multimedia.getType().equals(Type.SONG) && multimedia.getSong().length != 0 && multimedia.getSongContentType() != null) ||
+                (multimedia.getType().equals(Type.PHOTO) && multimedia.getImage().length != 0 && multimedia.getImageContentType() != null)){
+
+            multimediaRepository.save(multimedia);
+
+            return ResponseEntity.ok()
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "set"))
+                .body(true);
+        }
+
+        return ResponseEntity.badRequest()
+            .headers(HeaderUtil.createFailureAlert(ENTITY_NAME,
+                "parametros incorrectos", "parametros incorrectos, algo no coincide")).body(null);
+    }
 
     /*
     TODO metodo para obtener detalle de multimedia
