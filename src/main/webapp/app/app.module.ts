@@ -35,8 +35,8 @@ import {
         ArtWorkHomeModule,
         ArtWorkAdminModule,
         ArtWorkAccountModule,
-        ArtWorkEntityModule,
-        // jhipster-needle-angular-add-module JHipster will add new module here
+        ArtWorkEntityModule
+                // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [
         JhiMainComponent,

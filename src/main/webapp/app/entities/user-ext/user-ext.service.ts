@@ -16,8 +16,12 @@ export class UserExtService {
     constructor(private http: Http, private dateUtils: JhiDateUtils) { }
 
     create(userExt: UserExt): Observable<UserExt> {
+        console.log("create")
+        console.log(userExt)
         const copy = this.convert(userExt);
+        console.log(copy)
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
+            console.log(res)
             const jsonResponse = res.json();
             return this.convertItemFromServer(jsonResponse);
         });

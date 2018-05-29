@@ -24,3 +24,28 @@ only screen and (                min-resolution: 2dppx) {
     }
 }
 
+.home-page{
+    /* top / right / bottom / left*/
+    padding: 25px 50px 25px 50px;
+}
+
+.login{
+    background: url("../../content/images/friends.jpg") no-repeat center top;
+    background-size: auto;
+    height: 700px;
+}
+
+.register{
+    background: url("../../content/images/register.jpg") no-repeat center top;
+    background-size: auto;
+    height: 700px;
+}
+
+  .image{
+      height: 250px;
+      width: 300px;
+  }
+
+  .account-image{
+      max-height: 210px;
+  }

@@ -1,42 +1,195 @@
 <div class="row">
-    <div class="col-md-3">
-        <span class="hipster img-fluid rounded"></span>
-    </div>
-    <div class="col-md-9">
-        <h1 class="display-4" jhiTranslate="home.title">Welcome, Java Hipster!</h1>
-        <p class="lead" jhiTranslate="home.subtitle">This is your homepage</p>
+    <!-- NO ESTÁ REGISTRADO -->
+    <div class="col-md-12" *ngIf="!isAuthenticated()">
 
-        <div [ngSwitch]="isAuthenticated()">
-            <div class="alert alert-success" *ngSwitchCase="true">
-                <span *ngIf="account" jhiTranslate="home.logged.message"
-                    translateValues="{username: '{{account.login}}'}"> You are logged in as user "{{account.login}}". </span>
-            </div>
+        <div class="row login">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
 
-            <div class="alert alert-warning" *ngSwitchCase="false">
-                <span jhiTranslate="global.messages.info.authenticated.prefix">If you want to </span>
-                <a class="alert-link" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">sign in</a><span jhiTranslate="global.messages.info.authenticated.suffix">, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
-            </div>
+                <h1 style="text-align:center;margin-top:20px">Accede a ArtWork!</h1>
+                <form class="form" role="form" (ngSubmit)="login()">
+                    <div class="form-group">
+                        <label for="username">Nombre de usuario</label>
+                        <input type="text" class="form-control" name="username" id="username" placeholder="Nombre de usuario" [(ngModel)]="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña" [(ngModel)]="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary col-md-12">Entra</button>
+                </form>
 
-            <div class="alert alert-warning" *ngSwitchCase="false">
-                <span jhiTranslate="global.messages.info.register.noaccount">You don't have an account yet?</span>
-                <a class="alert-link" routerLink="register" jhiTranslate="global.messages.info.register.link">Register a new account</a>
             </div>
+            <div class="col-md-3"></div>
         </div>
 
-        <p jhiTranslate="home.question">
-            If you have any question on JHipster:
-        </p>
+        <div class="row register">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h1 style="text-align:center;margin-top:20px">Bienvenido a ArtWork!</h1>
+                <h2 style="text-align:center">Regístrate para disfrutar de nuestra app</h2>
 
-        <ul>
-            <li><a href="http://www.jhipster.tech/" target="_blank" rel="noopener" jhiTranslate="home.link.homepage">JHipster homepage</a></li>
-            <li><a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener" jhiTranslate="home.link.stackoverflow">JHipster on Stack Overflow</a></li>
-            <li><a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener" jhiTranslate="home.link.bugtracker">JHipster bug tracker</a></li>
-            <li><a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener" jhiTranslate="home.link.chat">JHipster public chat room</a></li>
-            <li><a href="https://twitter.com/java_hipster" target="_blank" rel="noopener" jhiTranslate="home.link.follow">follow @java_hipster on Twitter</a></li>
-        </ul>
+                <form name="form" role="form" (ngSubmit)="register()" #registerForm="ngForm">
 
-        <p>
-            <span jhiTranslate="home.like">If you like JHipster, don't forget to give us a star on</span> <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener" jhiTranslate="home.github">GitHub</a>!
-        </p>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="form-control-label" for="name">Nombre</label>
+                            <input type="text" class="form-control" [(ngModel)]="registerCredentials.name" id="name" name="name" #name="ngModel" placeholder="Nombre"
+                                required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="form-control-label" for="surname">Apellidos</label>
+                            <input type="text" class="form-control" id="surname" name="surname" #surname="ngModel" placeholder="Apellidos" [(ngModel)]="registerCredentials.surname"
+                                minlength=5 maxlength=100 surname required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="form-control-label" for="registerLogin">Nombre de usuario</label>
+                            <input type="text" class="form-control" [(ngModel)]="registerCredentials.login" id="registerLogin" name="registerLogin" #registerLogin  ="ngModel"
+                                placeholder="Nombre de usuario" required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="form-control-label" for="email">Correo electrónico</label>
+                            <input type="email" class="form-control" id="email" name="email" #email="ngModel" placeholder="Correo electrónico" [(ngModel)]="registerCredentials.email"
+                                minlength=5 maxlength=100 email required>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="form-control-label" for="registerPassword">Contraseña</label>
+                            <input type="password" class="form-control" [(ngModel)]="registerCredentials.password" id="registerPassword" name="registerPassword"
+                                #registerPassword="ngModel" placeholder="Contraseña" required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$">
+
+                            <!-- <jhi-password-strength-bar [passwordToCheck]="registerCredentials.password"></jhi-password-strength-bar> -->
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="form-control-label" for="confirmPassword">Confirmación de la contraseña</label>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" #confirmPasswordInput="ngModel" placeholder="Vuelve a introducir la contraseña"
+                                [(ngModel)]="registerCredentials.confirmPassword" minlength=4 maxlength=50 required>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div style="color:red;text-align:center" *ngIf="passwordNoMatch">
+                                <strong>Las contraseñas no coinciden</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+
+                            <label class="form-control-label"  for="field_image">Image</label>
+                            <div>
+                                <img [src]="'data:' + registerCredentials.imageContentType + ';base64,' + registerCredentials.image" style="max-height: 100px;" *ngIf="registerCredentials.image" alt="userExt image"/>
+                                <div *ngIf="registerCredentials.image" class="form-text text-danger clearfix">
+                                    <span class="pull-left">{{registerCredentials.imageContentType}}, {{byteSize(registerCredentials.image)}}</span>
+                                    <button type="button" (click)="clearInputImage('image', 'imageContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                                        <span class="fa fa-times"></span>
+                                    </button>
+                                </div>
+                                <input type="file" id="file_image" (change)="setFileData($event, registerCredentials, 'image', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+                            </div>
+                            <input type="hidden" class="form-control" name="image" id="field_image"
+                                   [(ngModel)]="registerCredentials.image"  />
+                            <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
+                                   [(ngModel)]="registerCredentials.imageContentType" />
+
+                        </div>
+                    </div>
+
+                        <button type="submit" [disabled]="registerForm.form.invalid" class="btn btn-primary col-md-12">Registrar</button>
+
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="alert alert-success" *ngIf="registerSuccess">
+                                <strong>El registro ha funcionado!!</strong> Revisa tu email y inicia sesión en nuestra app
+                            </div>
+
+                            <div class="alert alert-danger" *ngIf="registerError">
+                                <strong>Algo no ha funcionado bien...</strong> Vuelve a intentarlo de nuevo!
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+
+    <!-- ESTÁ REGISTRADO -->
+    <div class="col-md-12 home-page" *ngIf="isAuthenticated()">
+        <div class="row">
+            <h2>Bienvenido de nuevo, {{account.login}}</h2>
+        </div>
+        <div class="row">
+        <div class="col-md-3">
+                <div class="row">
+                    <img src="../../content/images/default-user.png" alt="user login image" class="account-image"/>
+                </div>
+                <p></p>
+
+                <div class="row">
+                    <div class="list-group">
+                        <div class="list-group-item">{{account.login}}</div>
+                        <div class="list-group-item">{{account.firstName}}
+                            {{account.lastName}}
+                        </div>
+                        <!--<div class="list-group-item">
+                            <a ui-sref="evento.new">
+                                <span data-translate="global.navbar-functions.create-event">Create event</span>
+                            </a>
+                        </div>
+                        <div class="list-group-item"
+                             ng-if="account.authorities[0] == 'ROLE_ADMIN' || account.authorities[1] == 'ROLE_ADMIN'">
+                            <a ui-sref="reto.new">
+                                    <span >Create challenge</span>
+                            </a>
+                        </div>
+                        <div class="list-group-item">
+                            <a ui-sref="user-participations">
+                                <span data-translate="global.navbar-functions.yourParticipations"></span>
+                            </a>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+
+        <div class="col-md-9">
+            <div class="row" style="padding:10px 5px 10px 5px">
+                <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4"/>
+                <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4"/>
+                <img src="../../content/images/test2.jpg" alt="user login image" class="account-image col-md-4"/>
+            </div>
+            <div class="row" style="padding:10px 5px 10px 5px">
+                <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4"/>
+                <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4"/>
+                <img src="../../content/images/test3.jpg" alt="user login image" class="account-image col-md-4"/>
+            </div>
+            <div class="row" style="padding:10px 5px 10px 5px">
+                <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4"/>
+                <img src="../../content/images/test2.jpg" alt="user login image" class="account-image col-md-4"/>
+                <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4"/>
+            </div>
+            <div class="row" style="padding:10px 5px 10px 5px">
+                <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4"/>
+                <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4"/>
+                <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4"/>
+            </div>
+           <!-- <div class="flex-container" *ngFor="let multimedia of multimedias">
+               &lt;!&ndash; {{multimedia |json}} &ndash;&gt;
+               <div *ngIf="multimedia.image" class="image">
+                   <a (click)="openFile(multimedia.imageContentType, multimedia.image)">
+                       <img [src]="'data:' + multimedia.imageContentType + ';base64,' + multimedia.image" style="max-width: 100%;" alt="multimedia image"
+                       />
+                   </a>
+               </div>
+           </div>-->
+        </div>
+        </div>
     </div>
 </div>

@@ -27,7 +27,7 @@ export class AuthServerProvider {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json',
             'Authorization': 'Basic ' + this.base64.encode('artWorkapp' + ':' + 'my-secret-token-to-change-in-production')
-        });
+    });
 
         return this.http.post('oauth/token', data, {
             headers
