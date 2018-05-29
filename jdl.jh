@@ -175,6 +175,8 @@ relationship ManyToOne{
 
     UserExt{profession(name)} to Profession,
 
+    Offer{profession(name)} to Profession,
+
 	Country{city(name)} to City,
 
 	ResumeCreation{language(name)} to Language,

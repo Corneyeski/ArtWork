@@ -2,12 +2,14 @@ package artwork.domain;
 
 import artwork.config.Constants;
 
+import artwork.service.dto.NewUserDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -99,6 +101,17 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JoinColumn(unique = true)
     @JsonIgnore
     private UserExt userExt;
+
+    public User() {}
+
+    //TODO copiar propiedades para hacer la alta del usuario
+    public User(NewUserDTO newUserDTO) {
+        BeanUtils.copyProperties(newUserDTO,this);
+        UserExt userExt = new UserExt();
+        userExt.setUser(this);
+        BeanUtils.copyProperties(newUserDTO.getNewUserExtDTO(), userExt);
+        this.setUserExt(userExt);
+    }
 
     public Long getId() {
         return id;

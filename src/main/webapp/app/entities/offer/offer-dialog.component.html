@@ -61,6 +61,13 @@
         </div>
 
         <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.offer.profession" for="field_profession">Profession</label>
+            <select class="form-control" id="field_profession" name="profession" [(ngModel)]="offer.profession" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="professionOption.id === offer.profession?.id ? offer.profession : professionOption" *ngFor="let professionOption of professions; trackBy: trackProfessionById">{{professionOption.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
             <label class="form-control-label" jhiTranslate="artWorkApp.offer.creator" for="field_creator">Creator</label>
             <select class="form-control" id="field_creator" name="creator" [(ngModel)]="offer.creator" >
                 <option [ngValue]="null"></option>

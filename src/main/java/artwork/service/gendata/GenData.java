@@ -32,7 +32,7 @@ public class GenData {
             List<String> links = new ArrayList<>();
             int i = 0;
 
-            while(i++ < 10) {
+            while(i++ < 1) {
 
                 String appId = "01907a24370e291c3494c6d185612066075a3cc81852ea977fe6949da5daa234";
                 String urlStr = "https://api.unsplash.com/photos/random?client_id=" + appId;

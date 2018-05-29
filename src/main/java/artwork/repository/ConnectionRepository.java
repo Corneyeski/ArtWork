@@ -1,6 +1,7 @@
 package artwork.repository;
 
 import artwork.domain.Connection;
+import artwork.domain.User;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
@@ -18,5 +19,7 @@ public interface ConnectionRepository extends JpaRepository<Connection, Long> {
 
     @Query("select connection from Connection connection where connection.receiver.login = ?#{principal.username}")
     List<Connection> findByReceiverIsCurrentUser();
+
+    Connection findByReceiverAndSender(User receiver, User sender);
 
 }

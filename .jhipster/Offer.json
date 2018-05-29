@@ -3,6 +3,12 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
+            "relationshipName": "profession",
+            "otherEntityName": "profession",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-one",
             "relationshipName": "creator",
             "otherEntityName": "user",
             "otherEntityField": "login"
@@ -59,6 +65,5 @@
     "entityTableName": "offer",
     "dto": "no",
     "pagination": "no",
-    "service": "no",
-    "jpaMetamodelFiltering": false
+    "service": "no"
 }

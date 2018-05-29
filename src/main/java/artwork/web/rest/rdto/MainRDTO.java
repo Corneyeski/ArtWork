@@ -1,8 +1,8 @@
-package artwork.web.rest.rdto.main;
+package artwork.web.rest.rdto;
 
-import java.util.ArrayList;
+import artwork.web.rest.rdto.multimedia.MultimediaRDTO;
+
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class MainRDTO {

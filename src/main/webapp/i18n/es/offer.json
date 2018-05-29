@@ -24,6 +24,7 @@
             "tags": "Tags",
             "location": "Location",
             "contract": "Contract",
+            "profession": "Profession",
             "creator": "Creator",
             "userExt": "User Ext"
         }

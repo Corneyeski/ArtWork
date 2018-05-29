@@ -40,6 +40,12 @@
         <dd>
             <span>{{offer.contract}}</span>
         </dd>
+        <dt><span jhiTranslate="artWorkApp.offer.profession">Profession</span></dt>
+        <dd>
+            <div *ngIf="offer.profession">
+                <a [routerLink]="['/profession', offer.profession?.id]">{{offer.profession?.name}}</a>
+            </div>
+        </dd>
         <dt><span jhiTranslate="artWorkApp.offer.creator">Creator</span></dt>
         <dd>
             {{offer.creator?.login}}

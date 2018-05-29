@@ -31,10 +31,6 @@ public class Offer implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Lob
-    @Column(name = "short_description")
-    private String shortDescription;
-
     @Column(name = "jhi_time")
     private ZonedDateTime time;
 
@@ -57,6 +53,9 @@ public class Offer implements Serializable {
     private String contract;
 
     @ManyToOne
+    private Profession profession;
+
+    @ManyToOne
     private User creator;
 
     @ManyToMany
@@ -66,7 +65,7 @@ public class Offer implements Serializable {
                inverseJoinColumns = @JoinColumn(name="user_exts_id", referencedColumnName="id"))
     private Set<UserExt> userExts = new HashSet<>();
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -192,6 +191,19 @@ public class Offer implements Serializable {
         this.contract = contract;
     }
 
+    public Profession getProfession() {
+        return profession;
+    }
+
+    public Offer profession(Profession profession) {
+        this.profession = profession;
+        return this;
+    }
+
+    public void setProfession(Profession profession) {
+        this.profession = profession;
+    }
+
     public User getCreator() {
         return creator;
     }
@@ -226,18 +238,10 @@ public class Offer implements Serializable {
         return this;
     }
 
-    public String getShortDescription() {
-        return shortDescription;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
-    }
-
     public void setUserExts(Set<UserExt> userExts) {
         this.userExts = userExts;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {

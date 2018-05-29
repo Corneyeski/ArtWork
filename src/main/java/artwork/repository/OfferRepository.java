@@ -1,12 +1,12 @@
 package artwork.repository;
 
 import artwork.domain.Offer;
+import artwork.domain.Profession;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
-import java.awt.print.Pageable;
 import java.util.Collection;
 import java.util.List;
 
@@ -26,6 +26,26 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
     Offer findOneWithEagerRelationships(@Param("id") Long id);
 
     //TODO Añadir paginacion
-    @Query("select offer from Offer offer where offer.status = true order by offer.time desc")
-    Collection<Offer> findRecentOffers();
+    @Query("SELECT offer FROM Offer offer " +
+        "WHERE offer.status = true " +
+        "AND offer.profession = :profession " +
+        "AND offer NOT IN :offers " +
+        "order by offer.time desc")
+    Collection<Offer> findRecentOffersByProfessionAndStatusOrderByTimeDesc(@Param("profession") Profession profession, @Param("offers") Collection<Offer> offers);
+
+    //Collection<Offer> findOffersNotInByProfessionAndStatusOrderByTimeDesc(Collection<Offer> offers, Profession profession, boolean status);
+
+    @Query("select offer from Offer offer where offer.status = true" +
+        " and offer.tags LIKE %:tag%" +
+        " and offer not in :offersReceived order by offer.time desc")
+    Collection<Offer> findRecentOffersByTags(@Param("tag") String tag, @Param("offersReceived") Collection<Offer> offers);
+
+    @Query("select offer from Offer offer where offer.status = true" +
+        " and offer.tags like %:tag%" +
+        " order by offer.time desc")
+    Collection<Offer> findRecentOffersByTagsNoOffers(@Param("tag") String tag);
+
+    //TODO Añadir paginacion
+    @Query("select offer from Offer offer where offer.status = true and offer.profession = :profession order by offer.time desc")
+    Collection<Offer> findRecentOffers(@Param("profession") Profession profession);
 }

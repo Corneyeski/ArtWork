@@ -3,12 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Rx';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { Offer } from './offer.model';
 import { OfferPopupService } from './offer-popup.service';
 import { OfferService } from './offer.service';
+import { Profession, ProfessionService } from '../profession';
 import { User, UserService } from '../../shared';
 import { UserExt, UserExtService } from '../user-ext';
 import { ResponseWrapper } from '../../shared';
@@ -22,6 +23,8 @@ export class OfferDialogComponent implements OnInit {
     offer: Offer;
     isSaving: boolean;
 
+    professions: Profession[];
+
     users: User[];
 
     userexts: UserExt[];
@@ -29,8 +32,9 @@ export class OfferDialogComponent implements OnInit {
     constructor(
         public activeModal: NgbActiveModal,
         private dataUtils: JhiDataUtils,
-        private jhiAlertService: JhiAlertService,
+        private alertService: JhiAlertService,
         private offerService: OfferService,
+        private professionService: ProfessionService,
         private userService: UserService,
         private userExtService: UserExtService,
         private eventManager: JhiEventManager
@@ -39,6 +43,8 @@ export class OfferDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
+        this.professionService.query()
+            .subscribe((res: ResponseWrapper) => { this.professions = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.userService.query()
             .subscribe((res: ResponseWrapper) => { this.users = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.userExtService.query()
@@ -88,7 +94,11 @@ export class OfferDialogComponent implements OnInit {
     }
 
     private onError(error: any) {
-        this.jhiAlertService.error(error.message, null, null);
+        this.alertService.error(error.message, null, null);
+    }
+
+    trackProfessionById(index: number, item: Profession) {
+        return item.id;
     }
 
     trackUserById(index: number, item: User) {

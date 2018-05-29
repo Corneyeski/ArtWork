@@ -1,6 +1,7 @@
 package artwork.web.rest;
 
 import artwork.config.Constants;
+import artwork.service.dto.NewUserDTO;
 import com.codahale.metrics.annotation.Timed;
 import artwork.domain.User;
 import artwork.repository.UserRepository;
@@ -107,6 +108,43 @@ public class UserResource {
                 .body(null);
         } else {
             User newUser = userService.createUser(managedUserVM);
+            mailService.sendCreationEmail(newUser);
+            return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
+                .headers(HeaderUtil.createAlert( "userManagement.created", newUser.getLogin()))
+                .body(newUser);
+        }
+    }
+
+    /**
+     * POST  /users  : Creates a new user.
+     * <p>
+     * Creates a new user if the login and email are not already used, and sends an
+     * mail with an activation link.
+     * The user needs to be activated on creation.
+     *
+     * @param newUserDTO the user to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new user, or with status 400 (Bad Request) if the login or email is already in use
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("/newUser")
+    @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity createUserWithExt(@Valid @RequestBody NewUserDTO newUserDTO) throws URISyntaxException {
+        log.debug("REST request to save User : {}", newUserDTO);
+
+        //TODO Añadir Profesion al registro(?)
+        //TODO Añadir metodos para comprobar si login o email ya estan en uso(?)
+
+         if (userRepository.findOneByLogin(newUserDTO.getLogin().toLowerCase()).isPresent()) {
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "userexists", "Login already in use"))
+                .body(null);
+        } else if (userRepository.findOneByEmail(newUserDTO.getEmail()).isPresent()) {
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "emailexists", "Email already in use"))
+                .body(null);
+        } else {
+            User newUser = userService.createUser(newUserDTO);
             mailService.sendCreationEmail(newUser);
             return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert( "userManagement.created", newUser.getLogin()))

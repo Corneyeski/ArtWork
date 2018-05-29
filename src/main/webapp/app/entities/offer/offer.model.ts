@@ -12,6 +12,7 @@ export class Offer implements BaseEntity {
         public tags?: string,
         public location?: string,
         public contract?: string,
+        public profession?: BaseEntity,
         public creator?: User,
         public userExts?: BaseEntity[],
     ) {
