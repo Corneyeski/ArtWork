@@ -68,7 +68,7 @@ public class ProfileResource {
                                                    Pageable album,
                                                    Pageable multimedia,
                                                    Pageable followed,
-                                                   Pageable Follower) {
+                                                   Pageable follower) {
 
         User user;
 
@@ -80,11 +80,11 @@ public class ProfileResource {
             user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
         }
 
-        List<Multimedia> multimedias = multimediaRepository.findByUserIsCurrentUser();
+        List<Multimedia> multimedias = multimediaRepository.findByUserIsCurrentUserOrderDesc(multimedia);
 
-        List<Following> followeds = followingRepository.findByFollowedIsCurrentUser();
+        List<Following> followeds = followingRepository.findByFollowedIsCurrentUser(followed);
 
-        List<Following> followers = followingRepository.findByFollowerIsCurrentUser();
+        List<Following> followers = followingRepository.findByFollowerIsCurrentUser(follower);
 
 
         return ResponseEntity.ok()
