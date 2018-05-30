@@ -1,6 +1,9 @@
 package artwork.web.rest;
 
+import artwork.domain.Following;
+import artwork.domain.Multimedia;
 import artwork.domain.User;
+import artwork.repository.AlbumRepository;
 import artwork.repository.FollowingRepository;
 import artwork.repository.MultimediaRepository;
 import artwork.repository.UserRepository;
@@ -12,6 +15,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+
+import static org.hibernate.id.IdentifierGenerator.ENTITY_NAME;
 
 
 /**
@@ -28,13 +38,16 @@ public class ProfileResource {
     private final UserRepository userRepository;
     private final MultimediaRepository multimediaRepository;
     private final FollowingRepository followingRepository;
+    private final AlbumRepository albumRepository;
 
     public ProfileResource(UserRepository userRepository,
                            MultimediaRepository multimediaRepository,
-                           FollowingRepository followingRepository) {
+                           FollowingRepository followingRepository,
+                           AlbumRepository albumRepository) {
         this.userRepository = userRepository;
         this.multimediaRepository = multimediaRepository;
         this.followingRepository = followingRepository;
+        this.albumRepository = albumRepository;
     }
 
 
@@ -49,11 +62,15 @@ public class ProfileResource {
         return null;
     }*/
 
-    @PostMapping("/profile")
+    @GetMapping("/profile")
     @Timed
-    public ResponseEntity<ProfileRDTO> userProfile(@RequestParam(required = false) Long id) {
+    public ResponseEntity<ProfileRDTO> userProfile(@RequestParam(required = false) Long id,
+                                                   Pageable album,
+                                                   Pageable multimedia,
+                                                   Pageable followed,
+                                                   Pageable Follower) {
 
-        User user = new User();
+        User user;
 
         if (id != null){
             user = userRepository.findOne(id);
@@ -63,6 +80,15 @@ public class ProfileResource {
             user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
         }
 
-        return null;
+        List<Multimedia> multimedias = multimediaRepository.findByUserIsCurrentUser();
+
+        List<Following> followeds = followingRepository.findByFollowedIsCurrentUser();
+
+        List<Following> followers = followingRepository.findByFollowerIsCurrentUser();
+
+
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "set"))
+            .body(new ProfileRDTO(user,multimedias,followers,followeds, null));
     }
 }
