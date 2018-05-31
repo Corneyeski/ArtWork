@@ -107,6 +107,11 @@ public class UserExt implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Tool> tools = new HashSet<>();
 
+    /*@OneToMany(mappedBy = "userExt")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Album> albums = new HashSet<>();*/
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -425,6 +430,32 @@ public class UserExt implements Serializable {
     public void setTools(Set<Tool> tools) {
         this.tools = tools;
     }
+
+    /*public Set<Album> getAlbums() {
+        return albums;
+    }
+
+    public UserExt albums(Set<Album> albums) {
+        this.albums = albums;
+        return this;
+    }
+
+    public UserExt addAlbum(Album album) {
+        this.albums.add(album);
+        album.setUserExt(this);
+        return this;
+    }
+
+    public UserExt removeAlbum(Album album) {
+        this.albums.remove(album);
+        album.setUserExt(null);
+        return this;
+    }
+
+    public void setAlbums(Set<Album> albums) {
+        this.albums = albums;
+    }*/
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

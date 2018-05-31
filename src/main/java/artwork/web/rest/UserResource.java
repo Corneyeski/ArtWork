@@ -135,6 +135,8 @@ public class UserResource {
         //TODO Añadir Profesion al registro(?)
         //TODO Añadir metodos para comprobar si login o email ya estan en uso(?)
 
+        System.out.println("POR QUE NO ENTRA EN EL DEBUG");
+
          if (userRepository.findOneByLogin(newUserDTO.getLogin().toLowerCase()).isPresent()) {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "userexists", "Login already in use"))
