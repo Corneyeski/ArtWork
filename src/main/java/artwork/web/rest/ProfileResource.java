@@ -13,6 +13,7 @@ import artwork.web.rest.util.HeaderUtil;
 import com.codahale.metrics.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,25 +51,13 @@ public class ProfileResource {
         this.albumRepository = albumRepository;
     }
 
-
-    //TODO Un metodo o dos?
-
-   /* @GetMapping("/profile")
-    @Timed
-    public ResponseEntity<ProfileRDTO> userProfile() {
-
-
-
-        return null;
-    }*/
-
     @GetMapping("/profile")
     @Timed
     public ResponseEntity<ProfileRDTO> userProfile(@RequestParam(required = false) Long id,
-                                                   Pageable album,
-                                                   Pageable multimedia,
-                                                   Pageable followed,
-                                                   Pageable follower) {
+                                                   @Qualifier("album") Pageable album,
+                                                   @Qualifier("multimedia") Pageable multimedia,
+                                                   @Qualifier("followed") Pageable followed,
+                                                   @Qualifier("follower") Pageable follower) {
 
         User user;
 
