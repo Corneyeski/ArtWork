@@ -39,6 +39,10 @@ public class Album implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Multimedia> multimedias = new HashSet<>();
 
+   /* @ManyToOne
+    private UserExt userExt;
+    */
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -111,6 +115,20 @@ public class Album implements Serializable {
     public void setMultimedias(Set<Multimedia> multimedias) {
         this.multimedias = multimedias;
     }
+
+    /*public UserExt getUserExt() {
+        return userExt;
+    }
+
+    public Album userExt(UserExt userExt) {
+        this.userExt = userExt;
+        return this;
+    }
+
+    public void setUserExt(UserExt userExt) {
+        this.userExt = userExt;
+    }*/
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

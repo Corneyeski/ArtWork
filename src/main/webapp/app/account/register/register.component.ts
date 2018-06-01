@@ -39,6 +39,20 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     register() {
+
+        var registerData = {
+            email: this.registerAccount.email, 
+            firstName: this.registerAccount.name,
+            lastName: this.registerAccount.surname,
+            langKey: "es", 
+            login: this.registerAccount.login,
+            password: this.registerAccount.password,
+            working: false,
+            image: this.registerAccount.image,
+            imageContentType: this.registerAccount.imageContentType,
+        }
+
+       
         if (this.registerAccount.password !== this.confirmPassword) {
             this.doNotMatch = 'ERROR';
         } else {
@@ -46,12 +60,12 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             this.error = null;
             this.errorUserExists = null;
             this.errorEmailExists = null;
-            this.languageService.getCurrent().then((key) => {
-                this.registerAccount.langKey = key;
-                this.registerService.save(this.registerAccount).subscribe(() => {
+            //this.languageService.getCurrent().then((key) => {
+                //this.registerAccount.langKey = key;
+                this.registerService.save(registerData).subscribe(() => {
                     this.success = true;
                 }, (response) => this.processError(response));
-            });
+            //});
         }
     }
 

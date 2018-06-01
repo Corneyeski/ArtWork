@@ -87,7 +87,7 @@ public class UserResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new user, or with status 400 (Bad Request) if the login or email is already in use
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/users")
+    /*@PostMapping("/users")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity createUser(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
@@ -113,7 +113,7 @@ public class UserResource {
                 .headers(HeaderUtil.createAlert( "userManagement.created", newUser.getLogin()))
                 .body(newUser);
         }
-    }
+    }*/
 
     /**
      * POST  /users  : Creates a new user.
@@ -126,7 +126,7 @@ public class UserResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new user, or with status 400 (Bad Request) if the login or email is already in use
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/newUser")
+    @PostMapping("/users")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity createUserWithExt(@Valid @RequestBody NewUserDTO newUserDTO) throws URISyntaxException {
@@ -134,6 +134,8 @@ public class UserResource {
 
         //TODO Añadir Profesion al registro(?)
         //TODO Añadir metodos para comprobar si login o email ya estan en uso(?)
+
+        System.out.println("POR QUE NO ENTRA EN EL DEBUG");
 
          if (userRepository.findOneByLogin(newUserDTO.getLogin().toLowerCase()).isPresent()) {
             return ResponseEntity.badRequest()

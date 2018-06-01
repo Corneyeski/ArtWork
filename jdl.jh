@@ -63,6 +63,7 @@ entity PricesT{
 }
 entity Connection{
 	acepted Boolean,
+    rejected Boolean,
 	title String,
 	message String,
 	time ZonedDateTime
@@ -228,7 +229,8 @@ relationship ManyToOne{
 }
 
 relationship OneToMany{
-    Album{multimedia(title)} to Multimedia{album(name)}
+    Album{multimedia(title)} to Multimedia{album(name)},
+    UserExt{album(name)} to Album{userExt(name)}
 }
 
 relationship OneToOne{

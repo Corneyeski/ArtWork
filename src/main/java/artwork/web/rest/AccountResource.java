@@ -1,5 +1,6 @@
 package artwork.web.rest;
 
+import artwork.service.dto.NewUserDTO;
 import com.codahale.metrics.annotation.Timed;
 
 import artwork.domain.User;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -31,6 +33,8 @@ import java.util.*;
 @RestController
 @RequestMapping("/api")
 public class AccountResource {
+
+    private static final String ENTITY_NAME = "userManagement";
 
     private final Logger log = LoggerFactory.getLogger(AccountResource.class);
 
@@ -56,7 +60,7 @@ public class AccountResource {
      * @param managedUserVM the managed user View Model
      * @return the ResponseEntity with status 201 (Created) if the user is registered or 400 (Bad Request) if the login or email is already in use
      */
-    @PostMapping(path = "/register",
+    /*@PostMapping(path = "/register",
         produces={MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
     @Timed
     public ResponseEntity registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
@@ -81,6 +85,40 @@ public class AccountResource {
                     return new ResponseEntity<>(HttpStatus.CREATED);
                 })
         );
+    }*/
+
+
+    /**
+     *
+     * @param newUserDTO
+     * @return
+     */
+    @PostMapping(path = "/register",
+        produces={MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
+    @Timed
+    public ResponseEntity createUserWithExt(@Valid @RequestBody NewUserDTO newUserDTO)  {
+        log.debug("REST request to save User : {}", newUserDTO);
+
+
+
+        //TODO Añadir Profesion al registro(?)
+        //TODO Añadir metodos para comprobar si login o email ya estan en uso(?)
+
+        System.out.println("POR QUE NO ENTRA EN EL DEBUG");
+
+        if (userRepository.findOneByLogin(newUserDTO.getLogin().toLowerCase()).isPresent()) {
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "userexists", "Login already in use"))
+                .body(null);
+        } else if (userRepository.findOneByEmail(newUserDTO.getEmail()).isPresent()) {
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "emailexists", "Email already in use"))
+                .body(null);
+        } else {
+            User newUser = userService.createUser(newUserDTO);
+            mailService.sendCreationEmail(newUser);
+            return  new ResponseEntity<>(HttpStatus.CREATED);
+        }
     }
 
     /**
