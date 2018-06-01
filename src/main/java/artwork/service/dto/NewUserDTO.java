@@ -4,7 +4,6 @@ import artwork.config.Constants;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.Column;
-import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -33,11 +32,6 @@ public class NewUserDTO {
     @Size(max = 50)
     private String lastName;
 
-
-    private byte[] image;
-
-    private String imageContentType;
-
     @Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH)
     private String password;
 
@@ -51,13 +45,11 @@ public class NewUserDTO {
 
     public NewUserDTO() {}
 
-    public NewUserDTO(String login, String email, String firstName, String lastName, byte[] image, String imageContentType, String password, Boolean working, String langKey, NewUserExtDTO newUserExtDTO) {
+    public NewUserDTO(String login, String email, String firstName, String lastName, String password, Boolean working, String langKey, NewUserExtDTO newUserExtDTO) {
         this.login = login;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.image = image;
-        this.imageContentType = imageContentType;
         this.password = password;
         this.working = working;
         this.langKey = langKey;
@@ -94,22 +86,6 @@ public class NewUserDTO {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
-    public String getImageContentType() {
-        return imageContentType;
-    }
-
-    public void setImageContentType(String imageContentType) {
-        this.imageContentType = imageContentType;
     }
 
     public String getPassword() {

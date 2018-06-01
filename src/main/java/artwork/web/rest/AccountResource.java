@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -95,8 +96,11 @@ public class AccountResource {
     @PostMapping(path = "/register",
         produces={MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
     @Timed
-    public ResponseEntity createUserWithExt(@Valid @RequestBody NewUserDTO newUserDTO)  {
+    public ResponseEntity createUserWithExt(@Valid @RequestBody NewUserDTO newUserDTO,
+                                            @RequestParam(required = false) Long time)  {
         log.debug("REST request to save User : {}", newUserDTO);
+
+
 
         //TODO Añadir Profesion al registro(?)
         //TODO Añadir metodos para comprobar si login o email ya estan en uso(?)
