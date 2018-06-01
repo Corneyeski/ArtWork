@@ -90,7 +90,7 @@ export class HomeComponent implements OnInit {
 
     register(){
         this.registerCredentials.newUserExtDTO = {
-            birthdate: 1527869120,
+            birthdate: new Date(1527869120),
             kind: 1,
             image: this.registerCredentials.image,
             imageContentType: this.registerCredentials.imageContentType, 
