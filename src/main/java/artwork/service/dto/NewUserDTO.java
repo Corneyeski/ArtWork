@@ -35,9 +35,6 @@ public class NewUserDTO {
     @Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH)
     private String password;
 
-    @NotNull
-    private Boolean working;
-
     @Size(min = 2, max = 5)
     private String langKey;
 
@@ -45,13 +42,12 @@ public class NewUserDTO {
 
     public NewUserDTO() {}
 
-    public NewUserDTO(String login, String email, String firstName, String lastName, String password, Boolean working, String langKey, NewUserExtDTO newUserExtDTO) {
+    public NewUserDTO(String login, String email, String firstName, String lastName, String password, String langKey, NewUserExtDTO newUserExtDTO) {
         this.login = login;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
-        this.working = working;
         this.langKey = langKey;
         this.newUserExtDTO = newUserExtDTO;
     }
@@ -94,14 +90,6 @@ public class NewUserDTO {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Boolean getWorking() {
-        return working;
-    }
-
-    public void setWorking(Boolean working) {
-        this.working = working;
     }
 
     public NewUserExtDTO getNewUserExtDTO() {

@@ -13,18 +13,21 @@ public class NewUserExtDTO {
     @NotNull
     private LocalDate birthdate;
 
-
     private byte[] image;
 
     private String imageContentType;
 
+    @NotNull
+    private Boolean working;
+
     public NewUserExtDTO() {}
 
-    public NewUserExtDTO(Integer kind, LocalDate birthdate, byte[] image, String imageContentType) {
+    public NewUserExtDTO(Integer kind, LocalDate birthdate, byte[] image, String imageContentType, Boolean working) {
         this.kind = kind;
         this.birthdate = birthdate;
         this.image = image;
         this.imageContentType = imageContentType;
+        this.working = working;
     }
 
     public Integer getKind() {
@@ -57,5 +60,13 @@ public class NewUserExtDTO {
 
     public void setImageContentType(String imageContentType) {
         this.imageContentType = imageContentType;
+    }
+
+    public Boolean getWorking() {
+        return working;
+    }
+
+    public void setWorking(Boolean working) {
+        this.working = working;
     }
 }
