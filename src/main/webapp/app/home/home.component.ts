@@ -89,10 +89,13 @@ export class HomeComponent implements OnInit {
     }
 
     register(){
-        /*this.userExt = new UserExt;
-        this.userExt.image = this.registerCredentials.image;
-        this.userExt.imageContentType = this.registerCredentials.imageContentType;
-        this.userExt.user = this.registerCredentials;*/
+        this.registerCredentials.newUserExtDTO = {
+            birthdate: 1527869120,
+            kind: 1,
+            image: this.registerCredentials.image,
+            imageContentType: this.registerCredentials.imageContentType, 
+            working: false
+        };
 
         if (this.registerCredentials.password !== this.registerCredentials.confirmPassword) {
             console.log("NO COINCIDEN")
@@ -105,7 +108,6 @@ export class HomeComponent implements OnInit {
                 this.registerService.save(this.registerCredentials).subscribe((response) => {
                     if(response.status == 200 || response.status == 201){
                         console.debug("Se ha creado el usuario")
-
                         this.registerSuccess = true;
                         this.registerError = false;
                     }else{
@@ -117,7 +119,7 @@ export class HomeComponent implements OnInit {
         }
     }
 
-    getMultimedia(){
+    /*getMultimedia(){
         this.multimediaService.query({
         }).subscribe(
             response => {
@@ -128,7 +130,7 @@ export class HomeComponent implements OnInit {
                 }
             }
         );
-    }
+    }*/
 
     byteSize(field) {
         return this.dataUtils.byteSize(field);

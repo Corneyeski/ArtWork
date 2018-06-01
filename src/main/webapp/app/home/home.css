@@ -49,3 +49,10 @@ only screen and (                min-resolution: 2dppx) {
   .account-image{
       max-height: 210px;
   }
+
+  .register-form-image{
+    background-color:white; 
+    background: rgba(255,255,255,.8);
+    border-radius: 8px; 
+    padding-bottom:10px;
+  }
