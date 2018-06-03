@@ -180,6 +180,7 @@ public class UserService {
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
         user.setActivated(true);
+        user.getUserExt().setRememberInfo(true);
 
         userRepository.save(user);
         userExtRepository.save(user.getUserExt());

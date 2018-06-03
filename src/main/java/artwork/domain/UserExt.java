@@ -80,6 +80,9 @@ public class UserExt implements Serializable {
     @Column(name = "resume_content_type")
     private String resumeContentType;
 
+    @Column(name = "remember_info")
+    private Boolean rememberInfo;
+
     @OneToOne
     @NotNull
     @JoinColumn(unique = true)
@@ -431,30 +434,13 @@ public class UserExt implements Serializable {
         this.tools = tools;
     }
 
-    /*public Set<Album> getAlbums() {
-        return albums;
+    public Boolean isRememberInfo() {
+        return rememberInfo;
     }
 
-    public UserExt albums(Set<Album> albums) {
-        this.albums = albums;
-        return this;
+    public void setRememberInfo(Boolean rememberInfo) {
+        this.rememberInfo = rememberInfo;
     }
-
-    public UserExt addAlbum(Album album) {
-        this.albums.add(album);
-        album.setUserExt(this);
-        return this;
-    }
-
-    public UserExt removeAlbum(Album album) {
-        this.albums.remove(album);
-        album.setUserExt(null);
-        return this;
-    }
-
-    public void setAlbums(Set<Album> albums) {
-        this.albums = albums;
-    }*/
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -497,6 +483,7 @@ public class UserExt implements Serializable {
             ", theme='" + getTheme() + "'" +
             ", resume='" + getResume() + "'" +
             ", resumeContentType='" + resumeContentType + "'" +
+            ", rememberInfo='"+ isRememberInfo() + "'" +
             "}";
     }
 }

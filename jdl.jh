@@ -12,7 +12,8 @@ entity UserExt{
 	age Integer,
     working Boolean,
     theme Theme,
-    resume Blob
+    resume Blob,
+    rememberInfo Boolean
 }
 
 enum Theme{ BLACK, WHITE, MINIMAL }
@@ -229,8 +230,7 @@ relationship ManyToOne{
 }
 
 relationship OneToMany{
-    Album{multimedia(title)} to Multimedia{album(name)},
-    UserExt{album(name)} to Album{userExt(name)}
+    Album{multimedia(title)} to Multimedia{album(name)}
 }
 
 relationship OneToOne{
