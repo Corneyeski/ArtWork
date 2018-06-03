@@ -93,7 +93,7 @@ public class AccountResource {
      * @param newUserDTO
      * @return
      */
-    @PostMapping(path = "/register",
+   @PostMapping(path = "/register",
         produces={MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
     @Timed
     public ResponseEntity createUserWithExt(@Valid @RequestBody NewUserDTO newUserDTO)  {

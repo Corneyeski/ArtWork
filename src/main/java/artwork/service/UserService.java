@@ -167,13 +167,14 @@ public class UserService {
 
         //TODO añadir authorities
         if (user.getAuthorities() != null) {
+            Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
             Set<Authority> authorities = new HashSet<>();
-            /*user.getAuthorities().forEach(
-                authority -> authorities.add(authorityRepository.findOne(authority))
-            );*/
+
+            authorities.add(authority);
+
             user.setAuthorities(authorities);
         }
-        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+        String encryptedPassword = passwordEncoder.encode(newUserDTO.getPassword());
         user.setPassword(encryptedPassword);
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
