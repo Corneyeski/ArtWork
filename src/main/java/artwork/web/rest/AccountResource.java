@@ -98,11 +98,7 @@ public class AccountResource {
     @Timed
     public ResponseEntity createUserWithExt(@Valid @RequestBody NewUserDTO newUserDTO)  {
         log.debug("REST request to save User : {}", newUserDTO);
-
-
-
         //TODO Añadir Profesion al registro(?)
-        //TODO Añadir metodos para comprobar si login o email ya estan en uso(?)
 
         System.out.println("POR QUE NO ENTRA EN EL DEBUG");
 

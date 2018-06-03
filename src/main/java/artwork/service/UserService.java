@@ -165,7 +165,6 @@ public class UserService {
            user.setLangKey(newUserDTO.getLangKey());
         }
 
-        //TODO añadir authorities
         if (user.getAuthorities() != null) {
             Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
             Set<Authority> authorities = new HashSet<>();
@@ -174,8 +173,10 @@ public class UserService {
 
             user.setAuthorities(authorities);
         }
+
         String encryptedPassword = passwordEncoder.encode(newUserDTO.getPassword());
         user.setPassword(encryptedPassword);
+
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
         user.setActivated(true);
