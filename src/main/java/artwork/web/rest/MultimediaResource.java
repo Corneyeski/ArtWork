@@ -131,10 +131,15 @@ public class MultimediaResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
-
-    @DeleteMapping(value = "/multimedia/user")
+    /**
+     *
+     * @param id
+     * @param pageable
+     * @return List<Multimedia>
+     */
+    @GetMapping(value = "/multimedia/user")
     @Timed
-    public ResponseEntity<List<Multimedia>> deleteMultimedia(@RequestParam(required = false) Long id, Pageable pageable) {
+    public ResponseEntity<List<Multimedia>> getUserMultimedia(@RequestParam(required = false) Long id, Pageable pageable) {
 
         User user;
 
