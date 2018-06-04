@@ -3,6 +3,7 @@ package artwork.web.rest;
 import artwork.domain.User;
 import artwork.repository.UserRepository;
 import artwork.security.SecurityUtils;
+import artwork.service.UserService;
 import com.codahale.metrics.annotation.Timed;
 import artwork.domain.Multimedia;
 
@@ -39,11 +40,11 @@ public class MultimediaResource {
     private static final String ENTITY_NAME = "multimedia";
 
     private final MultimediaRepository multimediaRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public MultimediaResource(MultimediaRepository multimediaRepository, UserRepository userRepository) {
+    public MultimediaResource(MultimediaRepository multimediaRepository, UserService userService) {
         this.multimediaRepository = multimediaRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     /**
@@ -141,15 +142,11 @@ public class MultimediaResource {
     @Timed
     public ResponseEntity<List<Multimedia>> getUserMultimedia(@RequestParam(required = false) Long id, Pageable pageable) {
 
-        User user;
+        User user = userService.getUserByIdOrLogin(id);
 
-        if (id != null){
-            user = userRepository.findOne(id);
-            if (user == null) return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "id error",
+        if (user == null)
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "id error",
                 "no user found with this id")).body(null);
-        }else{
-            user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
-        }
 
         List<Multimedia> multimedias = multimediaRepository.findByUserIsCurrentUserOrderDesc(user.getLogin(), pageable);
 
