@@ -1,5 +1,8 @@
 package artwork.web.rest;
 
+import artwork.domain.User;
+import artwork.security.SecurityUtils;
+import artwork.service.UserService;
 import com.codahale.metrics.annotation.Timed;
 import artwork.domain.Following;
 
@@ -35,9 +38,11 @@ public class FollowingResource {
     private static final String ENTITY_NAME = "following";
 
     private final FollowingRepository followingRepository;
+    private final UserService userService;
 
-    public FollowingResource(FollowingRepository followingRepository) {
+    public FollowingResource(FollowingRepository followingRepository, UserService userService) {
         this.followingRepository = followingRepository;
+        this.userService = userService;
     }
 
     /**
@@ -123,5 +128,54 @@ public class FollowingResource {
         log.debug("REST request to delete Following : {}", id);
         followingRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     *
+     * @param id
+     * @param pageable
+     * @return
+     */
+    @GetMapping("/followed/user")
+    @Timed
+    public ResponseEntity<List<Following>> getFollowedUser(@RequestParam(required = false) Long id, Pageable pageable) {
+
+        User user = userService.getUserByIdOrLogin(id);
+
+        if (user != null){
+            List<Following> followeds = followingRepository.findByFollowedIsCurrentUser(user.getLogin(), pageable);
+
+            return ResponseEntity.ok()
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "get"))
+                .body(followeds);
+
+        }else
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "id error",
+                "no user found with this id")).body(null);
+
+    }
+
+    /**
+     *
+     * @param id
+     * @param pageable
+     * @return
+     */
+    @GetMapping("/followers/user")
+    @Timed
+    public ResponseEntity<List<Following>> getFollowingUser(@RequestParam(required = false) Long id, Pageable pageable) {
+
+        User user = userService.getUserByIdOrLogin(id);
+
+        if (user != null){
+            List<Following> followeds = followingRepository.findByFollowerIsCurrentUser(user.getLogin(), pageable);
+
+            return ResponseEntity.ok()
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "get"))
+                .body(followeds);
+
+        }else
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "id error",
+                "no user found with this id")).body(null);
     }
 }

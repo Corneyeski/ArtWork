@@ -8,6 +8,7 @@ import artwork.repository.FollowingRepository;
 import artwork.repository.MultimediaRepository;
 import artwork.repository.UserRepository;
 import artwork.security.SecurityUtils;
+import artwork.service.UserService;
 import artwork.web.rest.rdto.ProfileRDTO;
 import artwork.web.rest.util.HeaderUtil;
 import com.codahale.metrics.annotation.Timed;
@@ -36,16 +37,16 @@ public class ProfileResource {
 
     private static final String ENTITY_NAME = "profiles";
 
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final MultimediaRepository multimediaRepository;
     private final FollowingRepository followingRepository;
     private final AlbumRepository albumRepository;
 
-    public ProfileResource(UserRepository userRepository,
+    public ProfileResource(UserService userService,
                            MultimediaRepository multimediaRepository,
                            FollowingRepository followingRepository,
                            AlbumRepository albumRepository) {
-        this.userRepository = userRepository;
+        this.userService = userService;
         this.multimediaRepository = multimediaRepository;
         this.followingRepository = followingRepository;
         this.albumRepository = albumRepository;
@@ -59,25 +60,21 @@ public class ProfileResource {
                                                    @Qualifier("followed") Pageable followed,
                                                    @Qualifier("follower") Pageable follower) {
 
-        User user;
+        User user = userService.getUserByIdOrLogin(id);
 
-        if (id != null){
-            user = userRepository.findOne(id);
-            if (user == null) return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "id error",
-                "no user found with this id")).body(null);
-        }else{
-            user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
-        }
+        if (user == null)
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "id error",
+            "no user found with this id")).body(null);
 
-        //List<Multimedia> multimedias = multimediaRepository.findByUserIsCurrentUserOrderDesc(multimedia);
+        List<Multimedia> multimedias = multimediaRepository.findByUserIsCurrentUserOrderDesc(user.getLogin(), multimedia);
 
-        List<Following> followeds = followingRepository.findByFollowedIsCurrentUser(followed);
+        List<Following> followeds = followingRepository.findByFollowedIsCurrentUser(user.getLogin(), followed);
 
-        List<Following> followers = followingRepository.findByFollowerIsCurrentUser(follower);
+        List<Following> followers = followingRepository.findByFollowerIsCurrentUser(user.getLogin(), follower);
 
 
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "set"))
-            .body(new ProfileRDTO(user,null,followers,followeds, null));
+            .body(new ProfileRDTO(user,multimedias,followers,followeds, null));
     }
 }

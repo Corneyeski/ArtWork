@@ -12,11 +12,13 @@ import artwork.service.dto.NewUserDTO;
 import artwork.service.util.RandomUtil;
 import artwork.service.dto.UserDTO;
 
+import artwork.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
@@ -298,5 +300,22 @@ public class UserService {
      */
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
+    }
+
+    /**
+     *
+     * @param id
+     * @return User
+     */
+    public User getUserByIdOrLogin(Long id){
+        User user;
+
+        if (id != null){
+            user = userRepository.findOne(id);
+        }else{
+            user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
+        }
+
+        return user;
     }
 }
