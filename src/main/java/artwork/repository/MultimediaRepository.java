@@ -30,8 +30,8 @@ public interface MultimediaRepository extends JpaRepository<Multimedia, Long> {
      *
      * @return List<Multimedia>
      */
-    @Query("SELECT multimedia FROM Multimedia multimedia WHERE multimedia.user.login = ?#{principal.username} ORDER BY multimedia.time DESC")
-    List<Multimedia> findByUserIsCurrentUserOrderDesc(Pageable pageable);
+    @Query("SELECT multimedia FROM Multimedia multimedia WHERE multimedia.user.login = :user ORDER BY multimedia.time DESC")
+    List<Multimedia> findByUserIsCurrentUserOrderDesc(String user, Pageable pageable);
 
     /**
      * Devuelve elementos multimedia filtrados por puntuacion y de usuarios de la misma ciudad ordenado de mas reciente a antiguo con paginacion

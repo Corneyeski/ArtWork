@@ -69,7 +69,7 @@ public class ProfileResource {
             user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
         }
 
-        List<Multimedia> multimedias = multimediaRepository.findByUserIsCurrentUserOrderDesc(multimedia);
+        //List<Multimedia> multimedias = multimediaRepository.findByUserIsCurrentUserOrderDesc(multimedia);
 
         List<Following> followeds = followingRepository.findByFollowedIsCurrentUser(followed);
 
@@ -78,6 +78,6 @@ public class ProfileResource {
 
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "set"))
-            .body(new ProfileRDTO(user,multimedias,followers,followeds, null));
+            .body(new ProfileRDTO(user,null,followers,followeds, null));
     }
 }

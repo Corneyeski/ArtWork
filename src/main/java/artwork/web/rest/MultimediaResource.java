@@ -1,5 +1,8 @@
 package artwork.web.rest;
 
+import artwork.domain.User;
+import artwork.repository.UserRepository;
+import artwork.security.SecurityUtils;
 import com.codahale.metrics.annotation.Timed;
 import artwork.domain.Multimedia;
 
@@ -36,9 +39,11 @@ public class MultimediaResource {
     private static final String ENTITY_NAME = "multimedia";
 
     private final MultimediaRepository multimediaRepository;
+    private final UserRepository userRepository;
 
-    public MultimediaResource(MultimediaRepository multimediaRepository) {
+    public MultimediaResource(MultimediaRepository multimediaRepository, UserRepository userRepository) {
         this.multimediaRepository = multimediaRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -124,5 +129,27 @@ public class MultimediaResource {
         log.debug("REST request to delete Multimedia : {}", id);
         multimediaRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+
+    @DeleteMapping(value = "/multimedia/user")
+    @Timed
+    public ResponseEntity<List<Multimedia>> deleteMultimedia(@RequestParam(required = false) Long id, Pageable pageable) {
+
+        User user;
+
+        if (id != null){
+            user = userRepository.findOne(id);
+            if (user == null) return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "id error",
+                "no user found with this id")).body(null);
+        }else{
+            user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
+        }
+
+        List<Multimedia> multimedias = multimediaRepository.findByUserIsCurrentUserOrderDesc(user.getLogin(), pageable);
+
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "get"))
+            .body(multimedias);
     }
 }
