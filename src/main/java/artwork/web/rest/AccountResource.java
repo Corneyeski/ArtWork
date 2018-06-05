@@ -96,7 +96,7 @@ public class AccountResource {
    @PostMapping(path = "/register",
         produces={MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
     @Timed
-    public ResponseEntity createUserWithExt(@Valid @RequestBody NewUserDTO newUserDTO)  {
+    public ResponseEntity createUserWithExt(@Valid @RequestBody NewUserDTO newUserDTO) {
         log.debug("REST request to save User : {}", newUserDTO);
         //TODO Añadir Profesion al registro(?)
 

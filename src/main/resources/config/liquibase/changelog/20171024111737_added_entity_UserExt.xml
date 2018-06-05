@@ -79,6 +79,10 @@
             <column name="resume_content_type" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+
+            <column name="remember_info" type="bit">
+                <constraints nullable="true" />
+            </column>
             <column name="user_id" type="bigint">
                 <constraints unique="true" nullable="true" />
             </column>

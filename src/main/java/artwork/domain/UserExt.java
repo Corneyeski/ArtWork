@@ -84,7 +84,6 @@ public class UserExt implements Serializable {
     private Boolean rememberInfo;
 
     @OneToOne
-    @NotNull
     @JoinColumn(unique = true)
     private User user;
 
@@ -110,12 +109,7 @@ public class UserExt implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Tool> tools = new HashSet<>();
 
-    /*@OneToMany(mappedBy = "userExt")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Album> albums = new HashSet<>();*/
-
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
     public Long getId() {
         return id;
     }
@@ -319,6 +313,19 @@ public class UserExt implements Serializable {
         this.resumeContentType = resumeContentType;
     }
 
+    public Boolean isRememberInfo() {
+        return rememberInfo;
+    }
+
+    public UserExt rememberInfo(Boolean rememberInfo) {
+        this.rememberInfo = rememberInfo;
+        return this;
+    }
+
+    public void setRememberInfo(Boolean rememberInfo) {
+        this.rememberInfo = rememberInfo;
+    }
+
     public User getUser() {
         return user;
     }
@@ -433,16 +440,7 @@ public class UserExt implements Serializable {
     public void setTools(Set<Tool> tools) {
         this.tools = tools;
     }
-
-    public Boolean isRememberInfo() {
-        return rememberInfo;
-    }
-
-    public void setRememberInfo(Boolean rememberInfo) {
-        this.rememberInfo = rememberInfo;
-    }
-
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
@@ -483,7 +481,7 @@ public class UserExt implements Serializable {
             ", theme='" + getTheme() + "'" +
             ", resume='" + getResume() + "'" +
             ", resumeContentType='" + resumeContentType + "'" +
-            ", rememberInfo='"+ isRememberInfo() + "'" +
+            ", rememberInfo='" + isRememberInfo() + "'" +
             "}";
     }
 }

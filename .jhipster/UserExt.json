@@ -115,12 +115,16 @@
             "fieldName": "resume",
             "fieldType": "byte[]",
             "fieldTypeBlobContent": "any"
+        },
+        {
+            "fieldName": "rememberInfo",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20171024111737",
-    "entityTableName": "user_ext",
     "dto": "no",
-    "pagination": "no",
     "service": "no",
-    "jpaMetamodelFiltering": false
+    "entityTableName": "user_ext",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
 }

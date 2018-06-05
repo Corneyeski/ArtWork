@@ -30,6 +30,7 @@
             <th><span jhiTranslate="artWorkApp.userExt.working">Working</span></th>
             <th><span jhiTranslate="artWorkApp.userExt.theme">Theme</span></th>
             <th><span jhiTranslate="artWorkApp.userExt.resume">Resume</span></th>
+            <th><span jhiTranslate="artWorkApp.userExt.rememberInfo">Remember Info</span></th>
             <th><span jhiTranslate="artWorkApp.userExt.user">User</span></th>
             <th><span jhiTranslate="artWorkApp.userExt.city">City</span></th>
             <th><span jhiTranslate="artWorkApp.userExt.language">Language</span></th>
@@ -62,6 +63,7 @@
                     <a *ngIf="userExt.resume" (click)="openFile(userExt.resumeContentType, userExt.resume)" jhiTranslate="entity.action.open">open</a>
                     <span *ngIf="userExt.resume">{{userExt.resumeContentType}}, {{byteSize(userExt.resume)}}</span>
                 </td>
+                <td>{{userExt.rememberInfo}}</td>
                 <td>
                     {{userExt.user?.login}}
                 </td>
