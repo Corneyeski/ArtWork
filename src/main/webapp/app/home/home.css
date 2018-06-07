@@ -11,48 +11,80 @@ Main page styles
 }
 
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
-@media
-only screen and (-webkit-min-device-pixel-ratio: 2),
-only screen and (   min--moz-device-pixel-ratio: 2),
-only screen and (     -o-min-device-pixel-ratio: 2/1),
-only screen and (        min-device-pixel-ratio: 2),
-only screen and (                min-resolution: 192dpi),
-only screen and (                min-resolution: 2dppx) {
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (min--moz-device-pixel-ratio: 2),
+    only screen and (-o-min-device-pixel-ratio: 2/1),
+    only screen and (min-device-pixel-ratio: 2),
+    only screen and (min-resolution: 192dpi),
+    only screen and (min-resolution: 2dppx) {
     .hipster {
-        background: url("../../content/images/hipster2x.png") no-repeat center top;
+        background: url("../../content/images/hipster2x.png") no-repeat center
+            top;
         background-size: contain;
     }
 }
 
-.home-page{
+.home-page {
     /* top / right / bottom / left*/
     padding: 25px 50px 25px 50px;
 }
 
 .login{
+    padding-top: 20%;
+    position: relative;
+    height: 710px;
+}
+
+.login::after {
+    content : "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
     background: url("../../content/images/friends.jpg") no-repeat center top;
-    background-size: auto;
-    height: 700px;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    opacity : 0.6;
+    z-index: -1;
 }
 
-.register{
+.register {
+    padding-top: 4%;
+    position: relative;
+    height: 760px;
+}
+
+.register::after{
+    content : "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
     background: url("../../content/images/register.jpg") no-repeat center top;
-    background-size: auto;
-    height: 700px;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    opacity : 0.6;
+    z-index: -1;
 }
 
-  .image{
-      height: 250px;
-      width: 300px;
-  }
+.image {
+    height: 250px;
+    width: 300px;
+}
 
-  .account-image{
-      max-height: 210px;
-  }
+.account-image {
+    max-height: 210px;
+}
 
-  .register-form-image{
-    background-color:white; 
-    background: rgba(255,255,255,.8);
-    border-radius: 8px; 
-    padding-bottom:10px;
-  }
+.register-form-image {
+    background-color: white;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    padding-bottom: 10px;
+}
+
+.ptop-xsmall {
+    padding-top: 10px;
+}
