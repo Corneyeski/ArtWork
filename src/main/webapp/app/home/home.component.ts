@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiBase64Service, JhiDataUtils, JhiLanguageService } from 'ng-jhipster';
 
@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
     registerCredentials:any = {};
     passwordNoMatch = false;
 
+    loginError = false;
     registerSuccess = false;
     registerError = false;
 
@@ -43,7 +44,8 @@ export class HomeComponent implements OnInit {
         private dataUtils: JhiDataUtils,
         private languageService: JhiLanguageService,
         private registerService: Register,
-        private http: Http
+        private http: Http,
+        private elementRef: ElementRef
     ) {
     }
 
@@ -83,9 +85,12 @@ export class HomeComponent implements OnInit {
             });
             //this.getMultimedia();
 
-        }).catch(() => {
-            console.debug("login FAIL");
+        }, (err) => {
+            console.log("ERROR")
+            this.loginError = true;
         });
+
+        this.password = '';
     }
 
     register(){
@@ -93,7 +98,7 @@ export class HomeComponent implements OnInit {
             birthdate: new Date(1527869120),
             kind: 1,
             image: this.registerCredentials.image,
-            imageContentType: this.registerCredentials.imageContentType, 
+            imageContentType: this.registerCredentials.imageContentType,
             working: false
         };
 
@@ -101,11 +106,11 @@ export class HomeComponent implements OnInit {
             console.log("NO COINCIDEN")
             this.passwordNoMatch = true;
         } else {
-            console.log(this.registerCredentials)
             this.passwordNoMatch = false;
             this.languageService.getCurrent().then((key) => {
                 this.registerCredentials.langKey = key;
                 this.registerService.save(this.registerCredentials).subscribe((response) => {
+                    console.log(response)
                     if(response.status == 200 || response.status == 201){
                         console.debug("Se ha creado el usuario")
                         this.registerSuccess = true;
@@ -142,6 +147,10 @@ export class HomeComponent implements OnInit {
 
     setFileData(event, entity, field, isImage) {
         this.dataUtils.setFileData(event, entity, field, isImage);
+    }
+
+    clearInputImage(field: string, fieldContentType: string, idInput: string) {
+        this.dataUtils.clearInputImage(this.registerCredentials, this.elementRef, field, fieldContentType, idInput);
     }
 
 }

@@ -1,148 +1,155 @@
 <div class="row">
-    <!-- NO ESTÁ REGISTRADO -->
-    <div class="col-md-12" *ngIf="!isAuthenticated()">
+   <!-- NO ESTÁ REGISTRADO -->
+   <div class="col-md-12" *ngIf="!isAuthenticated()">
 
-        <div class="row login">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
+      <div class="row login">
+         <div class="col-md-3"></div>
+         <div class="col-md-6">
+            <h1 style="text-align:center;margin-top:20px">Accede a ArtWork!</h1>
+            <form class="form" role="form" (ngSubmit)="login()">
+               <div class="form-group">
+                  <label for="username">Nombre de usuario</label>
+                  <input type="text" class="form-control" name="username" id="username" placeholder="Nombre de usuario" [(ngModel)]="username">
+               </div>
+               <div class="form-group">
+                  <label for="password">Contraseña</label>
+                  <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña" [(ngModel)]="password">
+               </div>
+               <button type="submit" class="btn btn-primary col-md-12">Entra</button>
 
-                <h1 style="text-align:center;margin-top:20px">Accede a ArtWork!</h1>
-                <form class="form" role="form" (ngSubmit)="login()">
-                    <div class="form-group">
-                        <label for="username">Nombre de usuario</label>
-                        <input type="text" class="form-control" name="username" id="username" placeholder="Nombre de usuario" [(ngModel)]="username">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Contraseña</label>
-                        <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña" [(ngModel)]="password">
-                    </div>
-                    <button type="submit" class="btn btn-primary col-md-12">Entra</button>
-                </form>
+               <div class="form-group ptop-xsmall" *ngIf="loginError">
+                  <div class="alert alert-danger" role="alert">
+                     Ha ocurrido un error. Por favor, revisa las credenciales que has introducido
+                  </div>
+               </div>
+            </form>
+         </div>
+         <div class="col-md-3"></div>
+      </div>
 
-            </div>
-            <div class="col-md-3"></div>
-        </div>
+      <div class="row register">
+         <div class="col-md-2"></div>
+         <div class="col-md-8">
+            <h1 style="text-align:center;margin-top:20px">Bienvenido a ArtWork!</h1>
+            <h2 style="text-align:center">Regístrate para disfrutar de nuestra app</h2>
 
-        <div class="row register">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                <h1 style="text-align:center;margin-top:20px">Bienvenido a ArtWork!</h1>
-                <h2 style="text-align:center">Regístrate para disfrutar de nuestra app</h2>
+            <form name="form" role="form" (ngSubmit)="register()" #registerForm="ngForm">
 
-                <form name="form" role="form" (ngSubmit)="register()" #registerForm="ngForm">
+               <div class="row">
+                  <div class="form-group col-md-6">
+                     <label class="form-control-label" for="name">Nombre</label>
+                     <input type="text" class="form-control" [(ngModel)]="registerCredentials.firstName" id="name" name="name" #name="ngModel"
+                        placeholder="Nombre" required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$">
+                  </div>
+                  <div class="form-group col-md-6">
+                     <label class="form-control-label" for="surname">Apellidos</label>
+                     <input type="text" class="form-control" id="surname" name="surname" #surname="ngModel" placeholder="Apellidos" [(ngModel)]="registerCredentials.lastName"
+                        minlength=1 maxlength=100 surname required>
+                  </div>
+               </div>
 
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label class="form-control-label" for="name">Nombre</label>
-                            <input type="text" class="form-control" [(ngModel)]="registerCredentials.firstName" id="name" name="name" #name="ngModel" placeholder="Nombre"
-                                required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="form-control-label" for="surname">Apellidos</label>
-                            <input type="text" class="form-control" id="surname" name="surname" #surname="ngModel" placeholder="Apellidos" [(ngModel)]="registerCredentials.lastName"
-                                minlength=1 maxlength=100 surname required>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label class="form-control-label" for="registerLogin">Nombre de usuario</label>
-                            <input type="text" class="form-control" [(ngModel)]="registerCredentials.login" id="registerLogin" name="registerLogin" #registerLogin="ngModel"
-                                placeholder="Nombre de usuario" required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="form-control-label" for="email">Correo electrónico</label>
-                            <input type="email" class="form-control" id="email" name="email" #email="ngModel" placeholder="Correo electrónico" [(ngModel)]="registerCredentials.email"
-                                minlength=5 maxlength=100 email required>
-                        </div>
-                    </div>
+               <div class="row">
+                  <div class="form-group col-md-6">
+                     <label class="form-control-label" for="registerLogin">Nombre de usuario</label>
+                     <input type="text" class="form-control" [(ngModel)]="registerCredentials.login" id="registerLogin" name="registerLogin" #registerLogin="ngModel"
+                        placeholder="Nombre de usuario" required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$">
+                  </div>
+                  <div class="form-group col-md-6">
+                     <label class="form-control-label" for="email">Correo electrónico</label>
+                     <input type="email" class="form-control" id="email" name="email" #email="ngModel" placeholder="Correo electrónico" [(ngModel)]="registerCredentials.email"
+                        minlength=5 maxlength=100 email required>
+                  </div>
+               </div>
 
 
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label class="form-control-label" for="registerPassword">Contraseña</label>
-                            <input type="password" class="form-control" [(ngModel)]="registerCredentials.password" id="registerPassword" name="registerPassword"
-                                #registerPassword="ngModel" placeholder="Contraseña" required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$">
+               <div class="row">
+                  <div class="form-group col-md-6">
+                     <label class="form-control-label" for="registerPassword">Contraseña</label>
+                     <input type="password" class="form-control" [(ngModel)]="registerCredentials.password" id="registerPassword" name="registerPassword"
+                        #registerPassword="ngModel" placeholder="Contraseña" required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$">
 
-                            <!-- <jhi-password-strength-bar [passwordToCheck]="registerCredentials.password"></jhi-password-strength-bar> -->
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="form-control-label" for="confirmPassword">Confirmación de la contraseña</label>
-                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" #confirmPasswordInput="ngModel" placeholder="Vuelve a introducir la contraseña"
-                                [(ngModel)]="registerCredentials.confirmPassword" minlength=4 maxlength=50 required>
-                        </div>
+                     <!-- <jhi-password-strength-bar [passwordToCheck]="registerCredentials.password"></jhi-password-strength-bar> -->
+                  </div>
+                  <div class="form-group col-md-6">
+                     <label class="form-control-label" for="confirmPassword">Confirmación de la contraseña</label>
+                     <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" #confirmPasswordInput="ngModel" placeholder="Vuelve a introducir la contraseña"
+                        [(ngModel)]="registerCredentials.confirmPassword" minlength=4 maxlength=50 required>
+                  </div>
 
-                        <div class="col-md-12">
-                            <!-- <div style="color:red;text-align:center" *ngIf="passwordNoMatch">
-                                <strong>Las contraseñas no coinciden</strong>
-                            </div> -->
-                            <div class="alert alert-danger" role="alert" *ngIf="passwordNoMatch">
-                                Las contraseñas no coinciden
-                            </div>
-                        </div>
-                    </div>
+                  <div class="col-md-12">
+                     <div class="alert alert-danger" role="alert" *ngIf="passwordNoMatch">
+                        Las contraseñas no coinciden
+                     </div>
+                  </div>
+               </div>
 
-                    <div class="row">
-                        <div class="form-group col-md-12 register-form-image">
+               <div class="row">
+                  <div class="form-group col-md-12 register-form-image">
 
-                            <label class="form-control-label" for="field_image">Image</label>
-                            <div>
-                                <img [src]="'data:' + registerCredentials.imageContentType + ';base64,' + registerCredentials.image" style="max-height: 100px;"
-                                    *ngIf="registerCredentials.image" alt="userExt image" />
-                                <div *ngIf="registerCredentials.image" class="form-text text-danger clearfix">
-                                    <span class="pull-left">{{registerCredentials.imageContentType}}, {{byteSize(registerCredentials.image)}}</span>
-                                    <button type="button" (click)="clearInputImage('image', 'imageContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
-                                        <span class="fa fa-times"></span>
+                     <label class="form-control-label" for="field_image">Imagen</label>
+                     <div>
+                        <img [src]="'data:' + registerCredentials.imageContentType + ';base64,' + registerCredentials.image" style="max-height: 100px;"
+                           *ngIf="registerCredentials.image" alt="userExt image" id="field_image" />
+                        <div class="form-text text-danger clearfix">
+                           <div class="row">
+                              <div class="col-md-8">
+                                 <div id="upload_button">
+                                    <button type="button" class="btn btn-secondary btn-xs pull-left">
+                                       <input type="file" id="file_image" (change)="setFileData($event, registerCredentials, 'image', true)" accept="image/*" />
                                     </button>
-                                </div>
-                                <input type="file" id="file_image" (change)="setFileData($event, registerCredentials, 'image', true)" accept="image/*" jhiTranslate="entity.action.addimage"
-                                />
-                            </div>
-                            <input type="hidden" class="form-control" name="image" id="field_image" [(ngModel)]="registerCredentials.image" />
-                            <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType" [(ngModel)]="registerCredentials.imageContentType"
-                            />
+                                 </div>
+                              </div>
 
+                              <div class="col-md-4" *ngIf="registerCredentials.image">
+                                 <button type="button" (click)="clearInputImage('image', 'imageContentType', 'field_image')" class="btn btn-secondary btn-xs pull-right">
+                                    <span class="fa fa-times"></span>
+                                 </button>
+                              </div>
+                           </div>
                         </div>
-                    </div>
+                        <!-- <input type="file" id="file_image" (change)="setFileData($event, registerCredentials, 'image', true)" accept="image/*" class="btn btn-secondary btn-xs pull-right"/> -->
+                     </div>
+                     <input type="hidden" class="form-control" name="image" id="field_image" [(ngModel)]="registerCredentials.image" />
+                     <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType" [(ngModel)]="registerCredentials.imageContentType"
+                     />
+                  </div>
+               </div>
 
-                    <button type="submit" [disabled]="registerForm.form.invalid" class="btn btn-primary col-md-12">Registrar</button>
+               <button type="submit" [disabled]="registerForm.form.invalid" class="btn btn-primary col-md-12">Registrar</button>
 
-                    <div class="row justify-content-center">
-                        <div class="col-md-8">
-                            <div class="alert alert-success" *ngIf="registerSuccess">
-                                <strong>El registro ha funcionado!!</strong> Revisa tu email y inicia sesión en nuestra app
-                            </div>
+               <div class="form-group ptop-xsmall">
+                  <div class="alert alert-success" role="alert" *ngIf="registerSuccess">
+                     <strong>El registro ha funcionado!!</strong> Revisa tu email y inicia sesión en nuestra app
+                  </div>
+                  <div class="alert alert-danger" role="alert" *ngIf="registerError">
+                     <strong>Algo no ha funcionado bien...</strong> Vuelve a intentarlo de nuevo!
+                  </div>
+               </div>
+            </form>
 
-                            <div class="alert alert-danger" *ngIf="registerError">
-                                <strong>Algo no ha funcionado bien...</strong> Vuelve a intentarlo de nuevo!
-                            </div>
-                        </div>
-                    </div>
-                </form>
+         </div>
+         <div class="col-md-2"></div>
+      </div>
+   </div>
 
+   <!-- ESTÁ REGISTRADO -->
+   <div class="col-md-12 home-page" *ngIf="isAuthenticated()">
+      <div class="row">
+         <h2>Bienvenido de nuevo, {{account.login}}</h2>
+      </div>
+      <div class="row">
+         <div class="col-md-3">
+            <div class="row">
+               <img src="../../content/images/default-user.png" alt="user login image" class="account-image" />
             </div>
-            <div class="col-md-2"></div>
-        </div>
-    </div>
+            <p></p>
 
-    <!-- ESTÁ REGISTRADO -->
-    <div class="col-md-12 home-page" *ngIf="isAuthenticated()">
-        <div class="row">
-            <h2>Bienvenido de nuevo, {{account.login}}</h2>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="row">
-                    <img src="../../content/images/default-user.png" alt="user login image" class="account-image" />
-                </div>
-                <p></p>
-
-                <div class="row">
-                    <div class="list-group">
-                        <div class="list-group-item">{{account.login}}</div>
-                        <div class="list-group-item">{{account.firstName}} {{account.lastName}}
-                        </div>
-                        <!--<div class="list-group-item">
+            <div class="row">
+               <div class="list-group">
+                  <div class="list-group-item">{{account.login}}</div>
+                  <div class="list-group-item">{{account.firstName}} {{account.lastName}}
+                  </div>
+                  <!--<div class="list-group-item">
                             <a ui-sref="evento.new">
                                 <span data-translate="global.navbar-functions.create-event">Create event</span>
                             </a>
@@ -158,32 +165,32 @@
                                 <span data-translate="global.navbar-functions.yourParticipations"></span>
                             </a>
                         </div>-->
-                    </div>
-                </div>
+               </div>
             </div>
+         </div>
 
-            <div class="col-md-9">
-                <div class="row" style="padding:10px 5px 10px 5px">
-                    <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4" />
-                    <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4" />
-                    <img src="../../content/images/test2.jpg" alt="user login image" class="account-image col-md-4" />
-                </div>
-                <div class="row" style="padding:10px 5px 10px 5px">
-                    <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4" />
-                    <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4" />
-                    <img src="../../content/images/test3.jpg" alt="user login image" class="account-image col-md-4" />
-                </div>
-                <div class="row" style="padding:10px 5px 10px 5px">
-                    <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4" />
-                    <img src="../../content/images/test2.jpg" alt="user login image" class="account-image col-md-4" />
-                    <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4" />
-                </div>
-                <div class="row" style="padding:10px 5px 10px 5px">
-                    <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4" />
-                    <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4" />
-                    <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4" />
-                </div>
-                <!-- <div class="flex-container" *ngFor="let multimedia of multimedias">
+         <div class="col-md-9">
+            <div class="row" style="padding:10px 5px 10px 5px">
+               <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4" />
+               <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4" />
+               <img src="../../content/images/test2.jpg" alt="user login image" class="account-image col-md-4" />
+            </div>
+            <div class="row" style="padding:10px 5px 10px 5px">
+               <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4" />
+               <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4" />
+               <img src="../../content/images/test3.jpg" alt="user login image" class="account-image col-md-4" />
+            </div>
+            <div class="row" style="padding:10px 5px 10px 5px">
+               <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4" />
+               <img src="../../content/images/test2.jpg" alt="user login image" class="account-image col-md-4" />
+               <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4" />
+            </div>
+            <div class="row" style="padding:10px 5px 10px 5px">
+               <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4" />
+               <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4" />
+               <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4" />
+            </div>
+            <!-- <div class="flex-container" *ngFor="let multimedia of multimedias">
                &lt;!&ndash; {{multimedia |json}} &ndash;&gt;
                <div *ngIf="multimedia.image" class="image">
                    <a (click)="openFile(multimedia.imageContentType, multimedia.image)">
@@ -192,7 +199,7 @@
                    </a>
                </div>
            </div>-->
-            </div>
-        </div>
-    </div>
+         </div>
+      </div>
+   </div>
 </div>
