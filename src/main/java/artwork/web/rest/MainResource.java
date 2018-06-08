@@ -150,11 +150,14 @@ public class MainResource {
     @Transactional
     public ResponseEntity<Boolean> upload(@RequestBody NewMultimediaRDTO newMultimedia) {
 
-        User user = userRepository.findOne(newMultimedia.getUser());
+
+        User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
 
         if(user == null) return ResponseEntity.badRequest()
             .headers(HeaderUtil.createFailureAlert(ENTITY_NAME,
                 "bad user", "usuario no valido")).body(null);
+
+
 
         Multimedia multimedia = new Multimedia();
         BeanUtils.copyProperties(newMultimedia, multimedia);
@@ -165,10 +168,10 @@ public class MainResource {
         }
 
         multimedia.setUser(user);
+        multimedia.setTotalValoration(0.0);
 
-
-        if((multimedia.getType().equals(Type.SONG) && multimedia.getSong().length != 0 && multimedia.getSongContentType() != null) ||
-                (multimedia.getType().equals(Type.PHOTO) && multimedia.getImage().length != 0 && multimedia.getImageContentType() != null)){
+        if((multimedia.getType().equals(Type.SONG) && multimedia.getSong() != null && multimedia.getSongContentType() != null) ||
+                (multimedia.getType().equals(Type.PHOTO) && multimedia.getImage() != null && multimedia.getImageContentType() != null)){
 
             multimediaRepository.save(multimedia);
 
