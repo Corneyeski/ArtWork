@@ -73,14 +73,13 @@ export class MultimediaDialogComponent implements OnInit {
             tags: this.multimedia.tags,
             title: this.multimedia.title, 
             type: this.multimedia.type,
-            description: this.multimedia.description,
-            totalValoration: 0, 
             song: null, 
             songContentType: null,
             image: null, 
             imageContentType: null
         };
-
+        // description: this.multimedia.description,
+       
         if(this.multimedia.image != undefined){
             multimedia.song = null;
             multimedia.songContentType = null;
@@ -101,16 +100,12 @@ export class MultimediaDialogComponent implements OnInit {
         console.log(multimedia)
         this.isSaving = true;
         this.multimediaService.uploadMultimedia(multimedia).subscribe(response => {
-            console.log("sended")
-            console.log(response);
+            if(response.status == 200 || response.status == 201){
+                this.activeModal.dismiss('cancel');
+            }else{
+                console.log("ha habido un error");
+            }
         })
-        /* if (multimedia.id !== undefined) {
-            this.subscribeToSaveResponse(
-                this.multimediaService.update(multimedia));
-        } else {
-            this.subscribeToSaveResponse(
-                this.multimediaService.create(multimedia));
-        } */
     }
 
     private subscribeToSaveResponse(result: Observable<Multimedia>) {
