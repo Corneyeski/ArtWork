@@ -20,8 +20,6 @@ public class NewMultimediaRDTO {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Type type;
-    @NotNull
-    private Long user;
     private Long Album;
 
     public String getTitle() {
@@ -78,14 +76,6 @@ public class NewMultimediaRDTO {
 
     public void setType(Type type) {
         this.type = type;
-    }
-
-    public Long getUser() {
-        return user;
-    }
-
-    public void setUser(Long user) {
-        this.user = user;
     }
 
     public Long getAlbum() {
