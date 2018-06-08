@@ -12,6 +12,7 @@ import { MultimediaService } from './multimedia.service';
 import { User, UserService } from '../../shared';
 import { Album, AlbumService } from '../album';
 import { ResponseWrapper } from '../../shared';
+import { multicast } from 'rxjs/operator/multicast';
 
 @Component({
     selector: 'jhi-multimedia-dialog',
@@ -67,14 +68,49 @@ export class MultimediaDialogComponent implements OnInit {
     }
 
     save() {
+        var multimedia = {
+            album: 0,
+            tags: this.multimedia.tags,
+            title: this.multimedia.title, 
+            type: this.multimedia.type,
+            description: this.multimedia.description,
+            totalValoration: 0, 
+            song: null, 
+            songContentType: null,
+            image: null, 
+            imageContentType: null
+        };
+
+        if(this.multimedia.image != undefined){
+            multimedia.song = null;
+            multimedia.songContentType = null;
+
+            multimedia.image = this.multimedia.image;
+            multimedia.imageContentType = this.multimedia.imageContentType;
+
+        }else if(this.multimedia.song != undefined){
+            multimedia.image = null;
+            multimedia.imageContentType = null;
+
+            multimedia.song = this.multimedia.song;
+            multimedia.songContentType = this.multimedia.songContentType;
+        }
+
+        console.log("guardando nuevo multimedia")
+        console.log(this.multimedia)
+        console.log(multimedia)
         this.isSaving = true;
-        if (this.multimedia.id !== undefined) {
+        this.multimediaService.uploadMultimedia(multimedia).subscribe(response => {
+            console.log("sended")
+            console.log(response);
+        })
+        /* if (multimedia.id !== undefined) {
             this.subscribeToSaveResponse(
-                this.multimediaService.update(this.multimedia));
+                this.multimediaService.update(multimedia));
         } else {
             this.subscribeToSaveResponse(
-                this.multimediaService.create(this.multimedia));
-        }
+                this.multimediaService.create(multimedia));
+        } */
     }
 
     private subscribeToSaveResponse(result: Observable<Multimedia>) {

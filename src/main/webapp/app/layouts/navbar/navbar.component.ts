@@ -77,4 +77,8 @@ export class NavbarComponent implements OnInit {
     getImageUrl() {
         return this.isAuthenticated() ? this.principal.getImageUrl() : null;
     }
+
+    uploadNewContent(){
+        console.log("modal para subir img")
+    }
 }
