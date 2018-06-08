@@ -1,58 +1,68 @@
 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
 
     <div class="modal-header">
-        <h4 class="modal-title" id="myMultimediaLabel" jhiTranslate="artWorkApp.multimedia.home.createOrEditLabel">Create or edit a Multimedia</h4>
+        <h4 class="modal-title" id="myMultimediaLabel">Añadir nuevo contenido</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 (click)="clear()">&times;</button>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" [hidden]="!multimedia.id">
-            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <label for="id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
                    [(ngModel)]="multimedia.id" readonly />
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.title" for="field_title">Title</label>
+            <label class="form-control-label" for="field_title">Título</label>
             <input type="text" class="form-control" name="title" id="field_title"
                 [(ngModel)]="multimedia.title"  />
         </div>
+
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.image" for="field_image">Image</label>
+                <label class="form-control-label" for="field_type">Tipo de archivo</label>
+                <select class="form-control" name="type" [(ngModel)]="multimedia.type" id="field_type" >
+                    <option value="PHOTO">Imagen</option>
+                    <!-- <option value="VIDEO">{{'artWorkApp.Type.VIDEO' | translate}}</option> -->
+                    <option value="SONG">Canción</option>
+                </select>
+            </div>
+
+        <div class="form-group" *ngIf="multimedia.type == 'PHOTO'">
+            <label class="form-control-label" for="field_image">Imagen</label>
             <div>
                 <img [src]="'data:' + multimedia.imageContentType + ';base64,' + multimedia.image" style="max-height: 100px;" *ngIf="multimedia.image" alt="multimedia image"/>
                 <div *ngIf="multimedia.image" class="form-text text-danger clearfix">
-                    <span class="pull-left">{{multimedia.imageContentType}}, {{byteSize(multimedia.image)}}</span>
+                   <!--  <span class="pull-left">{{multimedia.imageContentType}}, {{byteSize(multimedia.image)}}</span> -->
                     <button type="button" (click)="clearInputImage('image', 'imageContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
                         <span class="fa fa-times"></span>
                     </button>
                 </div>
-                <input type="file" id="file_image" (change)="setFileData($event, multimedia, 'image', true)" accept="image/*" jhiTranslate="entity.action.addimage"/>
+                <input type="file" id="file_image" (change)="setFileData($event, multimedia, 'image', true)" accept="image/*"/>
             </div>
             <input type="hidden" class="form-control" name="image" id="field_image"
                 [(ngModel)]="multimedia.image"  />
             <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
                 [(ngModel)]="multimedia.imageContentType" />
         </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.song" for="field_song">Song</label>
+        <div class="form-group" *ngIf="multimedia.type == 'SONG'">
+            <label class="form-control-label" for="field_song">Canción</label>
             <div>
                 <div *ngIf="multimedia.song" class="form-text text-danger clearfix">
-                    <a class="pull-left" (click)="openFile(multimedia.songContentType, multimedia.song)" jhiTranslate="entity.action.open">open</a><br>
-                    <span class="pull-left">{{multimedia.songContentType}}, {{byteSize(multimedia.song)}}</span>
+                    <a class="pull-left" (click)="openFile(multimedia.songContentType, multimedia.song)" >open</a><br>
+                    <!-- <span class="pull-left">{{multimedia.songContentType}}, {{byteSize(multimedia.song)}}</span> -->
                     <button type="button" (click)="multimedia.song=null;multimedia.songContentType=null;"
                             class="btn btn-secondary btn-xs pull-right">
                         <span class="fa fa-times"></span>
                     </button>
                 </div>
-                <input type="file" id="file_song" (change)="setFileData($event, multimedia, 'song', false)" jhiTranslate="entity.action.addblob"/>
+                <input type="file" id="file_song" (change)="setFileData($event, multimedia, 'song', false)"/>
             </div>
             <input type="hidden" class="form-control" name="song" id="field_song"
                 [(ngModel)]="multimedia.song"  />
             <input type="hidden" class="form-control" name="songContentType" id="field_songContentType"
                 [(ngModel)]="multimedia.songContentType" />
         </div>
-        <div class="form-group">
+       <!--  <div class="form-group">
             <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.url" for="field_url">Url</label>
             <input type="text" class="form-control" name="url" id="field_url"
                 [(ngModel)]="multimedia.url"  />
@@ -61,26 +71,27 @@
             <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.urlShare" for="field_urlShare">Url Share</label>
             <input type="text" class="form-control" name="urlShare" id="field_urlShare"
                 [(ngModel)]="multimedia.urlShare"  />
-        </div>
-        <div class="form-group">
+        </div> -->
+        <!-- <div class="form-group">
             <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.time" for="field_time">Time</label>
             <div class="d-flex">
                 <input id="field_time" type="datetime-local" class="form-control" name="time" [(ngModel)]="multimedia.time"
                   />
             </div>
-        </div>
+        </div> -->
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.tags" for="field_tags">Tags</label>
+            <label class="form-control-label" for="field_tags">Tags</label>
             <input type="text" class="form-control" name="tags" id="field_tags"
                 [(ngModel)]="multimedia.tags"  />
+            <small class="pull-right">NO OLVIDES INTRODUCIR EL # PARA CADA TAG</small>
         </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.totalValoration" for="field_totalValoration">Total Valoration</label>
+        <!-- <div class="form-group">
+            <label class="form-control-label" for="field_totalValoration">Total Valoration</label>
             <input type="number" class="form-control" name="totalValoration" id="field_totalValoration"
                 [(ngModel)]="multimedia.totalValoration" required min="0" max="5" />
             <div [hidden]="!(editForm.controls.totalValoration?.dirty && editForm.controls.totalValoration?.invalid)">
                 <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.totalValoration?.errors?.required" jhiTranslate="entity.validation.required">
+                   [hidden]="!editForm.controls.totalValoration?.errors?.required">
                    This field is required.
                 </small>
                 <small class="form-text text-danger"
@@ -96,57 +107,49 @@
                     This field should be a number.
                 </small>
             </div>
-        </div>
+        </div> -->
+        
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.type" for="field_type">Type</label>
-            <select class="form-control" name="type" [(ngModel)]="multimedia.type" id="field_type" >
-                <option value="PHOTO">{{'artWorkApp.Type.PHOTO' | translate}}</option>
-                <option value="VIDEO">{{'artWorkApp.Type.VIDEO' | translate}}</option>
-                <option value="SONG">{{'artWorkApp.Type.SONG' | translate}}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.description" for="field_description">Description</label>
+            <label class="form-control-label" for="field_description">Descripción</label>
             <textarea class="form-control" name="description" id="field_description"
-                [(ngModel)]="multimedia.description"  ></textarea>
+                [(ngModel)]="multimedia.description"></textarea>
         </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.usersTag" for="field_usersTag">Users Tag</label>
+        <!-- <div class="form-group">
+            <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.usersTag" for="field_usersTag">Tags</label>
             <input type="text" class="form-control" name="usersTag" id="field_usersTag"
                 [(ngModel)]="multimedia.usersTag"  />
-        </div>
-        <div class="form-group">
+        </div> -->
+        <!-- <div class="form-group">
             <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.copyright" for="field_copyright">Copyright</label>
             <input type="text" class="form-control" name="copyright" id="field_copyright"
                 [(ngModel)]="multimedia.copyright"  />
-        </div>
-        <div class="form-group">
+        </div> -->
+        <!-- <div class="form-group">
             <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.resolution" for="field_resolution">Resolution</label>
             <input type="text" class="form-control" name="resolution" id="field_resolution"
                 [(ngModel)]="multimedia.resolution"  />
-        </div>
-
-        <div class="form-group">
+        </div> -->
+        <!-- <div class="form-group">
             <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.user" for="field_user">User</label>
             <select class="form-control" id="field_user" name="user" [(ngModel)]="multimedia.user" >
                 <option [ngValue]="null"></option>
                 <option [ngValue]="userOption.id === multimedia.user?.id ? multimedia.user : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
             </select>
-        </div>
-        <div class="form-group">
+        </div> -->
+        <!-- <div class="form-group">
             <label class="form-control-label" jhiTranslate="artWorkApp.multimedia.album" for="field_album">Album</label>
             <select class="form-control" id="field_album" name="album" [(ngModel)]="multimedia.album" >
                 <option [ngValue]="null"></option>
                 <option [ngValue]="albumOption.id === multimedia.album?.id ? multimedia.album : albumOption" *ngFor="let albumOption of albums; trackBy: trackAlbumById">{{albumOption.name}}</option>
             </select>
-        </div>
+        </div> -->
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
-            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancelar</span>
         </button>
         <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            <span class="fa fa-save"></span>&nbsp;<span>Añadir</span>
         </button>
     </div>
 </form>

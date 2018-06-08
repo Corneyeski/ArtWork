@@ -16,12 +16,18 @@ export class MultimediaService {
     constructor(private http: Http, private dateUtils: JhiDateUtils) { }
 
     create(multimedia: Multimedia): Observable<Multimedia> {
+        console.log("create")
         const copy = this.convert(multimedia);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
             this.convertItemFromServer(jsonResponse);
             return jsonResponse;
         });
+    }
+
+    uploadMultimedia(multimedia) {
+        console.log("upload");
+        return this.http.post("api/main/upload", multimedia).map((res: Response) => {return res;});
     }
 
     update(multimedia: Multimedia): Observable<Multimedia> {
