@@ -234,4 +234,20 @@ public class UserResource {
         userService.deleteUser(login);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert( "userManagement.deleted", login)).build();
     }
+
+    @GetMapping("/users/user")
+    @Timed
+    public ResponseEntity<User> getFollowingUser(@RequestParam(required = false) Long id) {
+
+        User user = userService.getUserByIdOrLogin(id);
+
+        if (user != null){
+            return ResponseEntity.ok()
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "get"))
+                .body(user);
+
+        }else
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "id error",
+                "no user found with this id")).body(null);
+    }
 }
