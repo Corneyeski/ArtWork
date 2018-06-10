@@ -12,6 +12,9 @@ public class NewMultimediaRDTO {
 
     @NotNull
     private String title;
+    private String description;
+    private String resolution;
+    private String copyright;
     private String tags;
     private byte[] song;
     private byte[] image;
@@ -20,7 +23,9 @@ public class NewMultimediaRDTO {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Type type;
+    //TODO arreglar album para que se realiciones con el usuario tambien
     private Long Album;
+
 
     public String getTitle() {
         return title;
@@ -28,6 +33,30 @@ public class NewMultimediaRDTO {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getResolution() {
+        return resolution;
+    }
+
+    public void setResolution(String resolution) {
+        this.resolution = resolution;
+    }
+
+    public String getCopyright() {
+        return copyright;
+    }
+
+    public void setCopyright(String copyright) {
+        this.copyright = copyright;
     }
 
     public String getTags() {

@@ -144,8 +144,6 @@ public class MainResource {
             .body(received);
     }
 
-    //TODO Añadir metodo para que puedan subir fotos/videos etc
-
     @PostMapping("/main/upload")
     @Transactional
     public ResponseEntity<Boolean> upload(@RequestBody NewMultimediaRDTO newMultimedia) {
