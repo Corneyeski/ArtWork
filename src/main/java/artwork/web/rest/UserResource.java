@@ -252,9 +252,9 @@ public class UserResource {
                 "no user found with this id")).body(null);
     }
 
-    @GetMapping("/users/user-ext")
+    @GetMapping("/users/user-ext/{userID}")
     @Timed
-    public ResponseEntity<UserExt> getUserExt(@RequestParam(required = true) Long userID) {
+    public ResponseEntity<UserExt> getUserExt(@PathVariable(required = true) Long userID) {
 
         UserExt userExt = userRepository.findUserExtByUserId(userID);
 
