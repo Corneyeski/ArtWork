@@ -1,6 +1,8 @@
 package artwork.repository;
 
 import artwork.domain.User;
+import artwork.domain.UserExt;
+import org.springframework.data.repository.query.Param;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,4 +41,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select Max(user.id) from User user")
     Long getLastId();
+
+    @Query("select userExt from UserExt userExt where userExt.user.id = :userID")
+    UserExt findUserExtByUserId(@Param("userID") Long userID);
+
 }

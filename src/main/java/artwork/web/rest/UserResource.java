@@ -1,6 +1,7 @@
 package artwork.web.rest;
 
 import artwork.config.Constants;
+import artwork.domain.UserExt;
 import artwork.service.dto.NewUserDTO;
 import com.codahale.metrics.annotation.Timed;
 import artwork.domain.User;
@@ -245,6 +246,22 @@ public class UserResource {
             return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "get"))
                 .body(user);
+
+        }else
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "id error",
+                "no user found with this id")).body(null);
+    }
+
+    @GetMapping("/users/user-ext")
+    @Timed
+    public ResponseEntity<UserExt> getUserExt(@RequestParam(required = true) Long userID) {
+
+        UserExt userExt = userRepository.findUserExtByUserId(userID);
+
+        if (userExt != null){
+            return ResponseEntity.ok()
+                .headers(HeaderUtil.createEntityUpdateAlert("userExtManagement", "get"))
+                .body(userExt);
 
         }else
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "id error",
