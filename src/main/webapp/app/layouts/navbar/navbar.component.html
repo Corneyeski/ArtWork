@@ -1,11 +1,13 @@
 <nav class="navbar navbar-dark navbar-expand-md jh-navbar">
     <div class="jh-logo-container float-left">
-        <a class="jh-navbar-toggler d-lg-none float-right" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
+        <a class="jh-navbar-toggler d-lg-none float-right" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
             <i class="fa fa-bars"></i>
         </a>
         <a class="navbar-brand logo float-left" routerLink="/" (click)="collapseNavbar()">
             <!-- <span class="logo-img"></span> -->
-            <span jhiTranslate="global.title" class="navbar-title">ArtWork</span> <!-- <span class="navbar-version">{{version}}</span> -->
+            <span jhiTranslate="global.title" class="navbar-title">ArtWork</span>
+            <!-- <span class="navbar-version">{{version}}</span> -->
 
         </a>
     </div>
@@ -21,9 +23,10 @@
             </li> -->
             <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
 
-            
+
             <button *ngSwitchCase="true" class="btn btn-secondary btn-xs" [routerLink]="['/', { outlets: { popup: ['multimedia-new'] } }]">
-                <span class="fa fa-plus"></span> <span>Añadir contenido</span>
+                <span class="fa fa-plus"></span>
+                <span>Añadir contenido</span>
             </button>
 
             <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
@@ -127,7 +130,8 @@
                         </a>
                     </li> -->
                     <li>
-                        <a class="dropdown-item" routerLink="user-profile-valoration" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                        <a class="dropdown-item" routerLink="user-profile-valoration" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+                            (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
                             <span jhiTranslate="global.menu.entities.userProfileValoration">User Profile Valoration</span>
                         </a>
@@ -139,7 +143,8 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" routerLink="reason-report" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                        <a class="dropdown-item" routerLink="reason-report" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+                            (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
                             <span jhiTranslate="global.menu.entities.reasonReport">Reason Report</span>
                         </a>
@@ -180,7 +185,7 @@
                             <span jhiTranslate="global.menu.entities.userExt">User Ext</span>
                         </a>
                     </li> -->
-                   <!--  <li>
+                    <!--  <li>
                         <a class="dropdown-item" routerLink="tool" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
                             <span jhiTranslate="global.menu.entities.tool">Tool</span>
@@ -228,13 +233,13 @@
                             <span jhiTranslate="global.menu.entities.profession">Profession</span>
                         </a>
                     </li>
-                   <!--  <li>
+                    <!--  <li>
                         <a class="dropdown-item" routerLink="offer" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
                             <span jhiTranslate="global.menu.entities.offer">Offer</span>
                         </a>
                     </li> -->
-                    
+
                 </ul>
             </li>
             <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
@@ -261,19 +266,26 @@
                 </ul>
             </li>
 
-             <li ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="isAuthenticated()">
+            <li ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="isAuthenticated()">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
-                  <span *ngIf="!getImageUrl()">
-                    <i class="fa fa-user" aria-hidden="true"></i>
-                    <span jhiTranslate="global.menu.account.main">
-                      Account
+                    <span *ngIf="!getImageUrl()">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <span jhiTranslate="global.menu.account.main">
+                            Account
+                        </span>
                     </span>
-                  </span>
-                  <span *ngIf="getImageUrl()">
-                      <img [src]="getImageUrl()" class="profile-image img-circle" alt="Avatar">
-                  </span>
+                    <span *ngIf="getImageUrl()">
+                        <img [src]="getImageUrl()" class="profile-image img-circle" alt="Avatar">
+                    </span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+                    <li *ngSwitchCase="true">
+                        <a class="dropdown-item" routerLink="account" routerLinkActive="active" (click)="collapseNavbar()">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span>Mi perfil</span>
+                        </a>
+                    </li>
+
                     <li *ngSwitchCase="true">
                         <a class="dropdown-item" routerLink="settings" routerLinkActive="active" (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-wrench" aria-hidden="true"></i>

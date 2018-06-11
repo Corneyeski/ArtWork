@@ -1,20 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { JhiLanguageService } from 'ng-jhipster';
 
-import { Principal, AccountService, JhiLanguageHelper } from '../../shared';
+import { Principal, AccountService, JhiLanguageHelper, UserService } from '../../shared';
 
 @Component({
     selector: 'jhi-settings',
-    templateUrl: './settings.component.html'
+    templateUrl: './settings.component.html',
+    styleUrls: [
+        'settings.css'
+    ]
 })
 export class SettingsComponent implements OnInit {
     error: string;
     success: string;
-    settingsAccount: any;
+    account: any;
     languages: any[];
+    user: any;
 
     constructor(
-        private account: AccountService,
+        private accountService: AccountService,
+        private userService: UserService,
         private principal: Principal,
         private languageService: JhiLanguageService,
         private languageHelper: JhiLanguageHelper
@@ -23,23 +28,32 @@ export class SettingsComponent implements OnInit {
 
     ngOnInit() {
         this.principal.identity().then((account) => {
-            this.settingsAccount = this.copyAccount(account);
+            this.account = this.copyAccount(account);
+            this.userService.getProfileUser(account.id).subscribe((response) => {
+                this.user = response;
+            }, () => {
+                console.log("error")
+            });
         });
         this.languageHelper.getAll().then((languages) => {
             this.languages = languages;
         });
+
+
+        
+        
     }
 
     save() {
-        this.account.save(this.settingsAccount).subscribe(() => {
+        this.account.save(this.account).subscribe(() => {
             this.error = null;
             this.success = 'OK';
             this.principal.identity(true).then((account) => {
-                this.settingsAccount = this.copyAccount(account);
+                this.account = this.copyAccount(account);
             });
             this.languageService.getCurrent().then((current) => {
-                if (this.settingsAccount.langKey !== current) {
-                    this.languageService.changeLanguage(this.settingsAccount.langKey);
+                if (this.account.langKey !== current) {
+                    this.languageService.changeLanguage(this.account.langKey);
                 }
             });
         }, () => {
