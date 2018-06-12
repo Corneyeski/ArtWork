@@ -82,15 +82,33 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="row">
-                        <img src="../../../content/images/default-user.png" alt="user login image" class="account-image" />
+                        <!-- <img src="../../../content/images/default-user.png" alt="user login image" class="account-image" /> -->
+                        <a *ngIf="user?.image" (click)="openFile(user.imageContentType, user.image)">
+                            <img [src]="'data:' + user.imageContentType + ';base64,' + user.image" class="account-image" alt="user image"/>
+                        </a>
+                        <a *ngIf="!user?.image">
+                                <img src="../../../content/images/default-user.png" alt="user login image" class="account-image"/>
+                        </a>
                     </div>
                     <p></p>
 
                     <div class="row">
                         <div class="list-group">
-                           <!--  <div class="list-group-item">{{user.login}}</div>
-                            <div class="list-group-item">{{user.firstName}} {{account.lastName}} </div>-->
-                            
+                            <!-- LOGIN -->
+                            <div class="list-group-item" *ngIf="user?.login"><strong>Username: </strong>{{user?.login}}</div>
+                            <!-- NAME/SURNAME -->
+                            <div class="list-group-item" *ngIf="user?.name || user?.surname"><strong>Nombre: </strong>{{user?.name}} {{users?.surname}} </div>
+                            <!-- CITY -->
+                            <div class="list-group-item" *ngIf="user?.city"><strong>Ciudad: </strong>{{user?.city}}</div>
+                            <!-- BIRTHDATE -->
+                            <div class="list-group-item" *ngIf="user?.birthdate"><strong>Fecha nacimiento: </strong>{{user?.birthdate | date: 'dd/MM/yyyy'}}</div>
+                            <!-- PHONE -->
+                            <div class="list-group-item" *ngIf="user?.phone"><strong>Teléfono: </strong>{{user?.phone}}</div>
+                            <!-- PROFESSION -->
+                            <div class="list-group-item" *ngIf="user?.profession"><strong>Profesión: </strong>{{user?.profession}}</div>
+                            <!-- WORKING -->
+                            <div class="list-group-item" *ngIf="user?.working"><strong>Trabajando: </strong> sí</div>
+                            <div class="list-group-item" *ngIf="user?.working"><strong>Trabajando: </strong> no</div>
                         </div>
                     </div>
                 </div>
