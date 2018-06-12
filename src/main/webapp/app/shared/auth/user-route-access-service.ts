@@ -40,12 +40,14 @@ export class UserRouteAccessService implements CanActivate {
             }
 
             this.stateStorageService.storeUrl(url);
-            this.router.navigate(['accessdenied']).then(() => {
+            // en vez de ir a la path de error, vamos al login
+            this.router.navigate(['/']);
+            /* this.router.navigate(['accessdenied']).then(() => {
                 // only show the login dialog, if the user hasn't logged in yet
                 if (!account) {
                     this.loginModalService.open();
                 }
-            });
+            }); */
             return false;
         }));
     }
