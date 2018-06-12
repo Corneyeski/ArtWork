@@ -52,8 +52,6 @@ export class UserService {
     getProfileUser(id: any): any {
         var getUserExtUrl = this.resourceUrl + "/user-ext";
         console.log(getUserExtUrl)
-        //`${this.resourceUrl}/${login}`
-        //(SERVER_API_URL + 'api/users/user-ext', id)
         return this.http.get(`${getUserExtUrl}/${id}`).map((res: Response) => {
             console.log(res.json())
             return res.json();

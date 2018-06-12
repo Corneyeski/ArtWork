@@ -124,6 +124,10 @@ export class HomeComponent implements OnInit {
         }
     }
 
+    selectImg(){
+        document.getElementById("file_image").click();        
+    }
+
     /*getMultimedia(){
         this.multimediaService.query({
         }).subscribe(
