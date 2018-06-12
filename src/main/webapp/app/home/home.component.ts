@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
     loginCredentials:any = {};
     multimedias = [];
 
-    registerCredentials:any = {};
+    registerCredentials:any = {kind: 0};
     passwordNoMatch = false;
 
     loginError = false;
@@ -96,7 +96,7 @@ export class HomeComponent implements OnInit {
     register(){
         this.registerCredentials.newUserExtDTO = {
             birthdate: new Date(1527869120),
-            kind: 1,
+            kind: this.registerCredentials.kind,
             image: this.registerCredentials.image,
             imageContentType: this.registerCredentials.imageContentType,
             working: false
@@ -115,6 +115,7 @@ export class HomeComponent implements OnInit {
                         console.debug("Se ha creado el usuario")
                         this.registerSuccess = true;
                         this.registerError = false;
+                        this.registerCredentials = {};
                     }else{
                         this.registerError = true;
                         this.registerSuccess = false;

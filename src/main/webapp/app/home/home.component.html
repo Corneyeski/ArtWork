@@ -33,18 +33,44 @@
                 <h1 style="text-align:center;margin-top:20px">Bienvenido a ArtWork!</h1>
                 <h2 style="text-align:center">Regístrate para disfrutar de nuestra app</h2>
 
-                <form name="form" role="form" (ngSubmit)="register()" #registerForm="ngForm">
+                <form name="form" role="form" (ngSubmit)="register()" #registerForm="ngForm" style="padding-top:15px" class="register-form">
 
-                    <div class="row">
+                    <div class="row" style="text-align:center">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+
+                            <label class="radio-inline">
+                                <input name="options" ng-control="options" type="radio" [value]="0"  [(ngModel)]="registerCredentials.kind">
+                                <strong>Usuario</strong>
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="radio-inline">
+                                <input name="options" ng-control="options" type="radio" [value]="1" [(ngModel)]="registerCredentials.kind">
+                                <strong>Empresa</strong>
+                            </label>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+
+                    <div class="row" *ngIf="registerCredentials.kind == 0">
                         <div class="form-group col-md-6">
                             <label class="form-control-label" for="name">Nombre</label>
                             <input type="text" class="form-control" [(ngModel)]="registerCredentials.firstName" id="name" name="name" #name="ngModel"
-                                placeholder="Nombre" required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$">
+                                placeholder="Nombre" required minlength="1" maxlength="150">
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-control-label" for="surname">Apellidos</label>
                             <input type="text" class="form-control" id="surname" name="surname" #surname="ngModel" placeholder="Apellidos" [(ngModel)]="registerCredentials.lastName"
                                 minlength=1 maxlength=100 surname required>
+                        </div>
+                    </div>
+                    <!-- EN EL CASO DE LA EMPRESA -->
+                    <div class="row" *ngIf="registerCredentials.kind == 1">
+                        <div class="form-group col-md-12">
+                            <label class="form-control-label" for="name">Nombre de la empresa</label>
+                            <input type="text" class="form-control" [(ngModel)]="registerCredentials.firstName" id="name" name="name" #name="ngModel"
+                                placeholder="Nombre" required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$">
                         </div>
                     </div>
 
@@ -60,7 +86,6 @@
                                 minlength=5 maxlength=100 email required>
                         </div>
                     </div>
-
 
                     <div class="row">
                         <div class="form-group col-md-6">
@@ -84,7 +109,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="form-group col-md-12 register-form-image">
+                        <div class="form-group col-md-12">
 
                             <label class="form-control-label" for="field_image">Imagen</label>
                             <div>
@@ -95,8 +120,11 @@
                                         <div class="col-md-8">
                                             <input type="file" id="file_image" (change)="setFileData($event, registerCredentials, 'image', true)" accept="image/*" size="60"
                                             />
-                                            <button type="button" class="btn btn-secondary btn-xs pull-left" (click)="selectImg()">
-                                                <span class="fa fa-plus"></span>
+                                            <button type="button" class="btn btn-secondary btn-xs pull-left" (click)="selectImg()" *ngIf="!registerCredentials.image">
+                                                <span class="fa fa-plus"></span> Añadir imagen
+                                            </button>
+                                            <button type="button" class="btn btn-secondary btn-xs pull-left" (click)="selectImg()" *ngIf="registerCredentials.image">
+                                                <span class="fa fa-edit"></span> Editar imagen
                                             </button>
                                         </div>
 

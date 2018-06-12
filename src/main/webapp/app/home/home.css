@@ -78,11 +78,13 @@ Main page styles
     max-height: 210px;
 }
 
-.register-form-image {
+.register-form {
     background-color: white;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 8px;
-    padding-bottom: 10px;
+    
+    /* top / right / bottom / left*/
+    padding: 5px 20px 5px 20px;
 }
 
 .ptop-xsmall {
