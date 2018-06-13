@@ -243,6 +243,9 @@ public class UserResource {
         User user = userService.getUserByIdOrLogin(id);
 
         if (user != null){
+
+            if (user.getUserExt() != null) user.getUserExt().setUser(null);
+
             return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "get"))
                 .body(user);
