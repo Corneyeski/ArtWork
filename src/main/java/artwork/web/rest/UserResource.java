@@ -2,7 +2,9 @@ package artwork.web.rest;
 
 import artwork.config.Constants;
 import artwork.domain.UserExt;
+import artwork.repository.UserExtRepository;
 import artwork.service.dto.NewUserDTO;
+import artwork.web.rest.rdto.UserRDTO;
 import com.codahale.metrics.annotation.Timed;
 import artwork.domain.User;
 import artwork.repository.UserRepository;
@@ -18,6 +20,7 @@ import io.swagger.annotations.ApiParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -31,30 +34,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
-/**
- * REST controller for managing users.
- * <p>
- * This class accesses the User entity, and needs to fetch its collection of authorities.
- * <p>
- * For a normal use-case, it would be better to have an eager relationship between User and Authority,
- * and send everything to the client side: there would be no View Model and DTO, a lot less code, and an outer-join
- * which would be good for performance.
- * <p>
- * We use a View Model and a DTO for 3 reasons:
- * <ul>
- * <li>We want to keep a lazy association between the user and the authorities, because people will
- * quite often do relationships with the user, and we don't want them to get the authorities all
- * the time for nothing (for performance reasons). This is the #1 goal: we should not impact our users'
- * application because of this use-case.</li>
- * <li> Not having an outer join causes n+1 requests to the database. This is not a real issue as
- * we have by default a second-level cache. This means on the first HTTP call we do the n+1 requests,
- * but then all authorities come from the cache, so in fact it's much better than doing an outer join
- * (which will get lots of data from the database, for each HTTP call).</li>
- * <li> As this manages users, for security reasons, we'd rather have a DTO layer.</li>
- * </ul>
- * <p>
- * Another option would be to have a specific JPA entity graph to handle this case.
- */
 @RestController
 @RequestMapping("/api")
 public class UserResource {
@@ -69,12 +48,15 @@ public class UserResource {
 
     private final UserService userService;
 
+    private final UserExtRepository userExtRepository;
+
     public UserResource(UserRepository userRepository, MailService mailService,
-            UserService userService) {
+                        UserService userService, UserExtRepository userExtRepository) {
 
         this.userRepository = userRepository;
         this.mailService = mailService;
         this.userService = userService;
+        this.userExtRepository = userExtRepository;
     }
 
     /**
@@ -249,10 +231,39 @@ public class UserResource {
             return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "get"))
                 .body(user);
-
         }else
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "id error",
                 "no user found with this id")).body(null);
+    }
+
+    @PutMapping("/users/update")
+    @Timed
+    public ResponseEntity<User> updateUser(@RequestBody UserRDTO user) {
+
+        if (user.getId() != null && user.getIdExt() != null){
+
+            User u = userRepository.findOne(user.getId());
+            UserExt ue = userExtRepository.findOne(user.getIdExt());
+
+            if(u == null || ue == null)
+                return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "id error",
+                "no user found with this id")).body(null);
+
+            BeanUtils.copyProperties(user, u);
+            BeanUtils.copyProperties(user, ue);
+
+            u.setUserExt(ue);
+            userRepository.save(u);
+
+            ue.setUser(u);
+            userExtRepository.save(ue);
+
+            return ResponseEntity.ok()
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "get"))
+                .body(u);
+        }
+        return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "id error",
+            "faltan los id")).body(null);
     }
 
     @GetMapping("/users/user-ext/{userID}")

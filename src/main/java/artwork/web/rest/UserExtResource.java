@@ -1,5 +1,6 @@
 package artwork.web.rest;
 
+import artwork.domain.User;
 import com.codahale.metrics.annotation.Timed;
 import artwork.domain.UserExt;
 
@@ -73,6 +74,9 @@ public class UserExtResource {
             return createUserExt(userExt);
         }
         UserExt result = userExtRepository.save(userExt);
+
+        result.getUser().getUserExt();
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, userExt.getId().toString()))
             .body(result);
@@ -101,6 +105,9 @@ public class UserExtResource {
     public ResponseEntity<UserExt> getUserExt(@PathVariable Long id) {
         log.debug("REST request to get UserExt : {}", id);
         UserExt userExt = userExtRepository.findOne(id);
+
+        userExt.setUser(null);
+
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userExt));
     }
 
