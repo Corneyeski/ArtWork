@@ -94,9 +94,10 @@ export class HomeComponent implements OnInit {
     }
 
     register(){
+        
+        /* birthdate: new Date(1527869120),
+        kind: this.registerCredentials.kind, */
         this.registerCredentials.newUserExtDTO = {
-            birthdate: new Date(1527869120),
-            kind: this.registerCredentials.kind,
             image: this.registerCredentials.image,
             imageContentType: this.registerCredentials.imageContentType,
             working: false
@@ -156,6 +157,10 @@ export class HomeComponent implements OnInit {
 
     clearInputImage(field: string, fieldContentType: string, idInput: string) {
         this.dataUtils.clearInputImage(this.registerCredentials, this.elementRef, field, fieldContentType, idInput);
+    }
+
+    openImage(){
+        console.log("dale a tu cuerpo alegría macarena") 
     }
 
 }

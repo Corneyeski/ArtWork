@@ -50,11 +50,8 @@ export class UserService {
     }
 
     getProfileUser(id: any): any {
-        var getUserExtUrl = this.resourceUrl + "/user-ext";
-        console.log(getUserExtUrl)
-        return this.http.get(`${getUserExtUrl}/${id}`).map((res: Response) => {
-            console.log(res.json())
-            return res.json();
-        });
+
+        return this.http.get(this.resourceUrl+"/user", {params : id})
+        .map((res: Response) => {return res.json()});
     }
 }

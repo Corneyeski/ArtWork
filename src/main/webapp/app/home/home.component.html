@@ -40,7 +40,7 @@
                         <div class="col-md-3">
 
                             <label class="radio-inline">
-                                <input name="options" ng-control="options" type="radio" [value]="0"  [(ngModel)]="registerCredentials.kind">
+                                <input name="options" ng-control="options" type="radio" [value]="0" [(ngModel)]="registerCredentials.kind">
                                 <strong>Usuario</strong>
                             </label>
                         </div>
@@ -166,67 +166,23 @@
             <h2>Bienvenido de nuevo, {{account.login}}</h2>
         </div>
         <div class="row">
-            <div class="col-md-3">
-                <div class="row">
-                    <img src="../../content/images/default-user.png" alt="user login image" class="account-image" />
-                </div>
-                <p></p>
-
-                <div class="row">
-                    <div class="list-group">
-                        <div class="list-group-item">{{account.login}}</div>
-                        <div class="list-group-item">{{account.firstName}} {{account.lastName}}
-                        </div>
-                        <!--<div class="list-group-item">
-                            <a ui-sref="evento.new">
-                                <span data-translate="global.navbar-functions.create-event">Create event</span>
-                            </a>
-                        </div>
-                        <div class="list-group-item"
-                             ng-if="account.authorities[0] == 'ROLE_ADMIN' || account.authorities[1] == 'ROLE_ADMIN'">
-                            <a ui-sref="reto.new">
-                                    <span >Create challenge</span>
-                            </a>
-                        </div>
-                        <div class="list-group-item">
-                            <a ui-sref="user-participations">
-                                <span data-translate="global.navbar-functions.yourParticipations"></span>
-                            </a>
-                        </div>-->
-                    </div>
-                </div>
+            <div class="row" style="padding:10px 5px 10px 5px">
+                <img src="../../content/images/test9.jpg" alt="user login image" class="account-image col-md-3" (click)="openImage()" />
+                <img src="../../content/images/test10.jpg" alt="user login image" class="account-image col-md-3" (click)="openImage()"/>
+                <img src="../../content/images/test11.jpg" alt="user login image" class="account-image col-md-3" (click)="openImage()" />
+                <img src="../../content/images/test12.jpg" alt="user login image" class="account-image col-md-3" (click)="openImage()" />
             </div>
-
-            <div class="col-md-9">
-                <div class="row" style="padding:10px 5px 10px 5px">
-                    <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4" />
-                    <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4" />
-                    <img src="../../content/images/test2.jpg" alt="user login image" class="account-image col-md-4" />
-                </div>
-                <div class="row" style="padding:10px 5px 10px 5px">
-                    <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4" />
-                    <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4" />
-                    <img src="../../content/images/test3.jpg" alt="user login image" class="account-image col-md-4" />
-                </div>
-                <div class="row" style="padding:10px 5px 10px 5px">
-                    <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4" />
-                    <img src="../../content/images/test2.jpg" alt="user login image" class="account-image col-md-4" />
-                    <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4" />
-                </div>
-                <div class="row" style="padding:10px 5px 10px 5px">
-                    <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-4" />
-                    <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4" />
-                    <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-4" />
-                </div>
-                <!-- <div class="flex-container" *ngFor="let multimedia of multimedias">
-               &lt;!&ndash; {{multimedia |json}} &ndash;&gt;
-               <div *ngIf="multimedia.image" class="image">
-                   <a (click)="openFile(multimedia.imageContentType, multimedia.image)">
-                       <img [src]="'data:' + multimedia.imageContentType + ';base64,' + multimedia.image" style="max-width: 100%;" alt="multimedia image"
-                       />
-                   </a>
-               </div>
-           </div>-->
+            <div class="row" style="padding:10px 5px 10px 5px">
+                <img src="../../content/images/test5.jpg" alt="user login image" class="account-image col-md-3" (click)="openImage()" />
+                <img src="../../content/images/test6.jpg" alt="user login image" class="account-image col-md-3" (click)="openImage()" />
+                <img src="../../content/images/test7.jpg" alt="user login image" class="account-image col-md-3" (click)="openImage()" />
+                <img src="../../content/images/test8.jpg" alt="user login image" class="account-image col-md-3" (click)="openImage()" />
+            </div>
+            <div class="row" style="padding:10px 5px 10px 5px">
+                <img src="../../content/images/test1.jpg" alt="user login image" class="account-image col-md-3" (click)="openImage()" />
+                <img src="../../content/images/test2.jpg" alt="user login image" class="account-image col-md-3" (click)="openImage()" />
+                <img src="../../content/images/test3.jpg" alt="user login image" class="account-image col-md-3" (click)="openImage()" />
+                <img src="../../content/images/test4.jpg" alt="user login image" class="account-image col-md-3" (click)="openImage()" />
             </div>
         </div>
     </div>

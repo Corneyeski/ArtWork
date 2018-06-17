@@ -18,6 +18,23 @@ export class SettingsComponent implements OnInit {
     user: any;
     userRequest: any;
 
+    view = "data";
+    editProfile:{
+        "login":                "",
+        "email":                "",
+        "name":                 "",
+        "surname":              "",
+        "city":                 "",
+        "image":                "",
+        "imageContentType":     "",
+        "birthdate":            "",
+        "kind":                 "",
+        "phone":                "",
+        "profession":           "",
+        "working":              false,
+        "tags":                 any
+    }
+
     constructor(
         private accountService: AccountService,
         private userService: UserService,
@@ -31,11 +48,11 @@ export class SettingsComponent implements OnInit {
     ngOnInit() {
         this.principal.identity().then((account) => {
             this.account = this.copyAccount(account);
-            console.log(this.account)
+            console.log(account)
             this.userService.getProfileUser(account.id).subscribe((response) => {
                 this.userRequest = response;
                 console.log(this.userRequest)
-                this.mergeUser(this.account, this.userRequest);
+                this.mergeUser(this.userRequest);
             }, () => {
                 console.log("error")
             });
@@ -45,22 +62,24 @@ export class SettingsComponent implements OnInit {
         });
     }
 
-    mergeUser(account, user){
+    mergeUser(user){
         this.user = {
-            "login":                account.login,
-            "email":                account.email,
-            "name":                 account.firstName,
-            "surname":              account.surname,
-            "city":                 user.city,
-            "image":                user.image,
-            "imageContentType":     user.imageContentType,
-            "birthdate":            user.birthdate,
-            "kind":                 user.king, 
-            "phone":                user.phone,
-            "profession":           user.profession,
-            "working":              user.working,
-            "tags":                 user.tags
+            "login":                user.login,
+            "email":                user.email,
+            "name":                 user.firstName,
+            "surname":              user.lastName,
+            "city":                 user.userExt.city,
+            "image":                user.userExt.image,
+            "imageContentType":     user.userExt.imageContentType,
+            "birthdate":            user.userExt.birthdate,
+            "kind":                 user.userExt.king, 
+            "phone":                user.userExt.phone,
+            "profession":           user.userExt.profession,
+            "working":              user.userExt.working,
+            "tags":                 user.userExt.tags
         }
+
+        this.editProfile = Object.assign({}, this.user);
         console.log(this.user)
     }
 
@@ -96,5 +115,13 @@ export class SettingsComponent implements OnInit {
 
     openFile(contentType, field) {
         return this.dataUtils.openFile(contentType, field);
+    }
+
+    changeView(data){
+        this.view = data;
+    }
+
+    modifyProfile(){
+        console.log(this.editProfile)
     }
 }

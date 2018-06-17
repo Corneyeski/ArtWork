@@ -69,7 +69,6 @@ export class MultimediaDialogComponent implements OnInit {
 
     save() {
         var multimedia = {
-            album: 0,
             tags: this.multimedia.tags,
             title: this.multimedia.title, 
             type: this.multimedia.type,
@@ -78,7 +77,6 @@ export class MultimediaDialogComponent implements OnInit {
             image: null, 
             imageContentType: null
         };
-        // description: this.multimedia.description,
        
         if(this.multimedia.image != undefined){
             multimedia.song = null;
@@ -95,9 +93,6 @@ export class MultimediaDialogComponent implements OnInit {
             multimedia.songContentType = this.multimedia.songContentType;
         }
 
-        console.log("guardando nuevo multimedia")
-        console.log(this.multimedia)
-        console.log(multimedia)
         this.isSaving = true;
         this.multimediaService.uploadMultimedia(multimedia).subscribe(response => {
             if(response.status == 200 || response.status == 201){

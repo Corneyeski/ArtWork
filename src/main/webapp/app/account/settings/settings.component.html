@@ -1,120 +1,121 @@
 <div>
-    <!-- <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h2 jhiTranslate="settings.title" translateValues="{username: '{{settingsAccount.login}}'}" *ngIf="settingsAccount">User settings for [
-                <b>{{settingsAccount.login}}</b>]</h2>
-
-            <div class="alert alert-success" *ngIf="success" jhiTranslate="settings.messages.success">
-                <strong>Settings saved!</strong>
-            </div>
-
-            <jhi-alert-error></jhi-alert-error>
-
-            <form name="form" role="form" (ngSubmit)="save()" #settingsForm="ngForm" *ngIf="settingsAccount" novalidate>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="firstName" jhiTranslate="settings.form.firstname">First Name</label>
-                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="{{'settings.form.firstname.placeholder' | translate}}"
-                        [(ngModel)]="settingsAccount.firstName" minlength=1 maxlength=50 #firstNameInput="ngModel" required>
-                    <div *ngIf="firstNameInput.dirty && firstNameInput.invalid">
-                        <small class="form-text text-danger" *ngIf="firstNameInput.errors.required" jhiTranslate="settings.messages.validate.firstname.required">
-                            Your first name is required.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="firstNameInput.errors.minlength" jhiTranslate="settings.messages.validate.firstname.minlength">
-                            Your first name is required to be at least 1 character.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="firstNameInput.errors.maxlength" jhiTranslate="settings.messages.validate.firstname.maxlength">
-                            Your first name cannot be longer than 50 characters.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="lastName" jhiTranslate="settings.form.lastname">Last Name</label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="{{'settings.form.lastname.placeholder' | translate}}"
-                        [(ngModel)]="settingsAccount.lastName" minlength=1 maxlength=50 #lastNameInput="ngModel" required>
-                    <div *ngIf="lastNameInput.dirty && lastNameInput.invalid">
-                        <small class="form-text text-danger" *ngIf="lastNameInput.errors.required" jhiTranslate="settings.messages.validate.lastname.required">
-                            Your last name is required.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="lastNameInput.errors.minlength" jhiTranslate="settings.messages.validate.lastname.minlength">
-                            Your last name is required to be at least 1 character.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="lastNameInput.errors.maxlength" jhiTranslate="settings.messages.validate.lastname.maxlength">
-                            Your last name cannot be longer than 50 characters.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="email" jhiTranslate="global.form.email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="{{'global.form.email.placeholder' | translate}}"
-                        [(ngModel)]="settingsAccount.email" minlength="5" maxlength="100" #emailInput="ngModel" email required>
-                    <div *ngIf="emailInput.dirty && emailInput.invalid">
-                        <small class="form-text text-danger" *ngIf="emailInput.errors.required" jhiTranslate="global.messages.validate.email.required">
-                            Your email is required.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="emailInput.errors.email" jhiTranslate="global.messages.validate.email.invalid">
-                            Your email is invalid.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="emailInput.errors.minlength" jhiTranslate="global.messages.validate.email.minlength">
-                            Your email is required to be at least 5 characters.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="emailInput.errors.maxlength" jhiTranslate="global.messages.validate.email.maxlength">
-                            Your email cannot be longer than 100 characters.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group" *ngIf="languages && languages.length > 0">
-                    <label for="langKey" jhiTranslate="settings.form.language">Language</label>
-                    <select class="form-control" id="langKey" name="langKey" [(ngModel)]="settingsAccount.langKey">
-                        <option *ngFor="let language of languages" [value]="language">{{language | findLanguageFromKey}}</option>
-                    </select>
-                </div>
-                <button type="submit" [disabled]="settingsForm.form.invalid" class="btn btn-primary" jhiTranslate="settings.form.button">Save</button>
-            </form>
-        </div>
-    </div> -->
-
-
-
-
     <div class="row">
         <div class="col-md-12 home-page">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="row">
-                        <!-- <img src="../../../content/images/default-user.png" alt="user login image" class="account-image" /> -->
-                        <a *ngIf="user?.image" (click)="openFile(user.imageContentType, user.image)">
-                            <img [src]="'data:' + user.imageContentType + ';base64,' + user.image" class="account-image" alt="user image"/>
+                        <a *ngIf="user?.image" (click)="openFile(user?.imageContentType, user?.image)">
+                            <img [src]="'data:' + user?.imageContentType + ';base64,' + user?.image" class="account-image" alt="user image" />
                         </a>
                         <a *ngIf="!user?.image">
-                                <img src="../../../content/images/default-user.png" alt="user login image" class="account-image"/>
+                            <img src="../../../content/images/default-user.png" alt="default user image" class="account-image" />
                         </a>
                     </div>
                     <p></p>
 
-                    <div class="row">
-                        <div class="list-group">
-                            <!-- LOGIN -->
-                            <div class="list-group-item" *ngIf="user?.login"><strong>Username: </strong>{{user?.login}}</div>
-                            <!-- NAME/SURNAME -->
-                            <div class="list-group-item" *ngIf="user?.name || user?.surname"><strong>Nombre: </strong>{{user?.name}} {{users?.surname}} </div>
-                            <!-- CITY -->
-                            <div class="list-group-item" *ngIf="user?.city"><strong>Ciudad: </strong>{{user?.city}}</div>
-                            <!-- BIRTHDATE -->
-                            <div class="list-group-item" *ngIf="user?.birthdate"><strong>Fecha nacimiento: </strong>{{user?.birthdate | date: 'dd/MM/yyyy'}}</div>
-                            <!-- PHONE -->
-                            <div class="list-group-item" *ngIf="user?.phone"><strong>Teléfono: </strong>{{user?.phone}}</div>
-                            <!-- PROFESSION -->
-                            <div class="list-group-item" *ngIf="user?.profession"><strong>Profesión: </strong>{{user?.profession}}</div>
-                            <!-- WORKING -->
-                            <div class="list-group-item" *ngIf="user?.working"><strong>Trabajando: </strong> sí</div>
-                            <div class="list-group-item" *ngIf="user?.working"><strong>Trabajando: </strong> no</div>
+                    <div class="row w200">
+                        <div class="list-group ">
+                            <button type="button" class="btn btn-default" (click)="changeView('data')">Mis datos</button>
+                            <button type="button" class="btn btn-default" (click)="changeView('follow')">Mis seguidores / seguidos</button>
+                            <button type="button" class="btn btn-default" (click)="changeView('media')">Mi contenido</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-9">
-                    IMAGENES
+                <div class="col-md-1"></div>
+
+                <div class="col-md-9" *ngIf="view == 'data'">
+
+                    <div class="row">
+                        <h2>Mis datos</h2>
+                    </div>
+
+                    <div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-12">
+                                <form name="form" role="form" (ngSubmit)="modifyProfile()" #profileForm="ngForm">
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="form-control-label" for="login">Login</label>
+                                                <input type="text" class="form-control" [(ngModel)]="editProfile.login" name="login" disabled>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-control-label" for="email">Correo electrónico</label>
+                                                <input type="text" class="form-control" [(ngModel)]="editProfile.email" ng-pending name="email" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="form-control-label" for="name">Nombre</label>
+                                                <input type="text" class="form-control" [(ngModel)]="editProfile.name" ng-pending name="name">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-control-label" for="surname">Apellido</label>
+                                                <input type="text" class="form-control" [(ngModel)]="editProfile.surname" ng-pending name="surname">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="form-control-label" for="city">Ciudad</label>
+                                                <input type="text" class="form-control" [(ngModel)]="editProfile.city" ng-pending name="city">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-control-label" for="phone">Teléfono</label>
+                                                <input type="text" class="form-control" [(ngModel)]="editProfile.phone" ng-pending name="phone" maxlength="9">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="form-control-label" for="profession">Profesión</label>
+                                                <input type="text" class="form-control" [(ngModel)]="editProfile.profession" ng-pending name="profession">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-control-label" for="working">Trabajando</label>
+                                                <div class="row" style="padding-left:15px">
+                                                    <label class="radio-inline" *ngIf="editProfile.working">
+                                                        <input name="options" ng-control="options" type="radio" checked>
+                                                        <strong>Sí</strong>
+                                                        <input name="options" ng-control="options" type="radio">
+                                                        <strong>
+                                                            <Noscript></Noscript>
+                                                        </strong>
+                                                    </label>
+                                                    <label class="radio-inline" *ngIf="!editProfile.working">
+                                                        <input name="options" ng-control="options" type="radio">
+                                                        <strong>Si</strong>
+                                                        <input name="options" ng-control="options" type="radio" checked>
+                                                        <strong>No</strong>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" [disabled]="profileForm.form.invalid" class="btn btn-primary pull-right">Guardar cambios</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-9" *ngIf="view == 'follow'">
+                    SEGUIDORES Y SEGUIDOS
+                </div>
+
+                <div class="col-md-9" *ngIf="view == 'media'">
+                    mi multimedia
                 </div>
             </div>
         </div>
